@@ -1,0 +1,7 @@
+project_name: "STS Agent Course Project"
+game_name: "Slay the Spire"
+width: 1920
+height: 1200
+memory_db: "data/memory.db"
+log_dir: "logs"
+screenshot_dir: "screenshots"

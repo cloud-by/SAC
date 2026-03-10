@@ -1,0 +1,9 @@
+opencv-python
+mss
+pywin32
+pyautogui
+pillow
+pydantic
+numpy
+pyyaml
+pywin32
