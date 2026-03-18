@@ -1,2 +1,10 @@
 .idea/
 .env
+__pycache__/
+*.py[cod]
+
+# Runtime logs / debug artifacts
+logs/run_logs/
+logs/action_logs/
+screenshots/current/
+screenshots/history/

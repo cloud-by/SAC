@@ -4,8 +4,8 @@
   "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
   "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
   "result": "success",
-  "time_cost_ms": 6396,
+  "time_cost_ms": 6600,
   "screenshot": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_001.png",
   "operator": "A组执行平台",
-  "timestamp": "2026-03-18 18:10:17"
+  "timestamp": "2026-03-19 01:08:26"
 }

@@ -3,10 +3,10 @@
   "scene_type": "title_main",
   "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
   "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
-  "success_count": 7,
+  "success_count": 11,
   "fail_count": 0,
-  "reuse_count": 7,
-  "last_update": "2026-03-18 18:10:17",
+  "reuse_count": 11,
+  "last_update": "2026-03-19 01:08:26",
   "memory_priority": "medium",
   "outcome_tags": [
     "execute_success",

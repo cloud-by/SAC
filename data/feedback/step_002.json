@@ -1,22 +1,22 @@
 {
-  "action_type": "enter_single_mode",
+  "action_type": "choose_standard_mode",
   "execute_status": "success",
-  "before_scene": "title_main",
-  "after_scene": "title_main",
-  "time_cost_ms": 955,
+  "before_scene": "mode_select",
+  "after_scene": "mode_select",
+  "time_cost_ms": 1082,
   "click_position": [
-    1177,
-    1032
+    742,
+    731
   ],
   "click_positions": [
     [
-      1177,
-      1032
+      742,
+      731
     ]
   ],
-  "screen_diff": "title_menu_advanced",
+  "screen_diff": "mode_selected",
   "error_message": "",
   "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
-  "timestamp": "2026-03-18 18:10:23",
+  "timestamp": "2026-03-19 01:08:31",
   "step_id": 2
 }

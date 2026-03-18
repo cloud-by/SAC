@@ -1,61 +1,61 @@
-更新时间: 2026-03-18 18:10:24
+更新时间: 2026-03-19 01:09:01
 
 ===== 当前状态 =====
-场景: title_main
+场景: character_select
 场景变体: None
 流程修正: False
 流程原因: top_candidate_accepted
-上一场景: title_main
+上一场景: character_select
 阶段变化: bootstrap -> bootstrap
-匹配置信度: 0.8727
-命中模板: pic/scene_templates/title_main/title_main_001.png
-所选角色: None
+匹配置信度: 0.7031
+命中模板: pic/scene_templates/mode_select/mode_select_001.png
+所选角色: ironclad
 层数: None
-生命: None/None
+生命: 80/80
 能量: 0
 手牌数: 0
 敌人数: 0
-菜单选项数: 6
+菜单选项数: 0
 模式选项数: 0
-角色选项数: 0
+角色选项数: 5
 地图选项数: 0
 奖励选项数: 0
-可用按钮: [{"name": "single_mode", "bbox": [972, 999, 1382, 1066], "confidence": 0.95}]
-候选场景: [["title_main", "0.8727"], ["campfire_upgrade", "0.6234"], ["mode_select", "0.5781"], ["merchant", "0.5664"], ["battle_result", "0.5469"]]
-流程候选: [["title_main", 0.95], ["campfire_upgrade", 0.6234], ["mode_select", 0.6], ["merchant", 0.5664], ["battle_result", 0.5469]]
+可用按钮: [{"name": "ironclad", "bbox": [793, 1136, 972, 1325], "confidence": 0.9}, {"name": "confirm_character", "bbox": [2201, 1082, 2534, 1339], "confidence": 0.92}, {"name": "back", "bbox": [0, 974, 256, 1285], "confidence": 0.88}]
+候选场景: [["mode_select", "0.7031"], ["character_select", "0.6328"], ["map", "0.6000"], ["campfire_upgrade", "0.5734"], ["battle", "0.5312"]]
+流程候选: [["character_select", 0.95], ["mode_select", 0.9], ["battle", 0.8], ["map", 0.6], ["title_main", 0.6]]
 预览手牌: []
 预览敌人: []
-截图: D:\code\sts-agent-course-project\screenshots\history\step_002_before.png
+截图: D:\code\sts-agent-course-project\screenshots\history\step_005_before.png
 
 ===== 动作决策 =====
-动作类型: enter_single_mode
-动作来源: Brain-rule-title_main+Mcts
-置信度: 0.9600
-动作解释: 当前位于主页，优先进入单人模式以开始一局游戏。
+动作类型: confirm_character
+动作来源: Brain-rule-character_select+Mcts
+置信度: 0.9500
+动作解释: 铁甲战士已经被选中，继续确认角色进入开局流程。
 执行计划数: 1
-执行计划预览: [{"op": "click_button", "button_name": "single_mode"}]
+执行计划预览: [{"op": "click_button", "button_name": "confirm_character"}]
 
 ===== 执行反馈 =====
 执行结果: success
-场景变化: title_main -> title_main
-耗时(ms): 955
-屏幕变化: title_menu_advanced
-点击位置: [1177, 1032]
+场景变化: character_select -> character_select
+耗时(ms): 970
+屏幕变化: character_confirmed
+点击位置: [2367, 1210]
 错误信息: 
 
 ===== 运行日志 =====
-Step: 2
-输入摘要: scene=title_main, cards=0, enemies=0, energy=0
-决策摘要: enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。
+Step: 5
+输入摘要: scene=character_select, cards=0, enemies=0, energy=0
+决策摘要: confirm_character | 铁甲战士已经被选中，继续确认角色进入开局流程。
 结果: success
 操作方: A组执行平台
 
 ===== 技能演化 =====
-技能ID: title_main::enter_single_mode::single_mode
-触发条件: scene=title_main, hp=None/None, energy=0, enemies=0, cards=0
-动作模式: 当前位于主页，优先进入单人模式以开始一局游戏。
-成功次数: 8
+技能ID: character_select::confirm_character::confirm_character
+触发条件: scene=character_select, hp=80/80, energy=0, enemies=0, cards=0
+动作模式: 铁甲战士已经被选中，继续确认角色进入开局流程。
+成功次数: 6
 失败次数: 0
-复用次数: 8
-最近更新: 2026-03-18 18:10:24
-教师反馈: 动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。
+复用次数: 6
+最近更新: 2026-03-19 01:09:01
+教师反馈: 动作 confirm_character 执行成功，但收益一般，建议保留为可选经验。

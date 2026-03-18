@@ -1,30 +1,30 @@
 {
-  "action_type": "enter_single_mode",
-  "reason": "当前位于主页，优先进入单人模式以开始一局游戏。",
+  "action_type": "choose_standard_mode",
+  "reason": "当前位于模式选择页，默认进入标准模式。",
   "target": {
-    "button": "single_mode"
+    "button": "standard_mode"
   },
   "execution_plan": [
     {
       "op": "click_button",
-      "button_name": "single_mode"
+      "button_name": "standard_mode"
     }
   ],
   "params": {
     "step_id": 2,
-    "llm_analysis": "当前动作是进入单人模式，因为玩家位于游戏的主页界面，进入单人模式是开始一局游戏的第一步。这个动作的合理性很高（置信度0.96），并且根据历史记忆，这个动作已经成功执行了7次，没有失败记录，因此是一个有效的选择。",
+    "llm_analysis": "当前动作是选择标准模式进入游戏。这个动作是合理的，因为在模式选择页，默认选择标准模式可以快速开始游戏。根据历史记忆，这个动作已经成功执行过2次，成功率高，所以选择标准模式是一个合理的选择。",
     "llm_provider": "openai_compatible",
     "llm_model": "moonshot-v1-8k",
     "memory_priority": "medium",
-    "skill_key": "title_main::enter_single_mode::single_mode",
+    "skill_key": "mode_select::choose_standard_mode::standard_mode",
     "mcts_heuristic_score": 0.99,
     "mcts_learned_score": 0.0,
     "mcts_final_score": 0.693,
     "mcts_top_score": 0.693,
     "mcts_candidate_count": 2
   },
-  "confidence": 0.96,
-  "source": "Brain-rule-title_main+Mcts",
-  "timestamp": "2026-03-18 18:10:21",
+  "confidence": 0.94,
+  "source": "Brain-rule-mode_select+Mcts",
+  "timestamp": "2026-03-19 01:08:29",
   "step_id": 2
 }

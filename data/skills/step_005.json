@@ -1,0 +1,19 @@
+{
+  "skill_id": "character_select::confirm_character::confirm_character",
+  "scene_type": "character_select",
+  "trigger_condition": "scene=character_select, hp=80/80, energy=0, enemies=0, cards=0",
+  "action_pattern": "铁甲战士已经被选中，继续确认角色进入开局流程。",
+  "success_count": 6,
+  "fail_count": 0,
+  "reuse_count": 6,
+  "last_update": "2026-03-19 01:09:01",
+  "memory_priority": "medium",
+  "outcome_tags": [
+    "execute_success",
+    "usable"
+  ],
+  "teacher_feedback": "动作 confirm_character 执行成功，但收益一般，建议保留为可选经验。",
+  "last_score": 0.75,
+  "last_episode_id": null,
+  "last_execute_status": "success"
+}

@@ -164,28 +164,23 @@ class Hand:
 
         if op == "click_button":
             pos = self._resolve_button_position(item=item, state_data=state_data)
-            self._click(pos)
-            return pos
+            return self._click(pos, state_data=state_data)
 
         if op == "click_card":
             pos = self._resolve_card_position(item=item, state_data=state_data)
-            self._click(pos)
-            return pos
+            return self._click(pos, state_data=state_data)
 
         if op == "click_enemy":
             pos = self._resolve_enemy_position(item=item, state_data=state_data)
-            self._click(pos)
-            return pos
+            return self._click(pos, state_data=state_data)
 
         if op == "click_map_node":
             pos = self._resolve_map_node_position(item=item, state_data=state_data)
-            self._click(pos)
-            return pos
+            return self._click(pos, state_data=state_data)
 
         if op == "click_reward":
             pos = self._resolve_reward_position(item=item, state_data=state_data)
-            self._click(pos)
-            return pos
+            return self._click(pos, state_data=state_data)
 
         raise ValueError(f"未知执行操作 op={op}")
 
@@ -287,10 +282,11 @@ class Hand:
     def _resolve_button_position(self, item: Dict[str, Any], state_data: Dict[str, Any]) -> Tuple[int, int]:
         button_name = item.get("button_name", "")
         detected_regions = state_data.get("detected_regions", {}) or {}
+        anchor = self._button_click_anchor(button_name)
 
         for btn in detected_regions.get("detected_buttons", []):
             if btn.get("name") == button_name and btn.get("bbox"):
-                return self._center_of_bbox(btn["bbox"], default=(960, 540))
+                return self._point_in_bbox(btn["bbox"], default=(960, 540), anchor=anchor)
 
         key_map = {
             "single_mode": "single_mode_bbox",
@@ -303,10 +299,10 @@ class Hand:
         }
         key = key_map.get(button_name)
         if key and detected_regions.get(key):
-            return self._center_of_bbox(detected_regions[key], default=(960, 540))
+            return self._point_in_bbox(detected_regions[key], default=(960, 540), anchor=anchor)
 
         if item.get("button_bbox"):
-            return self._center_of_bbox(item["button_bbox"], default=(960, 540))
+            return self._point_in_bbox(item["button_bbox"], default=(960, 540), anchor=anchor)
 
         defaults = {
             "single_mode": (940, 860),
@@ -319,23 +315,156 @@ class Hand:
         }
         return defaults.get(button_name, (960, 540))
 
-    def _center_of_bbox(self, bbox: List[int], default: Tuple[int, int]) -> Tuple[int, int]:
+    def _button_click_anchor(self, button_name: str) -> Tuple[float, float]:
+        default_anchors = {
+            # 标题页“单人模式”的可点击热区更偏左上，直接取 bbox 中心会偏到文字的右下方。
+            "single_mode": (0.40, 0.36),
+        }
+        overrides = self.runtime.get("button_click_anchors", {}) or {}
+        raw_anchor = overrides.get(button_name, default_anchors.get(button_name))
+        if isinstance(raw_anchor, (list, tuple)) and len(raw_anchor) == 2:
+            try:
+                x_ratio = min(1.0, max(0.0, float(raw_anchor[0])))
+                y_ratio = min(1.0, max(0.0, float(raw_anchor[1])))
+                return x_ratio, y_ratio
+            except Exception:
+                pass
+        return 0.5, 0.5
+
+    def _point_in_bbox(
+        self,
+        bbox: List[int],
+        default: Tuple[int, int],
+        anchor: Tuple[float, float] = (0.5, 0.5),
+    ) -> Tuple[int, int]:
         if isinstance(bbox, list) and len(bbox) == 4:
             x1, y1, x2, y2 = [int(v) for v in bbox]
-            return int((x1 + x2) / 2), int((y1 + y2) / 2)
+            width = max(1, x2 - x1)
+            height = max(1, y2 - y1)
+            x_ratio, y_ratio = anchor
+            return int(x1 + width * x_ratio), int(y1 + height * y_ratio)
         return default
 
-    def _click(self, pos: Tuple[int, int]) -> None:
-        x, y = pos
+    def _center_of_bbox(self, bbox: List[int], default: Tuple[int, int]) -> Tuple[int, int]:
+        return self._point_in_bbox(bbox, default=default)
+
+    def _click(self, pos: Tuple[int, int], state_data: Optional[Dict[str, Any]] = None) -> Tuple[int, int]:
+        self._activate_target_window()
+        x, y = self._remap_point_to_current_window(pos=pos, state_data=state_data)
         if self.dry_run or self._pyautogui is None:
             logging.info("[DRY-RUN] click at (%s, %s)", x, y)
             time.sleep(self.action_delay)
-            return
+            return x, y
 
-        self._activate_target_window()
         logging.info("执行点击坐标=(%s, %s)", x, y)
         self._pyautogui.moveTo(x, y, duration=self.move_duration)
         self._pyautogui.click(x=x, y=y, interval=self.click_interval)
+        return x, y
+
+    def _remap_point_to_current_window(
+            self,
+            pos: Tuple[int, int],
+            state_data: Optional[Dict[str, Any]] = None,
+    ) -> Tuple[int, int]:
+        observed_bbox = self._normalize_bbox((state_data or {}).get("window_bbox"))
+        if observed_bbox is None:
+            observed_bbox = self._normalize_bbox(((state_data or {}).get("detected_regions") or {}).get("window_bbox"))
+        current_bbox = self._get_window_bbox() if self.window_name else None
+        if observed_bbox is None or current_bbox is None:
+            return pos
+
+        ox1, oy1, ox2, oy2 = observed_bbox
+        cx1, cy1, cx2, cy2 = current_bbox
+        observed_width = max(1, ox2 - ox1)
+        observed_height = max(1, oy2 - oy1)
+        current_width = max(1, cx2 - cx1)
+        current_height = max(1, cy2 - cy1)
+        px, py = pos
+        ratio_x = min(1.0, max(0.0, (px - ox1) / observed_width))
+        ratio_y = min(1.0, max(0.0, (py - oy1) / observed_height))
+        mapped_x = int(round(cx1 + current_width * ratio_x))
+        mapped_y = int(round(cy1 + current_height * ratio_y))
+        logging.info(
+            "点击坐标窗口映射: observed_bbox=%s raw=(%s,%s) current_bbox=%s mapped=(%s,%s)",
+            observed_bbox,
+            px,
+            py,
+            current_bbox,
+            mapped_x,
+            mapped_y,
+        )
+        return mapped_x, mapped_y
+
+    def _get_window_bbox(self) -> Optional[List[int]]:
+        if platform.system().lower() != "windows" or not self.window_name:
+            return None
+        try:
+            import ctypes
+            import ctypes.wintypes
+            import pygetwindow as gw  # type: ignore
+
+            user32 = ctypes.windll.user32
+            target_name = " ".join(str(self.window_name).split()).strip().lower()
+            all_windows = gw.getAllWindows()
+            candidates = []
+            for win in all_windows:
+                title = (getattr(win, "title", "") or "").strip()
+                norm_title = " ".join(title.split()).strip().lower()
+                if not norm_title:
+                    continue
+                if getattr(win, "isMinimized", False):
+                    continue
+                if target_name in norm_title or norm_title in target_name:
+                    candidates.append(win)
+            if not candidates:
+                return None
+
+            target = max(candidates, key=lambda w: int(getattr(w, "width", 0)) * int(getattr(w, "height", 0)))
+            hwnd = int(getattr(target, "_hWnd", 0))
+            if hwnd <= 0:
+                return None
+            rect = ctypes.wintypes.RECT()
+            if not user32.GetClientRect(hwnd, ctypes.byref(rect)):
+                return None
+            pt1 = ctypes.wintypes.POINT(rect.left, rect.top)
+            pt2 = ctypes.wintypes.POINT(rect.right, rect.bottom)
+            user32.ClientToScreen(hwnd, ctypes.byref(pt1))
+            user32.ClientToScreen(hwnd, ctypes.byref(pt2))
+            left = int(pt1.x)
+            top = int(pt1.y)
+            right = max(left + 1, int(pt2.x))
+            bottom = max(top + 1, int(pt2.y))
+            return [left, top, right, bottom]
+        except Exception as exc:
+            logging.warning("Hand 获取当前窗口客户区失败，将直接使用原始坐标: %s", exc)
+            return None
+
+    def _native_click(self, x: int, y: int) -> bool:
+        if platform.system().lower() != "windows":
+            return False
+        try:
+            import ctypes
+
+            user32 = ctypes.windll.user32
+            user32.SetCursorPos(int(x), int(y))
+            time.sleep(self.move_duration)
+            user32.mouse_event(0x0002, 0, 0, 0, 0)
+            user32.mouse_event(0x0004, 0, 0, 0, 0)
+            time.sleep(self.click_interval)
+            return True
+        except Exception as exc:
+            logging.warning("Hand 原生点击失败，回退 pyautogui: %s", exc)
+            return False
+
+    def _normalize_bbox(self, bbox: Any) -> Optional[List[int]]:
+        if isinstance(bbox, (list, tuple)) and len(bbox) == 4:
+            try:
+                x1, y1, x2, y2 = [int(v) for v in bbox]
+                if x2 > x1 and y2 > y1:
+                    return [x1, y1, x2, y2]
+            except Exception:
+                return None
+        return None
 
     def _activate_target_window(self) -> None:
         if not self.window_name or not self.bring_window_to_front:

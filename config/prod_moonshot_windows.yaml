@@ -1,7 +1,7 @@
 runtime:
   task: "Play the game"
   mode: "prod_windows"
-  max_steps: 2
+  max_steps: 5
   log_level: "INFO"
   stop_on_failures: 1
   max_memory_records: 500

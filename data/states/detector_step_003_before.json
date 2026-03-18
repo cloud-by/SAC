@@ -1,0 +1,389 @@
+{
+  "scene_hint": "character_select",
+  "scene_variant": null,
+  "scene_scores": {
+    "battle": 0.5156,
+    "battle_result": 0.4563,
+    "blessing_choice": 0.4344,
+    "campfire_choice": 0.4344,
+    "campfire_rest_done": 0.5312,
+    "campfire_upgrade": 0.5578,
+    "card_reward": 0.5039,
+    "character_select": 0.6328,
+    "map": 0.6094,
+    "merchant": 0.4805,
+    "merchant_shop": 0.3813,
+    "mode_select": 0.7031,
+    "title_main": 0.4375
+  },
+  "match_confidence": 0.7031,
+  "matched_template": "pic/scene_templates/mode_select/mode_select_001.png",
+  "scene_match_debug": {
+    "threshold": 0.76,
+    "accepted": false,
+    "best_scene": "mode_select",
+    "best_detail": {
+      "rois": [
+        {
+          "roi": "cards",
+          "similarity": 0.7031,
+          "weight": 1.0
+        }
+      ]
+    },
+    "scene_rank": [
+      {
+        "scene": "battle",
+        "score": 0.5156,
+        "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
+        "variant": "normal"
+      },
+      {
+        "scene": "battle_result",
+        "score": 0.4563,
+        "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
+        "variant": null
+      },
+      {
+        "scene": "blessing_choice",
+        "score": 0.4344,
+        "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_choice",
+        "score": 0.4344,
+        "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_rest_done",
+        "score": 0.5312,
+        "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_upgrade",
+        "score": 0.5578,
+        "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
+        "variant": null
+      },
+      {
+        "scene": "card_reward",
+        "score": 0.5039,
+        "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
+        "variant": null
+      },
+      {
+        "scene": "character_select",
+        "score": 0.6328,
+        "template_path": "pic/scene_templates/character_select/character_select_001.png",
+        "variant": null
+      },
+      {
+        "scene": "map",
+        "score": 0.6094,
+        "template_path": "pic/scene_templates/map/map_001.png",
+        "variant": null
+      },
+      {
+        "scene": "merchant",
+        "score": 0.4805,
+        "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
+        "variant": null
+      },
+      {
+        "scene": "merchant_shop",
+        "score": 0.3813,
+        "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
+        "variant": null
+      },
+      {
+        "scene": "mode_select",
+        "score": 0.7031,
+        "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
+        "variant": null
+      },
+      {
+        "scene": "title_main",
+        "score": 0.4375,
+        "template_path": "pic/scene_templates/title_main/title_main_001.png",
+        "variant": null
+      }
+    ]
+  },
+  "legacy_scene_scores": {
+    "title_main": 3.0,
+    "mode_select": 4.5,
+    "character_select": 5.5,
+    "blessing_choice": 1.5,
+    "battle": 4.0,
+    "map": 1.0
+  },
+  "flow_phase_before": "bootstrap",
+  "flow_phase_after": "bootstrap",
+  "flow_prev_scene": "character_select",
+  "flow_allowed_scenes": [
+    "blessing_choice",
+    "character_select",
+    "mode_select"
+  ],
+  "flow_corrected": false,
+  "flow_reason": "top_candidate_accepted",
+  "flow_ordered_candidates": [
+    [
+      "character_select",
+      0.95
+    ],
+    [
+      "mode_select",
+      0.9
+    ],
+    [
+      "battle",
+      0.8
+    ],
+    [
+      "map",
+      0.6094
+    ],
+    [
+      "title_main",
+      0.6
+    ],
+    [
+      "campfire_upgrade",
+      0.5578
+    ]
+  ],
+  "window_bbox": [
+    0,
+    29,
+    2560,
+    1380
+  ],
+  "capture_bbox": [
+    0,
+    29,
+    2560,
+    1380
+  ],
+  "timestamp": "2026-03-19 01:08:36",
+  "title_logo_area": [
+    512,
+    299,
+    1792,
+    812
+  ],
+  "title_menu_column": [
+    972,
+    893,
+    1382,
+    1325
+  ],
+  "title_single_mode": [
+    1024,
+    934,
+    1331,
+    1042
+  ],
+  "single_standard_card": [
+    486,
+    272,
+    998,
+    1190
+  ],
+  "single_daily_card": [
+    1049,
+    272,
+    1561,
+    1190
+  ],
+  "single_custom_card": [
+    1612,
+    272,
+    2150,
+    1190
+  ],
+  "back_button": [
+    0,
+    974,
+    256,
+    1285
+  ],
+  "character_confirm_button": [
+    2201,
+    1082,
+    2534,
+    1339
+  ],
+  "continue_button": [
+    204,
+    1271,
+    716,
+    1373
+  ],
+  "right_arrow_button": [
+    2304,
+    947,
+    2534,
+    1271
+  ],
+  "center_modal_button": [
+    1024,
+    1082,
+    1536,
+    1271
+  ],
+  "hand_area": [
+    307,
+    1069,
+    2252,
+    1352
+  ],
+  "enemy_area": [
+    1280,
+    245,
+    2355,
+    947
+  ],
+  "player_hp_bar": [
+    102,
+    1217,
+    563,
+    1312
+  ],
+  "energy_area": [
+    998,
+    1190,
+    1280,
+    1352
+  ],
+  "map_area": [
+    256,
+    137,
+    2304,
+    1136
+  ],
+  "reward_area": [
+    460,
+    272,
+    2099,
+    1217
+  ],
+  "end_turn_button": [
+    2150,
+    974,
+    2483,
+    1204
+  ],
+  "detected_cards": [],
+  "detected_enemies": [],
+  "map_options": [],
+  "reward_options": [],
+  "player": {
+    "hp": 80,
+    "max_hp": 80,
+    "energy": 0
+  },
+  "floor_hint": null,
+  "detected_buttons": [
+    {
+      "name": "ironclad",
+      "bbox": [
+        793,
+        1136,
+        972,
+        1325
+      ],
+      "confidence": 0.9
+    },
+    {
+      "name": "confirm_character",
+      "bbox": [
+        2201,
+        1082,
+        2534,
+        1339
+      ],
+      "confidence": 0.92
+    },
+    {
+      "name": "back",
+      "bbox": [
+        0,
+        974,
+        256,
+        1285
+      ],
+      "confidence": 0.88
+    }
+  ],
+  "menu_options": [],
+  "mode_options": [],
+  "character_options": [
+    {
+      "name": "ironclad",
+      "bbox": [
+        691,
+        1109,
+        900,
+        1352
+      ],
+      "confidence": 0.7
+    },
+    {
+      "name": "silent",
+      "bbox": [
+        900,
+        1109,
+        1109,
+        1352
+      ],
+      "confidence": 0.7
+    },
+    {
+      "name": "defect",
+      "bbox": [
+        1109,
+        1109,
+        1318,
+        1352
+      ],
+      "confidence": 0.7
+    },
+    {
+      "name": "watcher",
+      "bbox": [
+        1318,
+        1109,
+        1527,
+        1352
+      ],
+      "confidence": 0.7
+    },
+    {
+      "name": "unknown",
+      "bbox": [
+        1527,
+        1109,
+        1740,
+        1352
+      ],
+      "confidence": 0.7
+    }
+  ],
+  "selected_character": "ironclad",
+  "confirm_button_bbox": [
+    2201,
+    1082,
+    2534,
+    1339
+  ],
+  "back_button_bbox": [
+    0,
+    974,
+    256,
+    1285
+  ]
+}
