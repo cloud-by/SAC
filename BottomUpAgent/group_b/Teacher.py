@@ -169,43 +169,43 @@ class Teacher:
 
         return f"动作 {action_type} 虽已执行，但效果不明显，建议谨慎复用。"
 
-        def _resolve_memory_priority(self, score: float, feedback_data: Dict[str, Any]) -> str:
-            execute_status = str(feedback_data.get("execute_status", "unknown") or "unknown")
-            if execute_status != "success":
-                return "high"
-            if score >= 0.8:
-                return "high"
-            if score >= 0.5:
-                return "medium"
-            return "low"
+    def _resolve_memory_priority(self, score: float, feedback_data: Dict[str, Any]) -> str:
+        execute_status = str(feedback_data.get("execute_status", "unknown") or "unknown")
+        if execute_status != "success":
+            return "high"
+        if score >= 0.8:
+            return "high"
+        if score >= 0.5:
+            return "medium"
+        return "low"
 
-        def _build_outcome_tags(
-                self,
-                state_data: Dict[str, Any],
-                action_data: Dict[str, Any],
-                feedback_data: Dict[str, Any],
-                score: float,
-        ) -> List[str]:
-            tags: List[str] = []
-            if feedback_data.get("execute_status") == "success":
-                tags.append("execute_success")
-            else:
-                tags.append("execute_failure")
-            if feedback_data.get("before_scene") != feedback_data.get("after_scene"):
-                tags.append("scene_changed")
-            if action_data.get("action_type") == "wait":
-                tags.append("passive_action")
-            if score >= 0.8:
-                tags.append("high_value")
-            elif score >= 0.5:
-                tags.append("usable")
-            else:
-                tags.append("weak_signal")
-            return tags
+    def _build_outcome_tags(
+            self,
+            state_data: Dict[str, Any],
+            action_data: Dict[str, Any],
+            feedback_data: Dict[str, Any],
+            score: float,
+    ) -> List[str]:
+        tags: List[str] = []
+        if feedback_data.get("execute_status") == "success":
+            tags.append("execute_success")
+        else:
+            tags.append("execute_failure")
+        if feedback_data.get("before_scene") != feedback_data.get("after_scene"):
+            tags.append("scene_changed")
+        if action_data.get("action_type") == "wait":
+            tags.append("passive_action")
+        if score >= 0.8:
+            tags.append("high_value")
+        elif score >= 0.5:
+            tags.append("usable")
+        else:
+            tags.append("weak_signal")
+        return tags
 
-        def _build_skill_key(self, state_data: Dict[str, Any], action_data: Dict[str, Any]) -> str:
-            scene_type = str(state_data.get("scene_type", "unknown") or "unknown")
-            action_type = str(action_data.get("action_type", "unknown_action") or "unknown_action")
-            target = action_data.get("target", {}) if isinstance(action_data.get("target"), dict) else {}
-            target_name = target.get("kind") or target.get("button") or target.get("name") or "generic"
-            return f"{scene_type}::{action_type}::{str(target_name).lower()}"
+    def _build_skill_key(self, state_data: Dict[str, Any], action_data: Dict[str, Any]) -> str:
+        scene_type = str(state_data.get("scene_type", "unknown") or "unknown")
+        action_type = str(action_data.get("action_type", "unknown_action") or "unknown_action")
+        target = action_data.get("target", {}) if isinstance(action_data.get("target"), dict) else {}
+        target_name = target.get("kind") or target.get("button") or target.get("name") or "generic"
+        return f"{scene_type}::{action_type}::{str(target_name).lower()}"

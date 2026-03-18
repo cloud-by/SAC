@@ -1,19 +1,20 @@
+
 runtime:
-  task: "Play the game"
-  max_steps: 1
+  task: "Train policy from trajectories"
+  mode: "train_offline"
+  max_steps: 0
   log_level: "INFO"
-  mode: "dev_dryrun"
-  stop_on_failures: 3
+  stop_on_failures: 0
   max_memory_records: 500
   dry_run: true
-  action_delay: 0.2
-  startup_delay_seconds: 3
-  enable_preflight: true
+  action_delay: 0.0
+  startup_delay_seconds: 0
+  enable_preflight: false
   preflight_fail_on_warning: false
   enable_gui_health_check: false
-  gui_health_capture_count: 1
-  pause_on_repeated_observe_failures: true
-  max_observe_failures: 2
+  gui_health_capture_count: 0
+  pause_on_repeated_observe_failures: false
+  max_observe_failures: 0
 
 model:
   provider: "mock"
@@ -24,19 +25,15 @@ model:
   max_tokens: 512
 
 environment:
-  name: "Slay the Spire"
-  window_name: "Slay the Spire 2"
-
-  capture_mode: "window"
-
-  # 先别依赖固定桌面分辨率
+  name: "offline-training"
+  window_name: ""
+  capture_mode: "screen"
   capture_bbox: null
-
-  bring_window_to_front: true
+  bring_window_to_front: false
   force_scene: null
 
 visualization:
-  enabled: true
+  enabled: false
   refresh_interval_ms: 300
 
 paths:
@@ -48,9 +45,12 @@ paths:
   skills: "data/skills"
   screenshots_current: "screenshots/current"
   screenshots_history: "screenshots/history"
+  trajectories: "data/trajectories"
+  models: "data/models"
+  policy_model: "data/models/policy_model.json"
 
 scene_match:
-  enabled: true
+  enabled: false
   config_file: "config/scene_match.yaml"
   templates_root: "pic/scene_templates"
   cache_dir: "data/template_cache"

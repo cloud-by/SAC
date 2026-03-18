@@ -23,9 +23,12 @@ from pathlib import Path
 from typing import Any, Dict
 
 from BottomUpAgent.common.config_loader import load_yaml_file
+from BottomUpAgent.common.gui_health import run_gui_health_check
+from BottomUpAgent.common.preflight import run_preflight_checks
 
 
 DEFAULT_TASK = "Play the game"
+SUPPORTED_RUNTIME_MODES = {"auto", "dev_dryrun", "train_offline", "prod_windows"}
 
 
 def now_str() -> str:
@@ -99,6 +102,12 @@ def normalize_config(config: Dict[str, Any], project_root: Path) -> Dict[str, An
     runtime.setdefault("log_level", "INFO")
     runtime.setdefault("mode", "auto")
     runtime.setdefault("stop_on_failures", 3)
+    runtime.setdefault("enable_preflight", True)
+    runtime.setdefault("preflight_fail_on_warning", False)
+    runtime.setdefault("enable_gui_health_check", False)
+    runtime.setdefault("gui_health_capture_count", 1)
+    runtime.setdefault("pause_on_repeated_observe_failures", True)
+    runtime.setdefault("max_observe_failures", 2)
 
     model = config.setdefault("model", {})
     model.setdefault("provider", "mock")
@@ -124,6 +133,38 @@ def normalize_config(config: Dict[str, Any], project_root: Path) -> Dict[str, An
     paths.setdefault("screenshots_history", "screenshots/history")
 
     config["_project_root"] = str(project_root.resolve())
+    return apply_runtime_mode_defaults(config)
+
+def apply_runtime_mode_defaults(config: Dict[str, Any]) -> Dict[str, Any]:
+    runtime = config.setdefault("runtime", {})
+    environment = config.setdefault("environment", {})
+    mode = str(runtime.get("mode", "auto") or "auto").lower()
+
+    if mode not in SUPPORTED_RUNTIME_MODES:
+        raise ValueError(f"不支持的 runtime.mode: {mode}")
+
+    if mode == "dev_dryrun":
+        runtime["dry_run"] = True
+        runtime.setdefault("startup_delay_seconds", 0)
+        runtime["enable_preflight"] = True
+        runtime["preflight_fail_on_warning"] = False
+        runtime.setdefault("enable_gui_health_check", False)
+
+    elif mode == "train_offline":
+        runtime["dry_run"] = True
+        runtime["startup_delay_seconds"] = 0
+        runtime["enable_preflight"] = False
+        runtime["enable_gui_health_check"] = False
+        environment.setdefault("capture_mode", "screen")
+
+    elif mode == "prod_windows":
+        runtime["dry_run"] = False
+        runtime["enable_preflight"] = True
+        runtime["preflight_fail_on_warning"] = True
+        runtime.setdefault("enable_gui_health_check", True)
+        runtime.setdefault("startup_delay_seconds", 3)
+        environment.setdefault("capture_mode", "window")
+
     return config
 
 
@@ -140,10 +181,12 @@ def ensure_project_dirs(config: Dict[str, Any], project_root: Path) -> Dict[str,
     """
     raw_paths = config["paths"]
     resolved_paths: Dict[str, str] = {}
+    file_like_keys = {"policy_model"}
 
     for key, value in raw_paths.items():
         path = resolve_path(project_root, value)
-        path.mkdir(parents=True, exist_ok=True)
+        target_dir = path.parent if key in file_like_keys else path
+        target_dir.mkdir(parents=True, exist_ok=True)
         resolved_paths[key] = str(path)
 
     return resolved_paths
@@ -222,6 +265,32 @@ def build_agent(config: Dict[str, Any]):
     from BottomUpAgent.common.BottomUpAgent import BottomUpAgent
     return BottomUpAgent(config=config)
 
+def run_startup_gui_health_check(config: Dict[str, Any]) -> Dict[str, Any]:
+    from BottomUpAgent.group_a.Eye import Eye
+
+    eye = Eye(config)
+    capture_count = int(config.get("runtime", {}).get("gui_health_capture_count", 1) or 1)
+    report = run_gui_health_check(eye, capture_count=capture_count)
+    return report.to_dict()
+
+
+def run_train_offline_mode(config: Dict[str, Any], resolved_paths: Dict[str, str]) -> Dict[str, Any]:
+    from BottomUpAgent.group_b.Trainer import Trainer
+
+    trainer = Trainer(config)
+    model = trainer.train()
+    summary = {
+        "mode": "train_offline",
+        "status": "finished",
+        "record_count": int(model.get("meta", {}).get("record_count", 0) or 0),
+        "model_path": str(trainer.model_path),
+    }
+    summary_file = Path(resolved_paths["run_logs"]) / "train_offline_summary.json"
+    with summary_file.open("w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+    logging.info("离线训练完成，样本数=%s, 模型=%s", summary["record_count"], summary["model_path"])
+    return summary
+
 
 def main() -> int:
     try:
@@ -249,8 +318,60 @@ def main() -> int:
         logging.info("模型: %s / %s", config["model"]["provider"], config["model"]["name"])
         logging.info("环境: %s", config["environment"]["name"])
         logging.info("最大步数: %s", config["runtime"]["max_steps"])
+        logging.info("运行模式: %s", config["runtime"]["mode"])
+
+        if bool(config.get("runtime", {}).get("enable_preflight", True)):
+            preflight_report = run_preflight_checks(config)
+            for item in preflight_report.checks:
+                status = item.get("status", "pass")
+                message = item.get("message", "")
+                if status == "pass":
+                    logging.info("[Preflight][PASS] %s", message)
+                elif status == "warning":
+                    logging.warning("[Preflight][WARN] %s", message)
+                else:
+                    logging.error("[Preflight][ERROR] %s", message)
+
+            if not preflight_report.ok:
+                raise RuntimeError(
+                    "启动前环境自检失败，请先修复 preflight errors 后再运行。"
+                )
+
+            if (
+                    preflight_report.warnings
+                    and bool(config.get("runtime", {}).get("preflight_fail_on_warning", False))
+            ):
+                raise RuntimeError(
+                    "启动前环境自检包含 warning，且已配置 preflight_fail_on_warning=True。"
+                )
+
+        if (
+                str(config.get("runtime", {}).get("mode", "auto") or "auto").lower() != "train_offline"
+                and bool(config.get("runtime", {}).get("enable_gui_health_check", False))
+        ):
+            gui_report = run_startup_gui_health_check(config)
+            for item in gui_report.get("details", []):
+                if item.get("status") == "pass":
+                    logging.info(
+                        "[GUIHealth][PASS] capture=%s scene=%s image=%s",
+                        item.get("capture_index"),
+                        item.get("scene_type"),
+                        item.get("screen_image"),
+                    )
+                else:
+                    logging.error(
+                        "[GUIHealth][ERROR] capture=%s message=%s",
+                        item.get("capture_index"),
+                        item.get("message"),
+                    )
+            if not gui_report.get("ok", False):
+                raise RuntimeError("GUI 健康检查失败，请先修复截图/窗口问题后再运行。")
 
         save_bootstrap_summary(config, runtime_context)
+
+        if str(config.get("runtime", {}).get("mode", "auto") or "auto").lower() == "train_offline":
+            run_train_offline_mode(config, resolved_paths)
+            return 0
 
         agent = build_agent(config)
         startup_delay = float(config.get("runtime", {}).get("startup_delay_seconds", 0))

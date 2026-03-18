@@ -1,23 +1,23 @@
 runtime:
   task: "Play the game"
-  max_steps: 1
+  mode: "prod_windows"
+  max_steps: 10
   log_level: "INFO"
-  mode: "dev_dryrun"
   stop_on_failures: 3
   max_memory_records: 500
-  dry_run: true
+  dry_run: false
   action_delay: 0.2
   startup_delay_seconds: 3
   enable_preflight: true
-  preflight_fail_on_warning: false
-  enable_gui_health_check: false
-  gui_health_capture_count: 1
+  preflight_fail_on_warning: true
+  enable_gui_health_check: true
+  gui_health_capture_count: 2
   pause_on_repeated_observe_failures: true
   max_observe_failures: 2
 
 model:
-  provider: "mock"
-  name: "demo-model"
+  provider: "openai"
+  name: "gpt-4.1-mini"
   base_url: "https://api.openai.com/v1"
   api_key_env: "OPENAI_API_KEY"
   temperature: 0.2
@@ -26,12 +26,8 @@ model:
 environment:
   name: "Slay the Spire"
   window_name: "Slay the Spire 2"
-
   capture_mode: "window"
-
-  # 先别依赖固定桌面分辨率
   capture_bbox: null
-
   bring_window_to_front: true
   force_scene: null
 

@@ -261,7 +261,10 @@ class BottomUpAgent:
         self.run_id = self.runtime_context.get("run_id", f"run_{int(time.time())}")
         self.max_steps = int(self.runtime.get("max_steps", 10))
         self.stop_on_failures = int(self.runtime.get("stop_on_failures", 3))
+        self.pause_on_repeated_observe_failures = bool(self.runtime.get("pause_on_repeated_observe_failures", True))
+        self.max_observe_failures = int(self.runtime.get("max_observe_failures", 2))
         self.consecutive_failures = 0
+        self.consecutive_observe_failures = 0
 
         self.paths = self._init_paths()
 
@@ -541,7 +544,16 @@ class BottomUpAgent:
             step_id=step_id,
             phase=phase,
         )
-        return self._normalize_state_data(result, step_id=step_id, phase=phase)
+        observe_failed = result is fallback
+        if observe_failed:
+            self.consecutive_observe_failures += 1
+        else:
+            self.consecutive_observe_failures = 0
+
+        normalized = self._normalize_state_data(result, step_id=step_id, phase=phase)
+        normalized["observe_ok"] = not observe_failed
+        normalized["observe_failure_streak"] = self.consecutive_observe_failures
+        return normalized
 
     def _decide_action(self, task: str, state_data: Dict[str, Any], step_id: int) -> Dict[str, Any]:
         memory_summary = self._get_memory_summary()
@@ -838,6 +850,10 @@ class BottomUpAgent:
 
         if self.consecutive_failures >= self.stop_on_failures:
             logging.warning("连续失败次数达到阈值: %s", self.stop_on_failures)
+            return True
+
+        if self.pause_on_repeated_observe_failures and self.consecutive_observe_failures >= self.max_observe_failures:
+            logging.warning("连续观察失败次数达到阈值: %s", self.max_observe_failures)
             return True
 
         return False

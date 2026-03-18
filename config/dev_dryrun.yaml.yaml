@@ -1,13 +1,13 @@
 runtime:
   task: "Play the game"
+  mode: "dev_dryrun"
   max_steps: 1
   log_level: "INFO"
-  mode: "dev_dryrun"
   stop_on_failures: 3
   max_memory_records: 500
   dry_run: true
   action_delay: 0.2
-  startup_delay_seconds: 3
+  startup_delay_seconds: 0
   enable_preflight: true
   preflight_fail_on_warning: false
   enable_gui_health_check: false
@@ -26,12 +26,8 @@ model:
 environment:
   name: "Slay the Spire"
   window_name: "Slay the Spire 2"
-
   capture_mode: "window"
-
-  # 先别依赖固定桌面分辨率
   capture_bbox: null
-
   bring_window_to_front: true
   force_scene: null
 

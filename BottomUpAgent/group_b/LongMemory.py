@@ -317,6 +317,10 @@ class LongMemory:
         except Exception as exc:
             logging.warning("保存 latest_skills.json 失败: %s", exc)
 
-            def _priority_rank(self, value: Any) -> int:
-                mapping = {"low": 0, "medium": 1, "high": 2}
-                return mapping.get(str(value or "low").lower(), 0)
+    def _priority_rank(self, value: Any) -> int:
+        text = str(value or "low").lower()
+        if text == "high":
+            return 3
+        if text == "medium":
+            return 2
+        return 1
