@@ -1,0 +1,60 @@
+{
+  "action_type": "play_card",
+  "target": {
+    "card": {
+      "name": "Strike",
+      "cost": 1,
+      "type": "attack",
+      "bbox": [
+        492,
+        936,
+        697,
+        1164
+      ],
+      "confidence": 0.95
+    },
+    "enemy": {
+      "name": "Unknown Enemy",
+      "hp": null,
+      "intent": "unknown",
+      "bbox": [
+        960,
+        192,
+        1766,
+        816
+      ],
+      "confidence": 0.9
+    }
+  },
+  "execution_plan": [
+    {
+      "op": "click_card",
+      "card_name": "Strike",
+      "card_bbox": [
+        492,
+        936,
+        697,
+        1164
+      ]
+    },
+    {
+      "op": "click_enemy",
+      "enemy_name": "Unknown Enemy",
+      "enemy_bbox": [
+        960,
+        192,
+        1766,
+        816
+      ]
+    }
+  ],
+  "params": {
+    "card_name": "Strike",
+    "enemy_name": "Unknown Enemy"
+  },
+  "reason": "当前能量足够，优先使用攻击牌推进战斗节奏。",
+  "confidence": 0.95,
+  "source": "Brain-rule-battle+Mcts",
+  "timestamp": "2026-03-11 20:31:58",
+  "step_id": 3
+}

@@ -1,0 +1,220 @@
+{
+  "episode_id": "run_20260317_224919_9b29fb",
+  "step_id": 1,
+  "timestamp": "2026-03-17 22:49:19",
+  "state_data": {
+    "scene_type": "map",
+    "scene_variant": null,
+    "floor": 5,
+    "hp": 61,
+    "max_hp": 80,
+    "energy": 3,
+    "map_options": [
+      {
+        "id": "node_1",
+        "kind": "battle",
+        "bbox": [
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "id": "node_2",
+        "kind": "event_unknown",
+        "bbox": [
+          5,
+          6,
+          7,
+          8
+        ]
+      }
+    ],
+    "reward_options": [],
+    "hand_cards": [],
+    "enemies": [],
+    "match_confidence": 0.88,
+    "flow_corrected": true,
+    "flow_reason": "room_exit_prefer_map",
+    "detected_buttons": [
+      {
+        "name": "back"
+      }
+    ],
+    "available_buttons": [
+      "back"
+    ]
+  },
+  "state_repr": {
+    "episode_id": "run_20260317_224919_9b29fb",
+    "step_id": 1,
+    "timestamp": "2026-03-17 22:49:19",
+    "scene_type": "map",
+    "scene_variant": null,
+    "phase": "in_run",
+    "scene_key": "map",
+    "floor": 5,
+    "hp": 61,
+    "max_hp": 80,
+    "hp_ratio": 0.7625,
+    "hp_bucket": "high",
+    "energy": 3,
+    "energy_bucket": "high",
+    "selected_character": null,
+    "match_confidence": 0.88,
+    "matched_template": null,
+    "flow_corrected": true,
+    "flow_reason": "room_exit_prefer_map",
+    "flow_prev_scene": "unknown",
+    "flow_phase_before": "",
+    "flow_phase_after": "",
+    "hand_count": 0,
+    "enemy_count": 0,
+    "map_option_count": 2,
+    "reward_option_count": 0,
+    "shop_item_count": 0,
+    "campfire_option_count": 0,
+    "upgrade_option_count": 0,
+    "menu_option_count": 0,
+    "mode_option_count": 0,
+    "character_option_count": 0,
+    "hand_summary": {
+      "count": 0,
+      "attack_count": 0,
+      "skill_count": 0,
+      "power_count": 0,
+      "playable_count": 0,
+      "sample_names": []
+    },
+    "enemy_summary": {
+      "count": 0,
+      "attack_intent_count": 0,
+      "unknown_intent_count": 0,
+      "sample_names": []
+    },
+    "map_summary": {
+      "count": 2,
+      "kind_counts": {
+        "battle": 1,
+        "event_unknown": 1,
+        "rest": 0,
+        "merchant": 0,
+        "elite": 0,
+        "boss": 0,
+        "unknown": 0
+      },
+      "has_battle": true,
+      "has_event": true,
+      "has_rest": false,
+      "has_shop": false,
+      "has_elite": false,
+      "has_boss": false
+    },
+    "reward_summary": {
+      "count": 0,
+      "sample_names": []
+    },
+    "button_summary": {
+      "names": [
+        "back"
+      ],
+      "has_continue": false,
+      "has_back": true,
+      "has_end_turn": false
+    },
+    "flags": {
+      "has_continue": false,
+      "has_back": true,
+      "has_end_turn": false,
+      "has_map_node": true,
+      "has_reward_choice": false,
+      "has_shop_item": false,
+      "has_campfire_choice": false,
+      "is_low_hp": false,
+      "is_mid_hp": false,
+      "is_high_hp": true
+    },
+    "state_signature": "map|none|high|high|h0|a0|s0|e0|ea0|m2|r0",
+    "memory_summary": {
+      "skill_count": 3,
+      "total_records": 12,
+      "recent_skills_count": 0
+    },
+    "raw_refs": {
+      "screen_image": null,
+      "window_bbox": null,
+      "screen_image_name": null
+    }
+  },
+  "feature_dict": {
+    "scene_type": "map",
+    "scene_variant": null,
+    "phase": "in_run",
+    "floor": 5,
+    "hp_ratio": 0.7625,
+    "hp_bucket": "high",
+    "energy": 3,
+    "energy_bucket": "high",
+    "hand_count": 0,
+    "enemy_count": 0,
+    "map_option_count": 2,
+    "reward_option_count": 0,
+    "shop_item_count": 0,
+    "campfire_option_count": 0,
+    "attack_card_count": 0,
+    "skill_card_count": 0,
+    "power_card_count": 0,
+    "playable_card_count": 0,
+    "has_attack_card": false,
+    "has_skill_card": false,
+    "enemy_attack_count": 0,
+    "enemy_unknown_count": 0,
+    "map_has_battle": true,
+    "map_has_event": true,
+    "map_has_rest": false,
+    "map_has_shop": false,
+    "map_has_elite": false,
+    "reward_has_card": false,
+    "match_confidence": 0.88,
+    "flow_corrected": true,
+    "has_continue": false,
+    "has_back": true,
+    "has_end_turn": false,
+    "is_low_hp": false
+  },
+  "action_data": {
+    "action_type": "choose_map_node",
+    "target": {
+      "id": "node_2",
+      "kind": "event_unknown"
+    },
+    "reason": "演示：优先走问号房",
+    "confidence": 0.74,
+    "source": "Brain+Mcts"
+  },
+  "feedback_data": {
+    "execute_status": "success",
+    "before_scene": "map",
+    "after_scene": "event_unknown",
+    "screen_diff": "major_change",
+    "time_cost_ms": 632
+  },
+  "teacher_feedback": {
+    "score": 0.87,
+    "feedback": "动作执行效果较好",
+    "should_promote_to_skill": true
+  },
+  "memory_summary": {
+    "skill_count": 3,
+    "total_records": 12,
+    "recent_skills": []
+  },
+  "label": {
+    "success": 1,
+    "value": 0.87,
+    "scene_changed": 1,
+    "action_type": "choose_map_node"
+  },
+  "extra": {}
+}

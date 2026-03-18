@@ -1,0 +1,426 @@
+{
+  "battle": [
+    {
+      "scene_name": "battle",
+      "variant": "normal",
+      "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
+      "fingerprints": {
+        "top_hud": {
+          "hash": "8092b337b7b3c123",
+          "bbox_rel": [
+            0.0,
+            0.0,
+            1.0,
+            0.12
+          ],
+          "weight": 0.15
+        },
+        "enemy_mid": {
+          "hash": "850305020a089809",
+          "bbox_rel": [
+            0.48,
+            0.12,
+            0.92,
+            0.68
+          ],
+          "weight": 0.3
+        },
+        "hand": {
+          "hash": "17b369e4d4e4c4d4",
+          "bbox_rel": [
+            0.12,
+            0.76,
+            0.88,
+            0.98
+          ],
+          "weight": 0.35
+        },
+        "end_turn": {
+          "hash": "944a249a89c888e9",
+          "bbox_rel": [
+            0.84,
+            0.68,
+            0.98,
+            0.88
+          ],
+          "weight": 0.2
+        }
+      }
+    }
+  ],
+  "battle_result": [
+    {
+      "scene_name": "battle_result",
+      "variant": null,
+      "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
+      "fingerprints": {
+        "center_panel": {
+          "hash": "8000e80fc0c4f0d0",
+          "bbox_rel": [
+            0.34,
+            0.1,
+            0.66,
+            0.55
+          ],
+          "weight": 0.6
+        },
+        "action_buttons": {
+          "hash": "d4d4d4d4d4dcd801",
+          "bbox_rel": [
+            0.28,
+            0.56,
+            0.72,
+            0.86
+          ],
+          "weight": 0.4
+        }
+      }
+    }
+  ],
+  "blessing_choice": [
+    {
+      "scene_name": "blessing_choice",
+      "variant": null,
+      "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
+      "fingerprints": {
+        "text_bar": {
+          "hash": "96b2a2e2c1c18191",
+          "bbox_rel": [
+            0.28,
+            0.52,
+            0.74,
+            0.63
+          ],
+          "weight": 0.3
+        },
+        "options": {
+          "hash": "c9cc7462d2d890a0",
+          "bbox_rel": [
+            0.17,
+            0.42,
+            0.83,
+            0.9
+          ],
+          "weight": 0.7
+        }
+      }
+    }
+  ],
+  "campfire_choice": [
+    {
+      "scene_name": "campfire_choice",
+      "variant": null,
+      "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
+      "fingerprints": {
+        "campfire_stage": {
+          "hash": "f06968136840d0f0",
+          "bbox_rel": [
+            0.12,
+            0.18,
+            0.84,
+            0.86
+          ],
+          "weight": 0.7
+        },
+        "choice_bar": {
+          "hash": "028660e226cccccc",
+          "bbox_rel": [
+            0.3,
+            0.1,
+            0.7,
+            0.34
+          ],
+          "weight": 0.3
+        }
+      }
+    }
+  ],
+  "campfire_rest_done": [
+    {
+      "scene_name": "campfire_rest_done",
+      "variant": null,
+      "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
+      "fingerprints": {
+        "stage": {
+          "hash": "e4d8863368ccd5f1",
+          "bbox_rel": [
+            0.12,
+            0.18,
+            0.84,
+            0.86
+          ],
+          "weight": 0.8
+        },
+        "right_arrow": {
+          "hash": "8cc13020c3184000",
+          "bbox_rel": [
+            0.9,
+            0.68,
+            0.99,
+            0.92
+          ],
+          "weight": 0.2
+        }
+      }
+    }
+  ],
+  "campfire_upgrade": [
+    {
+      "scene_name": "campfire_upgrade",
+      "variant": null,
+      "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
+      "fingerprints": {
+        "card_grid": {
+          "hash": "5252525252525258",
+          "bbox_rel": [
+            0.1,
+            0.12,
+            0.9,
+            0.9
+          ],
+          "weight": 0.9
+        },
+        "right_arrow": {
+          "hash": "1818181818181808",
+          "bbox_rel": [
+            0.9,
+            0.68,
+            0.99,
+            0.92
+          ],
+          "weight": 0.1
+        }
+      }
+    }
+  ],
+  "card_reward": [
+    {
+      "scene_name": "card_reward",
+      "variant": null,
+      "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
+      "fingerprints": {
+        "reward_cards": {
+          "hash": "7169d4d4d4d4d4d4",
+          "bbox_rel": [
+            0.08,
+            0.22,
+            0.92,
+            0.8
+          ],
+          "weight": 0.75
+        },
+        "bottom_bar": {
+          "hash": "0c327272300c2120",
+          "bbox_rel": [
+            0.22,
+            0.8,
+            0.82,
+            0.96
+          ],
+          "weight": 0.25
+        }
+      }
+    }
+  ],
+  "character_select": [
+    {
+      "scene_name": "character_select",
+      "variant": null,
+      "template_path": "pic/scene_templates/character_select/character_select_001.png",
+      "fingerprints": {
+        "left_panel": {
+          "hash": "769c68525664693d",
+          "bbox_rel": [
+            0.05,
+            0.18,
+            0.44,
+            0.72
+          ],
+          "weight": 0.35
+        },
+        "portraits": {
+          "hash": "21a599998d858d6d",
+          "bbox_rel": [
+            0.26,
+            0.78,
+            0.72,
+            0.98
+          ],
+          "weight": 0.35
+        },
+        "confirm_btn": {
+          "hash": "343919074f472c42",
+          "bbox_rel": [
+            0.84,
+            0.74,
+            0.99,
+            0.98
+          ],
+          "weight": 0.3
+        }
+      }
+    }
+  ],
+  "map": [
+    {
+      "scene_name": "map",
+      "variant": null,
+      "template_path": "pic/scene_templates/map/map_001.png",
+      "fingerprints": {
+        "map_body": {
+          "hash": "d2dad0d4a9e4e4e8",
+          "bbox_rel": [
+            0.08,
+            0.08,
+            0.84,
+            0.9
+          ],
+          "weight": 0.8
+        },
+        "legend": {
+          "hash": "663cf4f4f4f43d3f",
+          "bbox_rel": [
+            0.84,
+            0.22,
+            0.99,
+            0.82
+          ],
+          "weight": 0.2
+        }
+      }
+    },
+    {
+      "scene_name": "map",
+      "variant": null,
+      "template_path": "pic/scene_templates/map/map_002.png",
+      "fingerprints": {
+        "map_body": {
+          "hash": "d6ceccccd8ccdaca",
+          "bbox_rel": [
+            0.08,
+            0.08,
+            0.84,
+            0.9
+          ],
+          "weight": 0.8
+        },
+        "legend": {
+          "hash": "0c38b9a9a9a95826",
+          "bbox_rel": [
+            0.84,
+            0.22,
+            0.99,
+            0.82
+          ],
+          "weight": 0.2
+        }
+      }
+    }
+  ],
+  "merchant": [
+    {
+      "scene_name": "merchant",
+      "variant": null,
+      "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
+      "fingerprints": {
+        "center_stage": {
+          "hash": "5dae9e9a9e9c8c1e",
+          "bbox_rel": [
+            0.18,
+            0.18,
+            0.8,
+            0.86
+          ],
+          "weight": 0.75
+        },
+        "right_arrow": {
+          "hash": "10c33001c312e680",
+          "bbox_rel": [
+            0.9,
+            0.68,
+            0.99,
+            0.92
+          ],
+          "weight": 0.25
+        }
+      }
+    }
+  ],
+  "merchant_shop": [
+    {
+      "scene_name": "merchant_shop",
+      "variant": null,
+      "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
+      "fingerprints": {
+        "item_grid": {
+          "hash": "9e492d2bec665a5a",
+          "bbox_rel": [
+            0.12,
+            0.16,
+            0.88,
+            0.86
+          ],
+          "weight": 0.8
+        },
+        "right_arrow": {
+          "hash": "2020201103222210",
+          "bbox_rel": [
+            0.9,
+            0.68,
+            0.99,
+            0.92
+          ],
+          "weight": 0.2
+        }
+      }
+    }
+  ],
+  "mode_select": [
+    {
+      "scene_name": "mode_select",
+      "variant": null,
+      "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
+      "fingerprints": {
+        "cards": {
+          "hash": "9696969696969282",
+          "bbox_rel": [
+            0.15,
+            0.16,
+            0.86,
+            0.88
+          ],
+          "weight": 1.0
+        }
+      }
+    }
+  ],
+  "title_main": [
+    {
+      "scene_name": "title_main",
+      "variant": null,
+      "template_path": "pic/scene_templates/title_main/title_main_001.png",
+      "fingerprints": {
+        "logo": {
+          "hash": "676ba594a4e4f4d4",
+          "bbox_rel": [
+            0.18,
+            0.12,
+            0.68,
+            0.52
+          ],
+          "weight": 0.55
+        },
+        "menu": {
+          "hash": "10c9e8c8ccb55040",
+          "bbox_rel": [
+            0.33,
+            0.58,
+            0.57,
+            0.94
+          ],
+          "weight": 0.45
+        }
+      }
+    }
+  ]
+}

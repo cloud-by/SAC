@@ -1,0 +1,137 @@
+{
+  "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_002_after.png",
+  "scene_hint": "battle",
+  "window_bbox": [
+    0,
+    0,
+    1920,
+    1200
+  ],
+  "hand_area": [
+    230,
+    924,
+    1689,
+    1176
+  ],
+  "enemy_area": [
+    960,
+    192,
+    1766,
+    816
+  ],
+  "player_hp_bar": [
+    76,
+    1056,
+    422,
+    1140
+  ],
+  "energy_area": [
+    748,
+    1032,
+    960,
+    1176
+  ],
+  "end_turn_button": [
+    1612,
+    840,
+    1862,
+    1044
+  ],
+  "map_area": [
+    192,
+    96,
+    1728,
+    983
+  ],
+  "reward_area": [
+    345,
+    216,
+    1574,
+    936
+  ],
+  "detected_buttons": [
+    {
+      "name": "end_turn",
+      "bbox": [
+        1612,
+        840,
+        1862,
+        1044
+      ],
+      "confidence": 0.7
+    }
+  ],
+  "detected_cards": [
+    {
+      "name": "Strike",
+      "bbox": [
+        492,
+        936,
+        697,
+        1164
+      ],
+      "cost": 1,
+      "type": "attack",
+      "confidence": 0.95
+    },
+    {
+      "name": "Defend",
+      "bbox": [
+        735,
+        936,
+        940,
+        1164
+      ],
+      "cost": 1,
+      "type": "skill",
+      "confidence": 0.95
+    },
+    {
+      "name": "Strike",
+      "bbox": [
+        978,
+        936,
+        1183,
+        1164
+      ],
+      "cost": 1,
+      "type": "attack",
+      "confidence": 0.95
+    },
+    {
+      "name": "Defend",
+      "bbox": [
+        1221,
+        936,
+        1426,
+        1164
+      ],
+      "cost": 1,
+      "type": "skill",
+      "confidence": 0.95
+    }
+  ],
+  "detected_enemies": [
+    {
+      "name": "Unknown Enemy",
+      "bbox": [
+        960,
+        192,
+        1766,
+        816
+      ],
+      "hp": null,
+      "intent": "unknown",
+      "confidence": 0.9
+    }
+  ],
+  "map_options": [],
+  "reward_options": [],
+  "player": {
+    "hp": null,
+    "max_hp": null,
+    "energy": 3
+  },
+  "floor_hint": null,
+  "timestamp": "2026-03-11 20:31:58"
+}

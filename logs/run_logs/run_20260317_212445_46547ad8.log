@@ -1,0 +1,27 @@
+[2026-03-17 21:24:45] [INFO] 配置文件加载成功: D:\code\sts-agent-course-project\config\game.yaml
+[2026-03-17 21:24:45] [INFO] 运行 ID: 20260317_212445_46547ad8
+[2026-03-17 21:24:45] [INFO] 任务: Play the game
+[2026-03-17 21:24:45] [INFO] 模型: mock / demo-model
+[2026-03-17 21:24:45] [INFO] 环境: Slay the Spire
+[2026-03-17 21:24:45] [INFO] 最大步数: 1
+[2026-03-17 21:24:45] [INFO] SceneMatcher 初始化完成 enabled=True, templates_root=D:\code\sts-agent-course-project\pic\scene_templates, hash_method=dhash
+[2026-03-17 21:24:45] [INFO] Detector 初始化完成，capture_bbox=None, force_scene=None, scene_match_enabled=True
+[2026-03-17 21:24:45] [INFO] Eye 初始化完成，window_name=Slay the Spire 2, capture_bbox=None
+[2026-03-17 21:24:45] [INFO] 组件加载成功: module=BottomUpAgent.group_a.Eye, class=Eye
+[2026-03-17 21:24:46] [INFO] Brain 初始化完成，provider=mock, model=demo-model, llm_assist=True
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_b.Brain, class=Brain
+[2026-03-17 21:24:46] [INFO] Mcts 初始化完成（轻量版）
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_b.Mcts, class=Mcts
+[2026-03-17 21:24:46] [INFO] UnifiedOperation 初始化完成
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_a.UnifiedOperation, class=UnifiedOperation
+[2026-03-17 21:24:46] [INFO] Hand 初始化完成，dry_run=True
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_a.Hand, class=Hand
+[2026-03-17 21:24:46] [INFO] Teacher 初始化完成
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_b.Teacher, class=Teacher
+[2026-03-17 21:24:46] [INFO] LongMemory 初始化完成，已有技能数=4
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_b.LongMemory, class=LongMemory
+[2026-03-17 21:24:46] [INFO] Visualizer 初始化完成，enabled=True, refresh_interval_ms=300
+[2026-03-17 21:24:46] [INFO] 组件加载成功: module=BottomUpAgent.group_a.visualizer, class=Visualizer
+[2026-03-17 21:24:46] [INFO] BottomUpAgent 初始化完成
+[2026-03-17 21:24:46] [INFO] run_id=20260317_212445_46547ad8, max_steps=1
+[2026-03-17 21:24:46] [INFO] 启动延迟 3.0 秒，请切到游戏窗口。

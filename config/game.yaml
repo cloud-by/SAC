@@ -1,7 +1,53 @@
-project_name: "STS Agent Course Project"
-game_name: "Slay the Spire"
-width: 1920
-height: 1200
-memory_db: "data/memory.db"
-log_dir: "logs"
-screenshot_dir: "screenshots"
+runtime:
+  task: "Play the game"
+  max_steps: 1
+  log_level: "INFO"
+  mode: "auto"
+  stop_on_failures: 3
+  max_memory_records: 500
+  dry_run: true
+  action_delay: 0.2
+  startup_delay_seconds: 3
+
+model:
+  provider: "mock"
+  name: "demo-model"
+  base_url: "https://api.openai.com/v1"
+  api_key_env: "OPENAI_API_KEY"
+  temperature: 0.2
+  max_tokens: 512
+
+environment:
+  name: "Slay the Spire"
+  window_name: "Slay the Spire 2"
+
+  capture_mode: "window"
+
+  # 先别依赖固定桌面分辨率
+  capture_bbox: null
+
+  bring_window_to_front: true
+  force_scene: null
+
+visualization:
+  enabled: true
+  refresh_interval_ms: 300
+
+paths:
+  run_logs: "logs/run_logs"
+  action_logs: "logs/action_logs"
+  states: "data/states"
+  actions: "data/actions"
+  feedback: "data/feedback"
+  skills: "data/skills"
+  screenshots_current: "screenshots/current"
+  screenshots_history: "screenshots/history"
+
+scene_match:
+  enabled: true
+  config_file: "config/scene_match.yaml"
+  templates_root: "pic/scene_templates"
+  cache_dir: "data/template_cache"
+  hash_method: "dhash"
+  min_scene_score: 0.76
+  min_margin: 0.05

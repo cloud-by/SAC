@@ -1,0 +1,175 @@
+{
+  "updated_at": "2026-03-11 20:32:00",
+  "state_panel": {
+    "title": "当前状态",
+    "scene_type": "battle",
+    "floor": null,
+    "hp": "None/None",
+    "energy": 3,
+    "hand_card_count": 4,
+    "enemy_count": 1,
+    "hand_cards": [
+      {
+        "name": "Strike",
+        "cost": 1,
+        "type": "attack",
+        "bbox": [
+          492,
+          936,
+          697,
+          1164
+        ],
+        "confidence": 0.95
+      },
+      {
+        "name": "Defend",
+        "cost": 1,
+        "type": "skill",
+        "bbox": [
+          735,
+          936,
+          940,
+          1164
+        ],
+        "confidence": 0.95
+      },
+      {
+        "name": "Strike",
+        "cost": 1,
+        "type": "attack",
+        "bbox": [
+          978,
+          936,
+          1183,
+          1164
+        ],
+        "confidence": 0.95
+      },
+      {
+        "name": "Defend",
+        "cost": 1,
+        "type": "skill",
+        "bbox": [
+          1221,
+          936,
+          1426,
+          1164
+        ],
+        "confidence": 0.95
+      }
+    ],
+    "enemies": [
+      {
+        "name": "Unknown Enemy",
+        "hp": null,
+        "intent": "unknown",
+        "bbox": [
+          960,
+          192,
+          1766,
+          816
+        ],
+        "confidence": 0.9
+      }
+    ],
+    "map_options": [],
+    "reward_options": [],
+    "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_003_before.png"
+  },
+  "action_panel": {
+    "title": "动作决策",
+    "action_type": "play_card",
+    "target": {
+      "card": {
+        "name": "Strike",
+        "cost": 1,
+        "type": "attack",
+        "bbox": [
+          492,
+          936,
+          697,
+          1164
+        ],
+        "confidence": 0.95
+      },
+      "enemy": {
+        "name": "Unknown Enemy",
+        "hp": null,
+        "intent": "unknown",
+        "bbox": [
+          960,
+          192,
+          1766,
+          816
+        ],
+        "confidence": 0.9
+      }
+    },
+    "reason": "当前能量足够，优先使用攻击牌推进战斗节奏。",
+    "confidence": 0.95,
+    "source": "Brain-rule-battle+Mcts",
+    "params": {
+      "card_name": "Strike",
+      "enemy_name": "Unknown Enemy"
+    },
+    "execution_plan": [
+      {
+        "op": "click_card",
+        "card_name": "Strike",
+        "card_bbox": [
+          492,
+          936,
+          697,
+          1164
+        ]
+      },
+      {
+        "op": "click_enemy",
+        "enemy_name": "Unknown Enemy",
+        "enemy_bbox": [
+          960,
+          192,
+          1766,
+          816
+        ]
+      }
+    ]
+  },
+  "feedback_panel": {
+    "title": "执行反馈",
+    "execute_status": "success",
+    "before_scene": "battle",
+    "after_scene": "battle",
+    "time_cost_ms": 400,
+    "click_position": [
+      594,
+      1050
+    ],
+    "screen_diff": "possible_battle_state_changed",
+    "error_message": "",
+    "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_003.png"
+  },
+  "log_panel": {
+    "title": "运行日志",
+    "step_id": 3,
+    "scene_type": "battle",
+    "input_summary": "scene=battle, cards=4, enemies=1, energy=3",
+    "decision": "play_card | 当前能量足够，优先使用攻击牌推进战斗节奏。",
+    "result": "success",
+    "time_cost_ms": 1591,
+    "operator": "A组执行平台",
+    "timestamp": "2026-03-11 20:32:00"
+  },
+  "skill_panel": {
+    "title": "技能演化",
+    "skill_id": "battle_play_card_strike",
+    "scene_type": "battle",
+    "trigger_condition": "scene=battle, hp=None/None, energy=3, enemies=0, cards=6",
+    "action_pattern": "当前能量足够，优先使用攻击牌推进战斗节奏。",
+    "success_count": 52,
+    "fail_count": 0,
+    "reuse_count": 52,
+    "last_update": "2026-03-11 20:32:00",
+    "teacher_feedback": "动作 play_card 执行成功，但收益一般，建议保留为可选经验。"
+  }
+}

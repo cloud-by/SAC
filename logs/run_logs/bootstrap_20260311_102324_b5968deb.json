@@ -1,0 +1,30 @@
+{
+  "run_id": "20260311_102324_b5968deb",
+  "start_time": "2026-03-11 10:23:24",
+  "config_file": "D:\\code\\sts-agent-course-project\\config\\game.yaml",
+  "task": "Play the game",
+  "max_steps": 10,
+  "mode": "auto",
+  "model": {
+    "provider": "mock",
+    "name": "demo-model"
+  },
+  "environment": {
+    "name": "Slay the Spire",
+    "window_name": "Slay the Spire",
+    "resolution": [
+      1920,
+      1200
+    ]
+  },
+  "paths": {
+    "run_logs": "D:\\code\\sts-agent-course-project\\logs\\run_logs",
+    "action_logs": "D:\\code\\sts-agent-course-project\\logs\\action_logs",
+    "states": "D:\\code\\sts-agent-course-project\\data\\states",
+    "actions": "D:\\code\\sts-agent-course-project\\data\\actions",
+    "feedback": "D:\\code\\sts-agent-course-project\\data\\feedback",
+    "skills": "D:\\code\\sts-agent-course-project\\data\\skills",
+    "screenshots_current": "D:\\code\\sts-agent-course-project\\screenshots\\current",
+    "screenshots_history": "D:\\code\\sts-agent-course-project\\screenshots\\history"
+  }
+}

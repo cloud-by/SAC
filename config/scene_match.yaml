@@ -1,0 +1,160 @@
+enabled: true
+templates_root: "pic/scene_templates"
+cache_dir: "data/template_cache"
+hash_method: "dhash"
+hash_size: 8
+phash_size: 32
+min_scene_score: 0.76
+min_margin: 0.05
+allow_recursive_templates: true
+
+scenes:
+  title_main:
+    threshold: 0.78
+    rois:
+      - name: logo
+        bbox_rel: [0.18, 0.12, 0.68, 0.52]
+        weight: 0.55
+      - name: menu
+        bbox_rel: [0.33, 0.58, 0.57, 0.94]
+        weight: 0.45
+
+  mode_select:
+    threshold: 0.76
+    rois:
+      - name: cards
+        bbox_rel: [0.15, 0.16, 0.86, 0.88]
+        weight: 1.0
+
+  character_select:
+    threshold: 0.78
+    rois:
+      - name: left_panel
+        bbox_rel: [0.05, 0.18, 0.44, 0.72]
+        weight: 0.35
+      - name: portraits
+        bbox_rel: [0.26, 0.78, 0.72, 0.98]
+        weight: 0.35
+      - name: confirm_btn
+        bbox_rel: [0.84, 0.74, 0.99, 0.98]
+        weight: 0.30
+
+  blessing_choice:
+    threshold: 0.76
+    rois:
+      - name: text_bar
+        bbox_rel: [0.28, 0.52, 0.74, 0.63]
+        weight: 0.30
+      - name: options
+        bbox_rel: [0.17, 0.42, 0.83, 0.90]
+        weight: 0.70
+
+  map:
+    threshold: 0.78
+    rois:
+      - name: map_body
+        bbox_rel: [0.08, 0.08, 0.84, 0.90]
+        weight: 0.80
+      - name: legend
+        bbox_rel: [0.84, 0.22, 0.99, 0.82]
+        weight: 0.20
+
+  battle:
+    threshold: 0.76
+    rois:
+      - name: top_hud
+        bbox_rel: [0.00, 0.00, 1.00, 0.12]
+        weight: 0.15
+      - name: enemy_mid
+        bbox_rel: [0.48, 0.12, 0.92, 0.68]
+        weight: 0.30
+      - name: hand
+        bbox_rel: [0.12, 0.76, 0.88, 0.98]
+        weight: 0.35
+      - name: end_turn
+        bbox_rel: [0.84, 0.68, 0.98, 0.88]
+        weight: 0.20
+
+  battle_result:
+    threshold: 0.78
+    rois:
+      - name: center_panel
+        bbox_rel: [0.34, 0.10, 0.66, 0.55]
+        weight: 0.60
+      - name: action_buttons
+        bbox_rel: [0.28, 0.56, 0.72, 0.86]
+        weight: 0.40
+
+  card_reward:
+    threshold: 0.78
+    rois:
+      - name: reward_cards
+        bbox_rel: [0.08, 0.22, 0.92, 0.80]
+        weight: 0.75
+      - name: bottom_bar
+        bbox_rel: [0.22, 0.80, 0.82, 0.96]
+        weight: 0.25
+
+  merchant:
+    threshold: 0.76
+    rois:
+      - name: center_stage
+        bbox_rel: [0.18, 0.18, 0.80, 0.86]
+        weight: 0.75
+      - name: right_arrow
+        bbox_rel: [0.90, 0.68, 0.99, 0.92]
+        weight: 0.25
+
+  merchant_shop:
+    threshold: 0.76
+    rois:
+      - name: item_grid
+        bbox_rel: [0.12, 0.16, 0.88, 0.86]
+        weight: 0.80
+      - name: right_arrow
+        bbox_rel: [0.90, 0.68, 0.99, 0.92]
+        weight: 0.20
+
+  campfire_choice:
+    threshold: 0.76
+    rois:
+      - name: campfire_stage
+        bbox_rel: [0.12, 0.18, 0.84, 0.86]
+        weight: 0.70
+      - name: choice_bar
+        bbox_rel: [0.30, 0.10, 0.70, 0.34]
+        weight: 0.30
+
+  campfire_upgrade:
+    threshold: 0.76
+    rois:
+      - name: card_grid
+        bbox_rel: [0.10, 0.12, 0.90, 0.90]
+        weight: 0.90
+      - name: right_arrow
+        bbox_rel: [0.90, 0.68, 0.99, 0.92]
+        weight: 0.10
+
+  campfire_rest_done:
+    threshold: 0.76
+    rois:
+      - name: stage
+        bbox_rel: [0.12, 0.18, 0.84, 0.86]
+        weight: 0.80
+      - name: right_arrow
+        bbox_rel: [0.90, 0.68, 0.99, 0.92]
+        weight: 0.20
+
+  event_unknown:
+    threshold: 0.72
+    rois:
+      - name: event_body
+        bbox_rel: [0.14, 0.12, 0.86, 0.90]
+        weight: 1.0
+
+  unknown:
+    threshold: 0.99
+    rois:
+      - name: full
+        bbox_rel: [0.0, 0.0, 1.0, 1.0]
+        weight: 1.0
