@@ -1,0 +1,33 @@
+{
+  "run_id": "20260318_163337_c793c6e2",
+  "task": "Play the game",
+  "status": "finished",
+  "total_steps": 2,
+  "consecutive_failures": 0,
+  "memory_summary": {
+    "total_records": 2,
+    "skill_count": 1,
+    "recent_skills": [
+      {
+        "skill_id": "title_main::enter_single_mode::single_mode",
+        "scene_type": "title_main",
+        "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
+        "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
+        "success_count": 2,
+        "fail_count": 0,
+        "reuse_count": 2,
+        "last_update": "2026-03-18 16:34:01",
+        "memory_priority": "medium",
+        "outcome_tags": [
+          "execute_success",
+          "usable"
+        ],
+        "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。",
+        "last_score": 0.75,
+        "last_episode_id": null,
+        "last_execute_status": "success"
+      }
+    ]
+  },
+  "finished_at": "2026-03-18 16:34:01"
+}

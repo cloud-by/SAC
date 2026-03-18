@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+import platform
 import time
 from datetime import datetime
 from pathlib import Path
@@ -19,6 +20,8 @@ class Hand:
         self.environment = config.get("environment", {})
         self.runtime_context = config.get("_runtime_context", {})
         self.project_root = Path(config.get("_project_root", Path.cwd())).resolve()
+        self.window_name = str(self.environment.get("window_name", "") or "").strip()
+        self.bring_window_to_front = bool(self.environment.get("bring_window_to_front", False))
 
         self.dry_run = bool(self.runtime.get("dry_run", True))
         self.action_delay = float(self.runtime.get("action_delay", 0.2))
@@ -27,6 +30,7 @@ class Hand:
         self.post_action_wait = float(self.runtime.get("post_action_wait", 0.35))
 
         self.paths = self._init_paths()
+        self._enable_windows_dpi_awareness()
         self._pyautogui = self._load_pyautogui()
 
         logging.info("Hand 初始化完成，dry_run=%s", self.dry_run)
@@ -51,6 +55,29 @@ class Hand:
 
         return result
 
+    def _enable_windows_dpi_awareness(self) -> None:
+        if platform.system().lower() != "windows":
+            return
+        try:
+            import ctypes
+
+            user32 = ctypes.windll.user32
+            shcore = getattr(ctypes.windll, "shcore", None)
+            if shcore is not None:
+                try:
+                    shcore.SetProcessDpiAwareness(2)
+                    logging.info("Hand 已启用 Windows Per-Monitor DPI Awareness。")
+                    return
+                except Exception:
+                    pass
+            try:
+                user32.SetProcessDPIAware()
+                logging.info("Hand 已启用 Windows DPI Awareness。")
+            except Exception as exc:
+                logging.warning("Hand 启用 Windows DPI Awareness 失败: %s", exc)
+        except Exception as exc:
+            logging.warning("Hand 初始化 Windows DPI 适配失败: %s", exc)
+
     def _load_pyautogui(self):
         if self.dry_run:
             return None
@@ -58,6 +85,11 @@ class Hand:
             import pyautogui  # type: ignore
             pyautogui.FAILSAFE = True
             pyautogui.PAUSE = self.action_delay
+            try:
+                screen_size = pyautogui.size()
+                logging.info("pyautogui 屏幕尺寸=%sx%s", screen_size.width, screen_size.height)
+            except Exception:
+                pass
             return pyautogui
         except Exception as exc:
             logging.warning("pyautogui 加载失败，自动切回 dry-run: %s", exc)
@@ -300,8 +332,33 @@ class Hand:
             time.sleep(self.action_delay)
             return
 
+        self._activate_target_window()
+        logging.info("执行点击坐标=(%s, %s)", x, y)
         self._pyautogui.moveTo(x, y, duration=self.move_duration)
         self._pyautogui.click(x=x, y=y, interval=self.click_interval)
+
+    def _activate_target_window(self) -> None:
+        if not self.window_name or not self.bring_window_to_front:
+            return
+        try:
+            import pygetwindow as gw  # type: ignore
+
+            target_name = " ".join(self.window_name.split()).strip().lower()
+            candidates = []
+            for win in gw.getAllWindows():
+                title = (getattr(win, "title", "") or "").strip()
+                norm_title = " ".join(title.split()).strip().lower()
+                if not norm_title:
+                    continue
+                if target_name in norm_title or norm_title in target_name:
+                    candidates.append(win)
+            if not candidates:
+                return
+            target = max(candidates, key=lambda w: int(getattr(w, "width", 0)) * int(getattr(w, "height", 0)))
+            target.activate()
+            time.sleep(0.15)
+        except Exception as exc:
+            logging.warning("点击前激活目标窗口失败，将继续直接点击: %s", exc)
 
     def _infer_screen_diff(self, action_data: Dict[str, Any], execute_status: str, before_scene: str, after_scene: str) -> str:
         if execute_status != "success":

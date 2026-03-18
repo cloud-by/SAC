@@ -3,20 +3,20 @@
   "execute_status": "success",
   "before_scene": "title_main",
   "after_scene": "title_main",
-  "time_cost_ms": 819,
+  "time_cost_ms": 956,
   "click_position": [
     1177,
-    1094
+    1032
   ],
   "click_positions": [
     [
       1177,
-      1094
+      1032
     ]
   ],
   "screen_diff": "title_menu_advanced",
   "error_message": "",
   "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_001.png",
-  "timestamp": "2026-03-18 15:39:13",
+  "timestamp": "2026-03-18 18:10:15",
   "step_id": 1
 }

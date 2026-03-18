@@ -2,21 +2,21 @@
   "scene_type": "title_main",
   "scene_variant": null,
   "scene_scores": {
-    "battle": 0.4516,
-    "battle_result": 0.4906,
-    "blessing_choice": 0.5094,
-    "campfire_choice": 0.525,
-    "campfire_rest_done": 0.525,
-    "campfire_upgrade": 0.6141,
-    "card_reward": 0.5117,
-    "character_select": 0.4641,
-    "map": 0.5469,
-    "merchant": 0.543,
-    "merchant_shop": 0.5125,
+    "battle": 0.4406,
+    "battle_result": 0.5469,
+    "blessing_choice": 0.4812,
+    "campfire_choice": 0.5406,
+    "campfire_rest_done": 0.5156,
+    "campfire_upgrade": 0.6734,
+    "card_reward": 0.5156,
+    "character_select": 0.4867,
+    "map": 0.5344,
+    "merchant": 0.5312,
+    "merchant_shop": 0.5406,
     "mode_select": 0.5625,
-    "title_main": 0.843
+    "title_main": 0.857
   },
-  "match_confidence": 0.843,
+  "match_confidence": 0.857,
   "matched_template": "pic/scene_templates/title_main/title_main_001.png",
   "flow_phase_before": "bootstrap",
   "flow_phase_after": "bootstrap",
@@ -35,23 +35,23 @@
     ],
     [
       "campfire_upgrade",
-      0.6141
+      0.6734
     ],
     [
       "mode_select",
       0.6
     ],
     [
-      "map",
+      "battle_result",
       0.5469
     ],
     [
-      "merchant",
-      0.543
+      "campfire_choice",
+      0.5406
     ],
     [
-      "campfire_choice",
-      0.525
+      "merchant_shop",
+      0.5406
     ]
   ],
   "floor": null,
@@ -131,10 +131,10 @@
     {
       "name": "single_mode",
       "bbox": [
-        1024,
-        1034,
-        1331,
-        1154
+        972,
+        999,
+        1382,
+        1066
       ],
       "confidence": 0.95
     }
@@ -144,21 +144,21 @@
     "scene_hint": "title_main",
     "scene_variant": null,
     "scene_scores": {
-      "battle": 0.4516,
-      "battle_result": 0.4906,
-      "blessing_choice": 0.5094,
-      "campfire_choice": 0.525,
-      "campfire_rest_done": 0.525,
-      "campfire_upgrade": 0.6141,
-      "card_reward": 0.5117,
-      "character_select": 0.4641,
-      "map": 0.5469,
-      "merchant": 0.543,
-      "merchant_shop": 0.5125,
+      "battle": 0.4406,
+      "battle_result": 0.5469,
+      "blessing_choice": 0.4812,
+      "campfire_choice": 0.5406,
+      "campfire_rest_done": 0.5156,
+      "campfire_upgrade": 0.6734,
+      "card_reward": 0.5156,
+      "character_select": 0.4867,
+      "map": 0.5344,
+      "merchant": 0.5312,
+      "merchant_shop": 0.5406,
       "mode_select": 0.5625,
-      "title_main": 0.843
+      "title_main": 0.857
     },
-    "match_confidence": 0.843,
+    "match_confidence": 0.857,
     "matched_template": "pic/scene_templates/title_main/title_main_001.png",
     "scene_match_debug": {
       "threshold": 0.78,
@@ -173,7 +173,7 @@
           },
           {
             "roi": "menu",
-            "similarity": 0.7656,
+            "similarity": 0.7969,
             "weight": 0.45
           }
         ]
@@ -181,67 +181,67 @@
       "scene_rank": [
         {
           "scene": "battle",
-          "score": 0.4516,
+          "score": 0.4406,
           "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
           "variant": "normal"
         },
         {
           "scene": "battle_result",
-          "score": 0.4906,
+          "score": 0.5469,
           "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
           "variant": null
         },
         {
           "scene": "blessing_choice",
-          "score": 0.5094,
+          "score": 0.4812,
           "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
           "variant": null
         },
         {
           "scene": "campfire_choice",
-          "score": 0.525,
+          "score": 0.5406,
           "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
           "variant": null
         },
         {
           "scene": "campfire_rest_done",
-          "score": 0.525,
+          "score": 0.5156,
           "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
           "variant": null
         },
         {
           "scene": "campfire_upgrade",
-          "score": 0.6141,
+          "score": 0.6734,
           "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
           "variant": null
         },
         {
           "scene": "card_reward",
-          "score": 0.5117,
+          "score": 0.5156,
           "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
           "variant": null
         },
         {
           "scene": "character_select",
-          "score": 0.4641,
+          "score": 0.4867,
           "template_path": "pic/scene_templates/character_select/character_select_001.png",
           "variant": null
         },
         {
           "scene": "map",
-          "score": 0.5469,
-          "template_path": "pic/scene_templates/map/map_001.png",
+          "score": 0.5344,
+          "template_path": "pic/scene_templates/map/map_002.png",
           "variant": null
         },
         {
           "scene": "merchant",
-          "score": 0.543,
+          "score": 0.5312,
           "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
           "variant": null
         },
         {
           "scene": "merchant_shop",
-          "score": 0.5125,
+          "score": 0.5406,
           "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
           "variant": null
         },
@@ -253,7 +253,7 @@
         },
         {
           "scene": "title_main",
-          "score": 0.843,
+          "score": 0.857,
           "template_path": "pic/scene_templates/title_main/title_main_001.png",
           "variant": null
         }
@@ -284,23 +284,23 @@
       ],
       [
         "campfire_upgrade",
-        0.6141
+        0.6734
       ],
       [
         "mode_select",
         0.6
       ],
       [
-        "map",
+        "battle_result",
         0.5469
       ],
       [
-        "merchant",
-        0.543
+        "campfire_choice",
+        0.5406
       ],
       [
-        "campfire_choice",
-        0.525
+        "merchant_shop",
+        0.5406
       ]
     ],
     "window_bbox": [
@@ -315,7 +315,7 @@
       2560,
       1528
     ],
-    "timestamp": "2026-03-18 15:39:01",
+    "timestamp": "2026-03-18 18:10:05",
     "title_logo_area": [
       512,
       332,
@@ -438,10 +438,10 @@
       {
         "name": "single_mode",
         "bbox": [
-          1024,
-          1034,
-          1331,
-          1154
+          972,
+          999,
+          1382,
+          1066
         ],
         "confidence": 0.95
       }
@@ -512,13 +512,13 @@
     "character_options": [],
     "selected_character": null,
     "single_mode_bbox": [
-      1024,
-      1034,
-      1331,
-      1154
+      972,
+      999,
+      1382,
+      1066
     ]
   },
-  "timestamp": "2026-03-18 15:39:01",
+  "timestamp": "2026-03-18 18:10:05",
   "step_id": 1,
   "phase": "healthcheck",
   "window_name": "Slay the Spire 2",

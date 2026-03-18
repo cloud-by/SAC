@@ -1,4 +1,4 @@
-更新时间: 2026-03-18 15:39:24
+更新时间: 2026-03-18 18:10:24
 
 ===== 当前状态 =====
 场景: title_main
@@ -7,7 +7,7 @@
 流程原因: top_candidate_accepted
 上一场景: title_main
 阶段变化: bootstrap -> bootstrap
-匹配置信度: 0.8430
+匹配置信度: 0.8727
 命中模板: pic/scene_templates/title_main/title_main_001.png
 所选角色: None
 层数: None
@@ -20,9 +20,9 @@
 角色选项数: 0
 地图选项数: 0
 奖励选项数: 0
-可用按钮: [{"name": "single_mode", "bbox": [1024, 1034, 1331, 1154], "confidence": 0.95}]
-候选场景: [["title_main", "0.8430"], ["campfire_upgrade", "0.6078"], ["battle_result", "0.5625"], ["merchant_shop", "0.5625"], ["mode_select", "0.5625"]]
-流程候选: [["title_main", 0.95], ["campfire_upgrade", 0.6078], ["mode_select", 0.6], ["battle_result", 0.5625], ["merchant_shop", 0.5625]]
+可用按钮: [{"name": "single_mode", "bbox": [972, 999, 1382, 1066], "confidence": 0.95}]
+候选场景: [["title_main", "0.8727"], ["campfire_upgrade", "0.6234"], ["mode_select", "0.5781"], ["merchant", "0.5664"], ["battle_result", "0.5469"]]
+流程候选: [["title_main", 0.95], ["campfire_upgrade", 0.6234], ["mode_select", 0.6], ["merchant", 0.5664], ["battle_result", 0.5469]]
 预览手牌: []
 预览敌人: []
 截图: D:\code\sts-agent-course-project\screenshots\history\step_002_before.png
@@ -38,9 +38,9 @@
 ===== 执行反馈 =====
 执行结果: success
 场景变化: title_main -> title_main
-耗时(ms): 804
+耗时(ms): 955
 屏幕变化: title_menu_advanced
-点击位置: [1177, 1094]
+点击位置: [1177, 1032]
 错误信息: 
 
 ===== 运行日志 =====
@@ -54,8 +54,8 @@ Step: 2
 技能ID: title_main::enter_single_mode::single_mode
 触发条件: scene=title_main, hp=None/None, energy=0, enemies=0, cards=0
 动作模式: 当前位于主页，优先进入单人模式以开始一局游戏。
-成功次数: 19
+成功次数: 8
 失败次数: 0
-复用次数: 19
-最近更新: 2026-03-18 15:39:24
+复用次数: 8
+最近更新: 2026-03-18 18:10:24
 教师反馈: 动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。

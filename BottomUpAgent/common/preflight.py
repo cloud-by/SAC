@@ -174,9 +174,35 @@ def _check_input_backend(report: PreflightReport, *, dry_run: bool) -> None:
         report.add("input_backend", "pass", "当前 dry_run=True，不强制要求 pyautogui 可用。")
         return
     try:
+        dpi_detail = "unknown"
+        if platform.system().lower() == "windows":
+            try:
+                import ctypes
+
+                user32 = ctypes.windll.user32
+                shcore = getattr(ctypes.windll, "shcore", None)
+                if shcore is not None:
+                    try:
+                        shcore.SetProcessDpiAwareness(2)
+                        dpi_detail = "per_monitor_v2"
+                    except Exception:
+                        pass
+                if dpi_detail == "unknown":
+                    try:
+                        user32.SetProcessDPIAware()
+                        dpi_detail = "system_aware"
+                    except Exception:
+                        dpi_detail = "set_failed"
+            except Exception:
+                dpi_detail = "init_failed"
         import pyautogui  # type: ignore
 
-        report.add("input_backend", "pass", f"pyautogui 已就绪，FAILSAFE={getattr(pyautogui, 'FAILSAFE', None)}")
+        report.add(
+            "input_backend",
+            "pass",
+            f"pyautogui 已就绪，FAILSAFE={getattr(pyautogui, 'FAILSAFE', None)}",
+            dpi_awareness=dpi_detail,
+        )
     except Exception as exc:
         report.add("input_backend", "error", f"真实执行模式需要 pyautogui，但加载失败: {exc}")
 

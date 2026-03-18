@@ -12,7 +12,7 @@
   ],
   "params": {
     "step_id": 1,
-    "llm_analysis": "当前动作是进入单人模式，因为现在处于游戏的主页界面。根据记忆总结，这个动作已经成功执行过17次，没有失败记录，所以选择这个动作是合理的，可以开始一局新的游戏。",
+    "llm_analysis": "当前动作是进入单人模式，因为在游戏的主页面，优先选择单人模式开始一局游戏是合理的。这个动作有96%的置信度，并且根据历史记忆，这个动作已经成功执行了6次，没有失败记录，所以选择这个动作是合理的。",
     "llm_provider": "openai_compatible",
     "llm_model": "moonshot-v1-8k",
     "memory_priority": "medium",
@@ -25,6 +25,6 @@
   },
   "confidence": 0.96,
   "source": "Brain-rule-title_main+Mcts",
-  "timestamp": "2026-03-18 15:39:12",
+  "timestamp": "2026-03-18 18:10:14",
   "step_id": 1
 }

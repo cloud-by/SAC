@@ -343,9 +343,11 @@ class Detector:
 
         return scores
 
-    def _detect_scene_specific_payload(self, image: Image.Image, rois: Dict[str, List[int]], scene_hint: str) -> Dict[str, Any]:
+    def _detect_scene_specific_payload(self, image: Image.Image, rois: Dict[str, List[int]], scene_hint: str) -> Dict[
+        str, Any]:
+        title_menu_options = self._detect_menu_options(rois) if scene_hint == "title_main" else []
         payload: Dict[str, Any] = {
-            "detected_buttons": self._detect_buttons(rois, scene_hint),
+            "detected_buttons": self._detect_buttons(rois, scene_hint, title_menu_options=title_menu_options),
             "menu_options": [],
             "mode_options": [],
             "character_options": [],
@@ -357,8 +359,11 @@ class Detector:
         }
 
         if scene_hint == "title_main":
-            payload["menu_options"] = self._detect_menu_options(rois)
-            payload["single_mode_bbox"] = rois["title_single_mode"]
+            payload["menu_options"] = title_menu_options
+            if title_menu_options:
+                payload["single_mode_bbox"] = title_menu_options[0].get("bbox", rois["title_single_mode"])
+            else:
+                payload["single_mode_bbox"] = rois["title_single_mode"]
 
         elif scene_hint == "mode_select":
             payload["mode_options"] = self._detect_mode_options(rois)
@@ -418,8 +423,16 @@ class Detector:
 
         return payload
 
-    def _detect_buttons(self, rois: Dict[str, List[int]], scene_hint: str) -> List[Dict[str, Any]]:
+    def _detect_buttons(
+            self,
+            rois: Dict[str, List[int]],
+            scene_hint: str,
+            title_menu_options: Optional[List[Dict[str, Any]]] = None,
+    ) -> List[Dict[str, Any]]:
         if scene_hint == "title_main":
+            menu_options = list(title_menu_options or [])
+            if menu_options and menu_options[0].get("bbox"):
+                return [{"name": "single_mode", "bbox": menu_options[0]["bbox"], "confidence": 0.95}]
             return [{"name": "single_mode", "bbox": rois["title_single_mode"], "confidence": 0.95}]
         if scene_hint == "mode_select":
             return [
@@ -436,7 +449,8 @@ class Detector:
             return [{"name": "back", "bbox": rois["back_button"], "confidence": 0.88}]
         if scene_hint == "battle":
             return [{"name": "end_turn", "bbox": rois["end_turn_button"], "confidence": 0.85}]
-        if scene_hint in {"battle_result", "card_reward", "merchant", "merchant_shop", "campfire_choice", "campfire_upgrade", "campfire_rest_done", "event_unknown"}:
+        if scene_hint in {"battle_result", "card_reward", "merchant", "merchant_shop", "campfire_choice",
+                          "campfire_upgrade", "campfire_rest_done", "event_unknown"}:
             return [{"name": "continue", "bbox": rois["right_arrow_button"], "confidence": 0.78}]
         return []
 
