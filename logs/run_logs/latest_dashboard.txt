@@ -1,41 +1,61 @@
-更新时间: 2026-03-17 21:24:03
+更新时间: 2026-03-18 15:18:07
 
 ===== 当前状态 =====
 场景: title_main
+场景变体: None
+流程修正: False
+流程原因: top_candidate_accepted
+上一场景: title_main
+阶段变化: bootstrap -> bootstrap
+匹配置信度: 0.8711
+命中模板: pic/scene_templates/title_main/title_main_001.png
+所选角色: None
 层数: None
 生命: None/None
 能量: 0
 手牌数: 0
 敌人数: 0
-截图: D:\code\sts-agent-course-project\screenshots\history\step_001_before.png
+菜单选项数: 6
+模式选项数: 0
+角色选项数: 0
+地图选项数: 0
+奖励选项数: 0
+可用按钮: [{"name": "single_mode", "bbox": [1024, 1034, 1331, 1154], "confidence": 0.95}]
+候选场景: [["title_main", "0.8711"], ["campfire_upgrade", "0.6266"], ["map", "0.5656"], ["mode_select", "0.5625"], ["merchant", "0.5547"]]
+流程候选: [["title_main", 0.95], ["campfire_upgrade", 0.6266], ["mode_select", 0.6], ["map", 0.5656], ["merchant", 0.5547]]
+预览手牌: []
+预览敌人: []
+截图: D:\code\sts-agent-course-project\screenshots\history\step_002_before.png
 
 ===== 动作决策 =====
-动作类型: wait
-动作来源: Brain-rule-unknown+Mcts
-置信度: 0.15
-动作解释: 当前场景尚未建立明确策略，先等待并记录状态。
+动作类型: enter_single_mode
+动作来源: Brain-rule-title_main+Mcts
+置信度: 0.9600
+动作解释: 当前位于主页，优先进入单人模式以开始一局游戏。
+执行计划数: 1
+执行计划预览: [{"op": "click_button", "button_name": "single_mode"}]
 
 ===== 执行反馈 =====
 执行结果: success
 场景变化: title_main -> title_main
-耗时(ms): 851
-屏幕变化: no_obvious_change
-点击位置: []
+耗时(ms): 809
+屏幕变化: title_menu_advanced
+点击位置: [1177, 1094]
 错误信息: 
 
 ===== 运行日志 =====
-Step: 1
+Step: 2
 输入摘要: scene=title_main, cards=0, enemies=0, energy=0
-决策摘要: wait | 当前场景尚未建立明确策略，先等待并记录状态。
+决策摘要: enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。
 结果: success
 操作方: A组执行平台
 
 ===== 技能演化 =====
-技能ID: title_main_wait_generic
+技能ID: title_main::enter_single_mode::single_mode
 触发条件: scene=title_main, hp=None/None, energy=0, enemies=0, cards=0
-动作模式: 当前场景尚未建立明确策略，先等待并记录状态。
-成功次数: 3
+动作模式: 当前位于主页，优先进入单人模式以开始一局游戏。
+成功次数: 13
 失败次数: 0
-复用次数: 3
-最近更新: 2026-03-17 21:24:03
-教师反馈: 动作 wait 虽已执行，但效果不明显，建议谨慎复用。
+复用次数: 13
+最近更新: 2026-03-18 15:18:07
+教师反馈: 动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。

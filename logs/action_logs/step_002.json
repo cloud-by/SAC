@@ -1,11 +1,11 @@
 {
   "step_id": 2,
-  "scene_type": "battle",
-  "input_summary": "scene=battle, cards=4, enemies=1, energy=3",
-  "decision": "play_card | 当前能量足够，优先使用攻击牌推进战斗节奏。",
+  "scene_type": "title_main",
+  "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
+  "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
   "result": "success",
-  "time_cost_ms": 805,
+  "time_cost_ms": 6382,
   "screenshot": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
   "operator": "A组执行平台",
-  "timestamp": "2026-03-11 20:31:58"
+  "timestamp": "2026-03-18 15:18:07"
 }

@@ -1,4 +1,8 @@
-# Core HTTP/model integration
+# Runtime dependencies for running this project from PyCharm or the command line.
+# These packages are inferred from the current code paths in run.py,
+# BottomUpAgent/group_a/*, BottomUpAgent/group_b/*, and base_model/*.
+
+# Model / HTTP layer
 requests>=2.31
 
 # Config loading (.env is optional in code, but supported by run.py)
@@ -11,7 +15,9 @@ Pillow>=10.0
 mss>=9.0
 opencv-python>=4.8
 
-# Desktop window discovery and input control (mainly for Windows game automation)
+# Desktop automation / window discovery
 PyAutoGUI>=0.9.54
 PyGetWindow>=0.0.9
+
+# Windows-specific helpers for real game automation
 pywin32>=306; platform_system == "Windows"

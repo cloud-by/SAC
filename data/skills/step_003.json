@@ -1,12 +1,19 @@
 {
-  "skill_id": "battle_play_card_strike",
-  "scene_type": "battle",
-  "trigger_condition": "scene=battle, hp=None/None, energy=3, enemies=0, cards=6",
-  "action_pattern": "当前能量足够，优先使用攻击牌推进战斗节奏。",
-  "success_count": 52,
+  "skill_id": "title_main::enter_single_mode::single_mode",
+  "scene_type": "title_main",
+  "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
+  "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
+  "success_count": 5,
   "fail_count": 0,
-  "reuse_count": 52,
-  "last_update": "2026-03-11 20:32:00",
-  "teacher_feedback": "动作 play_card 执行成功，但收益一般，建议保留为可选经验。",
-  "last_score": 0.75
+  "reuse_count": 5,
+  "last_update": "2026-03-18 14:51:47",
+  "memory_priority": "medium",
+  "outcome_tags": [
+    "execute_success",
+    "usable"
+  ],
+  "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。",
+  "last_score": 0.75,
+  "last_episode_id": null,
+  "last_execute_status": "success"
 }

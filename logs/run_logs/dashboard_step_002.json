@@ -1,175 +1,1381 @@
 {
-  "updated_at": "2026-03-11 20:31:58",
+  "updated_at": "2026-03-18 15:18:07",
   "state_panel": {
     "title": "当前状态",
-    "scene_type": "battle",
+    "scene_type": "title_main",
+    "scene_variant": null,
     "floor": null,
     "hp": "None/None",
-    "energy": 3,
-    "hand_card_count": 4,
-    "enemy_count": 1,
-    "hand_cards": [
+    "energy": 0,
+    "selected_character": null,
+    "match_confidence": 0.8711,
+    "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+    "flow_prev_scene": "title_main",
+    "flow_phase_before": "bootstrap",
+    "flow_phase_after": "bootstrap",
+    "flow_corrected": false,
+    "flow_reason": "top_candidate_accepted",
+    "flow_ordered_candidates": [
+      [
+        "title_main",
+        0.95
+      ],
+      [
+        "campfire_upgrade",
+        0.6266
+      ],
+      [
+        "mode_select",
+        0.6
+      ],
+      [
+        "map",
+        0.5656
+      ],
+      [
+        "merchant",
+        0.5547
+      ]
+    ],
+    "top_scene_scores": [
+      [
+        "title_main",
+        0.8711
+      ],
+      [
+        "campfire_upgrade",
+        0.6266
+      ],
+      [
+        "map",
+        0.5656
+      ],
+      [
+        "mode_select",
+        0.5625
+      ],
+      [
+        "merchant",
+        0.5547
+      ]
+    ],
+    "window_bbox": [
+      0,
+      34,
+      2560,
+      1528
+    ],
+    "available_buttons": [
       {
-        "name": "Strike",
-        "cost": 1,
-        "type": "attack",
+        "name": "single_mode",
         "bbox": [
-          492,
-          936,
-          697,
-          1164
-        ],
-        "confidence": 0.95
-      },
-      {
-        "name": "Defend",
-        "cost": 1,
-        "type": "skill",
-        "bbox": [
-          735,
-          936,
-          940,
-          1164
-        ],
-        "confidence": 0.95
-      },
-      {
-        "name": "Strike",
-        "cost": 1,
-        "type": "attack",
-        "bbox": [
-          978,
-          936,
-          1183,
-          1164
-        ],
-        "confidence": 0.95
-      },
-      {
-        "name": "Defend",
-        "cost": 1,
-        "type": "skill",
-        "bbox": [
-          1221,
-          936,
-          1426,
-          1164
+          1024,
+          1034,
+          1331,
+          1154
         ],
         "confidence": 0.95
       }
     ],
-    "enemies": [
+    "hand_card_count": 0,
+    "enemy_count": 0,
+    "menu_options_count": 6,
+    "mode_options_count": 0,
+    "character_options_count": 0,
+    "map_options_count": 0,
+    "reward_options_count": 0,
+    "hand_cards": [],
+    "enemies": [],
+    "menu_options": [
       {
-        "name": "Unknown Enemy",
-        "hp": null,
-        "intent": "unknown",
+        "name": "single_mode",
         "bbox": [
-          960,
-          192,
-          1766,
-          816
+          972,
+          999,
+          1382,
+          1066
         ],
-        "confidence": 0.9
+        "confidence": 0.75
+      },
+      {
+        "name": "multi_mode",
+        "bbox": [
+          972,
+          1066,
+          1382,
+          1133
+        ],
+        "confidence": 0.75
+      },
+      {
+        "name": "timeline",
+        "bbox": [
+          972,
+          1133,
+          1382,
+          1200
+        ],
+        "confidence": 0.75
+      },
+      {
+        "name": "settings",
+        "bbox": [
+          972,
+          1200,
+          1382,
+          1267
+        ],
+        "confidence": 0.75
+      },
+      {
+        "name": "encyclopedia",
+        "bbox": [
+          972,
+          1267,
+          1382,
+          1334
+        ],
+        "confidence": 0.75
       }
     ],
+    "mode_options": [],
+    "character_options": [],
     "map_options": [],
     "reward_options": [],
     "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_002_before.png"
   },
   "action_panel": {
     "title": "动作决策",
-    "action_type": "play_card",
+    "action_type": "enter_single_mode",
     "target": {
-      "card": {
-        "name": "Strike",
-        "cost": 1,
-        "type": "attack",
-        "bbox": [
-          492,
-          936,
-          697,
-          1164
-        ],
-        "confidence": 0.95
-      },
-      "enemy": {
-        "name": "Unknown Enemy",
-        "hp": null,
-        "intent": "unknown",
-        "bbox": [
-          960,
-          192,
-          1766,
-          816
-        ],
-        "confidence": 0.9
-      }
+      "button": "single_mode"
     },
-    "reason": "当前能量足够，优先使用攻击牌推进战斗节奏。",
-    "confidence": 0.95,
-    "source": "Brain-rule-battle+Mcts",
+    "reason": "当前位于主页，优先进入单人模式以开始一局游戏。",
+    "confidence": 0.96,
+    "source": "Brain-rule-title_main+Mcts",
     "params": {
-      "card_name": "Strike",
-      "enemy_name": "Unknown Enemy"
+      "step_id": 2,
+      "memory_priority": "medium",
+      "skill_key": "title_main::enter_single_mode::single_mode",
+      "mcts_heuristic_score": 0.99,
+      "mcts_learned_score": 0.0,
+      "mcts_final_score": 0.693,
+      "mcts_top_score": 0.693,
+      "mcts_candidate_count": 2
     },
+    "execution_plan_count": 1,
     "execution_plan": [
       {
-        "op": "click_card",
-        "card_name": "Strike",
-        "card_bbox": [
-          492,
-          936,
-          697,
-          1164
-        ]
-      },
-      {
-        "op": "click_enemy",
-        "enemy_name": "Unknown Enemy",
-        "enemy_bbox": [
-          960,
-          192,
-          1766,
-          816
-        ]
+        "op": "click_button",
+        "button_name": "single_mode"
       }
     ]
   },
   "feedback_panel": {
     "title": "执行反馈",
     "execute_status": "success",
-    "before_scene": "battle",
-    "after_scene": "battle",
-    "time_cost_ms": 400,
+    "before_scene": "title_main",
+    "after_scene": "title_main",
+    "time_cost_ms": 809,
     "click_position": [
-      594,
-      1050
+      1177,
+      1094
     ],
-    "screen_diff": "possible_battle_state_changed",
+    "screen_diff": "title_menu_advanced",
     "error_message": "",
     "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png"
   },
   "log_panel": {
     "title": "运行日志",
     "step_id": 2,
-    "scene_type": "battle",
-    "input_summary": "scene=battle, cards=4, enemies=1, energy=3",
-    "decision": "play_card | 当前能量足够，优先使用攻击牌推进战斗节奏。",
+    "scene_type": "title_main",
+    "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
+    "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
     "result": "success",
-    "time_cost_ms": 805,
+    "time_cost_ms": 6382,
     "operator": "A组执行平台",
-    "timestamp": "2026-03-11 20:31:58"
+    "timestamp": "2026-03-18 15:18:07"
   },
   "skill_panel": {
     "title": "技能演化",
-    "skill_id": "battle_play_card_strike",
-    "scene_type": "battle",
-    "trigger_condition": "scene=battle, hp=None/None, energy=3, enemies=0, cards=6",
-    "action_pattern": "当前能量足够，优先使用攻击牌推进战斗节奏。",
-    "success_count": 51,
+    "skill_id": "title_main::enter_single_mode::single_mode",
+    "scene_type": "title_main",
+    "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
+    "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
+    "success_count": 13,
     "fail_count": 0,
-    "reuse_count": 51,
-    "last_update": "2026-03-11 20:31:58",
-    "teacher_feedback": "动作 play_card 执行成功，但收益一般，建议保留为可选经验。"
+    "reuse_count": 13,
+    "last_update": "2026-03-18 15:18:07",
+    "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。"
+  },
+  "step_record": {
+    "step_id": 2,
+    "task": "Play the game",
+    "state_data": {
+      "scene_type": "title_main",
+      "scene_variant": null,
+      "scene_scores": {
+        "battle": 0.4531,
+        "battle_result": 0.5344,
+        "blessing_choice": 0.4766,
+        "campfire_choice": 0.5031,
+        "campfire_rest_done": 0.5094,
+        "campfire_upgrade": 0.6266,
+        "card_reward": 0.5,
+        "character_select": 0.4633,
+        "map": 0.5656,
+        "merchant": 0.5547,
+        "merchant_shop": 0.5406,
+        "mode_select": 0.5625,
+        "title_main": 0.8711
+      },
+      "match_confidence": 0.8711,
+      "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+      "flow_phase_before": "bootstrap",
+      "flow_phase_after": "bootstrap",
+      "flow_prev_scene": "title_main",
+      "flow_allowed_scenes": [
+        "mode_select",
+        "title_main"
+      ],
+      "flow_corrected": false,
+      "flow_reason": "top_candidate_accepted",
+      "flow_ordered_candidates": [
+        [
+          "title_main",
+          0.95
+        ],
+        [
+          "campfire_upgrade",
+          0.6266
+        ],
+        [
+          "mode_select",
+          0.6
+        ],
+        [
+          "map",
+          0.5656
+        ],
+        [
+          "merchant",
+          0.5547
+        ],
+        [
+          "merchant_shop",
+          0.5406
+        ]
+      ],
+      "floor": null,
+      "hp": null,
+      "max_hp": null,
+      "energy": 0,
+      "hand_cards": [],
+      "enemies": [],
+      "map_options": [],
+      "reward_options": [],
+      "menu_options": [
+        {
+          "name": "single_mode",
+          "bbox": [
+            972,
+            999,
+            1382,
+            1066
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "multi_mode",
+          "bbox": [
+            972,
+            1066,
+            1382,
+            1133
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "timeline",
+          "bbox": [
+            972,
+            1133,
+            1382,
+            1200
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "settings",
+          "bbox": [
+            972,
+            1200,
+            1382,
+            1267
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "encyclopedia",
+          "bbox": [
+            972,
+            1267,
+            1382,
+            1334
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "quit",
+          "bbox": [
+            972,
+            1334,
+            1382,
+            1468
+          ],
+          "confidence": 0.75
+        }
+      ],
+      "mode_options": [],
+      "character_options": [],
+      "selected_character": null,
+      "available_buttons": [
+        {
+          "name": "single_mode",
+          "bbox": [
+            1024,
+            1034,
+            1331,
+            1154
+          ],
+          "confidence": 0.95
+        }
+      ],
+      "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_002_before.png",
+      "detected_regions": {
+        "scene_hint": "title_main",
+        "scene_variant": null,
+        "scene_scores": {
+          "battle": 0.4531,
+          "battle_result": 0.5344,
+          "blessing_choice": 0.4766,
+          "campfire_choice": 0.5031,
+          "campfire_rest_done": 0.5094,
+          "campfire_upgrade": 0.6266,
+          "card_reward": 0.5,
+          "character_select": 0.4633,
+          "map": 0.5656,
+          "merchant": 0.5547,
+          "merchant_shop": 0.5406,
+          "mode_select": 0.5625,
+          "title_main": 0.8711
+        },
+        "match_confidence": 0.8711,
+        "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+        "scene_match_debug": {
+          "threshold": 0.78,
+          "accepted": true,
+          "best_scene": "title_main",
+          "best_detail": {
+            "rois": [
+              {
+                "roi": "logo",
+                "similarity": 0.9062,
+                "weight": 0.55
+              },
+              {
+                "roi": "menu",
+                "similarity": 0.8281,
+                "weight": 0.45
+              }
+            ]
+          },
+          "scene_rank": [
+            {
+              "scene": "battle",
+              "score": 0.4531,
+              "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
+              "variant": "normal"
+            },
+            {
+              "scene": "battle_result",
+              "score": 0.5344,
+              "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
+              "variant": null
+            },
+            {
+              "scene": "blessing_choice",
+              "score": 0.4766,
+              "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_choice",
+              "score": 0.5031,
+              "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_rest_done",
+              "score": 0.5094,
+              "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_upgrade",
+              "score": 0.6266,
+              "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
+              "variant": null
+            },
+            {
+              "scene": "card_reward",
+              "score": 0.5,
+              "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
+              "variant": null
+            },
+            {
+              "scene": "character_select",
+              "score": 0.4633,
+              "template_path": "pic/scene_templates/character_select/character_select_001.png",
+              "variant": null
+            },
+            {
+              "scene": "map",
+              "score": 0.5656,
+              "template_path": "pic/scene_templates/map/map_001.png",
+              "variant": null
+            },
+            {
+              "scene": "merchant",
+              "score": 0.5547,
+              "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
+              "variant": null
+            },
+            {
+              "scene": "merchant_shop",
+              "score": 0.5406,
+              "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
+              "variant": null
+            },
+            {
+              "scene": "mode_select",
+              "score": 0.5625,
+              "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
+              "variant": null
+            },
+            {
+              "scene": "title_main",
+              "score": 0.8711,
+              "template_path": "pic/scene_templates/title_main/title_main_001.png",
+              "variant": null
+            }
+          ]
+        },
+        "legacy_scene_scores": {
+          "title_main": 5.0,
+          "mode_select": 3.0,
+          "character_select": 1.0,
+          "blessing_choice": 0.5,
+          "battle": 2.0,
+          "map": 0.0
+        },
+        "flow_phase_before": "bootstrap",
+        "flow_phase_after": "bootstrap",
+        "flow_prev_scene": "title_main",
+        "flow_allowed_scenes": [
+          "mode_select",
+          "title_main"
+        ],
+        "flow_corrected": false,
+        "flow_reason": "top_candidate_accepted",
+        "flow_ordered_candidates": [
+          [
+            "title_main",
+            0.95
+          ],
+          [
+            "campfire_upgrade",
+            0.6266
+          ],
+          [
+            "mode_select",
+            0.6
+          ],
+          [
+            "map",
+            0.5656
+          ],
+          [
+            "merchant",
+            0.5547
+          ],
+          [
+            "merchant_shop",
+            0.5406
+          ]
+        ],
+        "window_bbox": [
+          0,
+          34,
+          2560,
+          1528
+        ],
+        "capture_bbox": [
+          0,
+          34,
+          2560,
+          1528
+        ],
+        "timestamp": "2026-03-18 15:18:03",
+        "title_logo_area": [
+          512,
+          332,
+          1792,
+          900
+        ],
+        "title_menu_column": [
+          972,
+          990,
+          1382,
+          1468
+        ],
+        "title_single_mode": [
+          1024,
+          1034,
+          1331,
+          1154
+        ],
+        "single_standard_card": [
+          486,
+          302,
+          998,
+          1318
+        ],
+        "single_daily_card": [
+          1049,
+          302,
+          1561,
+          1318
+        ],
+        "single_custom_card": [
+          1612,
+          302,
+          2150,
+          1318
+        ],
+        "back_button": [
+          0,
+          1079,
+          256,
+          1423
+        ],
+        "character_confirm_button": [
+          2201,
+          1199,
+          2534,
+          1483
+        ],
+        "continue_button": [
+          204,
+          1408,
+          716,
+          1520
+        ],
+        "right_arrow_button": [
+          2304,
+          1049,
+          2534,
+          1408
+        ],
+        "center_modal_button": [
+          1024,
+          1199,
+          1536,
+          1408
+        ],
+        "hand_area": [
+          307,
+          1184,
+          2252,
+          1498
+        ],
+        "enemy_area": [
+          1280,
+          273,
+          2355,
+          1049
+        ],
+        "player_hp_bar": [
+          102,
+          1348,
+          563,
+          1453
+        ],
+        "energy_area": [
+          998,
+          1318,
+          1280,
+          1498
+        ],
+        "map_area": [
+          256,
+          153,
+          2304,
+          1259
+        ],
+        "reward_area": [
+          460,
+          302,
+          2099,
+          1348
+        ],
+        "end_turn_button": [
+          2150,
+          1079,
+          2483,
+          1333
+        ],
+        "detected_cards": [],
+        "detected_enemies": [],
+        "map_options": [],
+        "reward_options": [],
+        "player": {
+          "hp": null,
+          "max_hp": null,
+          "energy": 0
+        },
+        "floor_hint": null,
+        "detected_buttons": [
+          {
+            "name": "single_mode",
+            "bbox": [
+              1024,
+              1034,
+              1331,
+              1154
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "menu_options": [
+          {
+            "name": "single_mode",
+            "bbox": [
+              972,
+              999,
+              1382,
+              1066
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "multi_mode",
+            "bbox": [
+              972,
+              1066,
+              1382,
+              1133
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "timeline",
+            "bbox": [
+              972,
+              1133,
+              1382,
+              1200
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "settings",
+            "bbox": [
+              972,
+              1200,
+              1382,
+              1267
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "encyclopedia",
+            "bbox": [
+              972,
+              1267,
+              1382,
+              1334
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "quit",
+            "bbox": [
+              972,
+              1334,
+              1382,
+              1468
+            ],
+            "confidence": 0.75
+          }
+        ],
+        "mode_options": [],
+        "character_options": [],
+        "selected_character": null,
+        "single_mode_bbox": [
+          1024,
+          1034,
+          1331,
+          1154
+        ]
+      },
+      "timestamp": "2026-03-18 15:18:03",
+      "step_id": 2,
+      "phase": "before",
+      "window_name": "Slay the Spire 2",
+      "resolution": [
+        1280,
+        720
+      ],
+      "window_bbox": [
+        0,
+        34,
+        2560,
+        1528
+      ],
+      "observe_ok": true,
+      "observe_failure_streak": 0
+    },
+    "post_state_data": {
+      "scene_type": "title_main",
+      "scene_variant": null,
+      "scene_scores": {
+        "battle": 0.443,
+        "battle_result": 0.5469,
+        "blessing_choice": 0.4437,
+        "campfire_choice": 0.5141,
+        "campfire_rest_done": 0.5125,
+        "campfire_upgrade": 0.65,
+        "card_reward": 0.4922,
+        "character_select": 0.4687,
+        "map": 0.5531,
+        "merchant": 0.5039,
+        "merchant_shop": 0.5,
+        "mode_select": 0.5938,
+        "title_main": 0.85
+      },
+      "match_confidence": 0.85,
+      "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+      "flow_phase_before": "bootstrap",
+      "flow_phase_after": "bootstrap",
+      "flow_prev_scene": "title_main",
+      "flow_allowed_scenes": [
+        "mode_select",
+        "title_main"
+      ],
+      "flow_corrected": false,
+      "flow_reason": "top_candidate_accepted",
+      "flow_ordered_candidates": [
+        [
+          "title_main",
+          0.95
+        ],
+        [
+          "campfire_upgrade",
+          0.65
+        ],
+        [
+          "mode_select",
+          0.6
+        ],
+        [
+          "map",
+          0.5531
+        ],
+        [
+          "battle_result",
+          0.5469
+        ],
+        [
+          "campfire_choice",
+          0.5141
+        ]
+      ],
+      "floor": null,
+      "hp": null,
+      "max_hp": null,
+      "energy": 0,
+      "hand_cards": [],
+      "enemies": [],
+      "map_options": [],
+      "reward_options": [],
+      "menu_options": [
+        {
+          "name": "single_mode",
+          "bbox": [
+            972,
+            999,
+            1382,
+            1066
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "multi_mode",
+          "bbox": [
+            972,
+            1066,
+            1382,
+            1133
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "timeline",
+          "bbox": [
+            972,
+            1133,
+            1382,
+            1200
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "settings",
+          "bbox": [
+            972,
+            1200,
+            1382,
+            1267
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "encyclopedia",
+          "bbox": [
+            972,
+            1267,
+            1382,
+            1334
+          ],
+          "confidence": 0.75
+        },
+        {
+          "name": "quit",
+          "bbox": [
+            972,
+            1334,
+            1382,
+            1468
+          ],
+          "confidence": 0.75
+        }
+      ],
+      "mode_options": [],
+      "character_options": [],
+      "selected_character": null,
+      "available_buttons": [
+        {
+          "name": "single_mode",
+          "bbox": [
+            1024,
+            1034,
+            1331,
+            1154
+          ],
+          "confidence": 0.95
+        }
+      ],
+      "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_002_after.png",
+      "detected_regions": {
+        "scene_hint": "title_main",
+        "scene_variant": null,
+        "scene_scores": {
+          "battle": 0.443,
+          "battle_result": 0.5469,
+          "blessing_choice": 0.4437,
+          "campfire_choice": 0.5141,
+          "campfire_rest_done": 0.5125,
+          "campfire_upgrade": 0.65,
+          "card_reward": 0.4922,
+          "character_select": 0.4687,
+          "map": 0.5531,
+          "merchant": 0.5039,
+          "merchant_shop": 0.5,
+          "mode_select": 0.5938,
+          "title_main": 0.85
+        },
+        "match_confidence": 0.85,
+        "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+        "scene_match_debug": {
+          "threshold": 0.78,
+          "accepted": true,
+          "best_scene": "title_main",
+          "best_detail": {
+            "rois": [
+              {
+                "roi": "logo",
+                "similarity": 0.9062,
+                "weight": 0.55
+              },
+              {
+                "roi": "menu",
+                "similarity": 0.7812,
+                "weight": 0.45
+              }
+            ]
+          },
+          "scene_rank": [
+            {
+              "scene": "battle",
+              "score": 0.443,
+              "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
+              "variant": "normal"
+            },
+            {
+              "scene": "battle_result",
+              "score": 0.5469,
+              "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
+              "variant": null
+            },
+            {
+              "scene": "blessing_choice",
+              "score": 0.4437,
+              "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_choice",
+              "score": 0.5141,
+              "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_rest_done",
+              "score": 0.5125,
+              "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
+              "variant": null
+            },
+            {
+              "scene": "campfire_upgrade",
+              "score": 0.65,
+              "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
+              "variant": null
+            },
+            {
+              "scene": "card_reward",
+              "score": 0.4922,
+              "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
+              "variant": null
+            },
+            {
+              "scene": "character_select",
+              "score": 0.4687,
+              "template_path": "pic/scene_templates/character_select/character_select_001.png",
+              "variant": null
+            },
+            {
+              "scene": "map",
+              "score": 0.5531,
+              "template_path": "pic/scene_templates/map/map_002.png",
+              "variant": null
+            },
+            {
+              "scene": "merchant",
+              "score": 0.5039,
+              "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
+              "variant": null
+            },
+            {
+              "scene": "merchant_shop",
+              "score": 0.5,
+              "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
+              "variant": null
+            },
+            {
+              "scene": "mode_select",
+              "score": 0.5938,
+              "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
+              "variant": null
+            },
+            {
+              "scene": "title_main",
+              "score": 0.85,
+              "template_path": "pic/scene_templates/title_main/title_main_001.png",
+              "variant": null
+            }
+          ]
+        },
+        "legacy_scene_scores": {
+          "title_main": 6.0,
+          "mode_select": 3.0,
+          "character_select": 1.0,
+          "blessing_choice": 0.5,
+          "battle": 2.0,
+          "map": 0.0
+        },
+        "flow_phase_before": "bootstrap",
+        "flow_phase_after": "bootstrap",
+        "flow_prev_scene": "title_main",
+        "flow_allowed_scenes": [
+          "mode_select",
+          "title_main"
+        ],
+        "flow_corrected": false,
+        "flow_reason": "top_candidate_accepted",
+        "flow_ordered_candidates": [
+          [
+            "title_main",
+            0.95
+          ],
+          [
+            "campfire_upgrade",
+            0.65
+          ],
+          [
+            "mode_select",
+            0.6
+          ],
+          [
+            "map",
+            0.5531
+          ],
+          [
+            "battle_result",
+            0.5469
+          ],
+          [
+            "campfire_choice",
+            0.5141
+          ]
+        ],
+        "window_bbox": [
+          0,
+          34,
+          2560,
+          1528
+        ],
+        "capture_bbox": [
+          0,
+          34,
+          2560,
+          1528
+        ],
+        "timestamp": "2026-03-18 15:18:07",
+        "title_logo_area": [
+          512,
+          332,
+          1792,
+          900
+        ],
+        "title_menu_column": [
+          972,
+          990,
+          1382,
+          1468
+        ],
+        "title_single_mode": [
+          1024,
+          1034,
+          1331,
+          1154
+        ],
+        "single_standard_card": [
+          486,
+          302,
+          998,
+          1318
+        ],
+        "single_daily_card": [
+          1049,
+          302,
+          1561,
+          1318
+        ],
+        "single_custom_card": [
+          1612,
+          302,
+          2150,
+          1318
+        ],
+        "back_button": [
+          0,
+          1079,
+          256,
+          1423
+        ],
+        "character_confirm_button": [
+          2201,
+          1199,
+          2534,
+          1483
+        ],
+        "continue_button": [
+          204,
+          1408,
+          716,
+          1520
+        ],
+        "right_arrow_button": [
+          2304,
+          1049,
+          2534,
+          1408
+        ],
+        "center_modal_button": [
+          1024,
+          1199,
+          1536,
+          1408
+        ],
+        "hand_area": [
+          307,
+          1184,
+          2252,
+          1498
+        ],
+        "enemy_area": [
+          1280,
+          273,
+          2355,
+          1049
+        ],
+        "player_hp_bar": [
+          102,
+          1348,
+          563,
+          1453
+        ],
+        "energy_area": [
+          998,
+          1318,
+          1280,
+          1498
+        ],
+        "map_area": [
+          256,
+          153,
+          2304,
+          1259
+        ],
+        "reward_area": [
+          460,
+          302,
+          2099,
+          1348
+        ],
+        "end_turn_button": [
+          2150,
+          1079,
+          2483,
+          1333
+        ],
+        "detected_cards": [],
+        "detected_enemies": [],
+        "map_options": [],
+        "reward_options": [],
+        "player": {
+          "hp": null,
+          "max_hp": null,
+          "energy": 0
+        },
+        "floor_hint": null,
+        "detected_buttons": [
+          {
+            "name": "single_mode",
+            "bbox": [
+              1024,
+              1034,
+              1331,
+              1154
+            ],
+            "confidence": 0.95
+          }
+        ],
+        "menu_options": [
+          {
+            "name": "single_mode",
+            "bbox": [
+              972,
+              999,
+              1382,
+              1066
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "multi_mode",
+            "bbox": [
+              972,
+              1066,
+              1382,
+              1133
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "timeline",
+            "bbox": [
+              972,
+              1133,
+              1382,
+              1200
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "settings",
+            "bbox": [
+              972,
+              1200,
+              1382,
+              1267
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "encyclopedia",
+            "bbox": [
+              972,
+              1267,
+              1382,
+              1334
+            ],
+            "confidence": 0.75
+          },
+          {
+            "name": "quit",
+            "bbox": [
+              972,
+              1334,
+              1382,
+              1468
+            ],
+            "confidence": 0.75
+          }
+        ],
+        "mode_options": [],
+        "character_options": [],
+        "selected_character": null,
+        "single_mode_bbox": [
+          1024,
+          1034,
+          1331,
+          1154
+        ]
+      },
+      "timestamp": "2026-03-18 15:18:07",
+      "step_id": 2,
+      "phase": "after",
+      "window_name": "Slay the Spire 2",
+      "resolution": [
+        1280,
+        720
+      ],
+      "window_bbox": [
+        0,
+        34,
+        2560,
+        1528
+      ],
+      "observe_ok": true,
+      "observe_failure_streak": 0
+    },
+    "action_data": {
+      "action_type": "enter_single_mode",
+      "reason": "当前位于主页，优先进入单人模式以开始一局游戏。",
+      "target": {
+        "button": "single_mode"
+      },
+      "execution_plan": [
+        {
+          "op": "click_button",
+          "button_name": "single_mode"
+        }
+      ],
+      "params": {
+        "step_id": 2,
+        "memory_priority": "medium",
+        "skill_key": "title_main::enter_single_mode::single_mode",
+        "mcts_heuristic_score": 0.99,
+        "mcts_learned_score": 0.0,
+        "mcts_final_score": 0.693,
+        "mcts_top_score": 0.693,
+        "mcts_candidate_count": 2
+      },
+      "confidence": 0.96,
+      "source": "Brain-rule-title_main+Mcts",
+      "timestamp": "2026-03-18 15:18:03",
+      "step_id": 2
+    },
+    "feedback_data": {
+      "action_type": "enter_single_mode",
+      "execute_status": "success",
+      "before_scene": "title_main",
+      "after_scene": "title_main",
+      "time_cost_ms": 809,
+      "click_position": [
+        1177,
+        1094
+      ],
+      "click_positions": [
+        [
+          1177,
+          1094
+        ]
+      ],
+      "screen_diff": "title_menu_advanced",
+      "error_message": "",
+      "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
+      "timestamp": "2026-03-18 15:18:06",
+      "step_id": 2
+    },
+    "log_data": {
+      "step_id": 2,
+      "scene_type": "title_main",
+      "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
+      "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
+      "result": "success",
+      "time_cost_ms": 6382,
+      "screenshot": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
+      "operator": "A组执行平台",
+      "timestamp": "2026-03-18 15:18:07"
+    },
+    "skill_data": {
+      "skill_id": "title_main::enter_single_mode::single_mode",
+      "scene_type": "title_main",
+      "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
+      "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
+      "success_count": 13,
+      "fail_count": 0,
+      "reuse_count": 13,
+      "last_update": "2026-03-18 15:18:07",
+      "memory_priority": "medium",
+      "outcome_tags": [
+        "execute_success",
+        "usable"
+      ],
+      "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。",
+      "last_score": 0.75,
+      "last_episode_id": null,
+      "last_execute_status": "success"
+    },
+    "teacher_feedback": {
+      "score": 0.75,
+      "feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。",
+      "should_promote_to_skill": true,
+      "memory_priority": "medium",
+      "outcome_tags": [
+        "execute_success",
+        "usable"
+      ],
+      "timestamp": "2026-03-18 15:18:07",
+      "step_id": 2,
+      "scene_type": "title_main",
+      "action_type": "enter_single_mode",
+      "execute_status": "success",
+      "skill_key": "title_main::enter_single_mode::single_mode"
+    },
+    "timestamp": "2026-03-18 15:18:07"
   }
 }

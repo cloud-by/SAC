@@ -1,60 +1,30 @@
 {
-  "action_type": "play_card",
+  "action_type": "enter_single_mode",
+  "reason": "当前位于主页，优先进入单人模式以开始一局游戏。",
   "target": {
-    "card": {
-      "name": "Strike",
-      "cost": 1,
-      "type": "attack",
-      "bbox": [
-        492,
-        936,
-        697,
-        1164
-      ],
-      "confidence": 0.95
-    },
-    "enemy": {
-      "name": "Unknown Enemy",
-      "hp": null,
-      "intent": "unknown",
-      "bbox": [
-        960,
-        192,
-        1766,
-        816
-      ],
-      "confidence": 0.9
-    }
+    "button": "single_mode"
   },
   "execution_plan": [
     {
-      "op": "click_card",
-      "card_name": "Strike",
-      "card_bbox": [
-        492,
-        936,
-        697,
-        1164
-      ]
-    },
-    {
-      "op": "click_enemy",
-      "enemy_name": "Unknown Enemy",
-      "enemy_bbox": [
-        960,
-        192,
-        1766,
-        816
-      ]
+      "op": "click_button",
+      "button_name": "single_mode"
     }
   ],
   "params": {
-    "card_name": "Strike",
-    "enemy_name": "Unknown Enemy"
+    "step_id": 3,
+    "llm_analysis": "MOCK_RESPONSE: 当前为 mock 模型返回，用于占位调试。",
+    "llm_provider": "mock",
+    "llm_model": "demo-model",
+    "memory_priority": "medium",
+    "skill_key": "title_main::enter_single_mode::single_mode",
+    "mcts_heuristic_score": 0.99,
+    "mcts_learned_score": 0.0,
+    "mcts_final_score": 0.693,
+    "mcts_top_score": 0.693,
+    "mcts_candidate_count": 2
   },
-  "reason": "当前能量足够，优先使用攻击牌推进战斗节奏。",
-  "confidence": 0.95,
-  "source": "Brain-rule-battle+Mcts",
-  "timestamp": "2026-03-11 20:31:58",
+  "confidence": 0.96,
+  "source": "Brain-rule-title_main+Mcts",
+  "timestamp": "2026-03-18 14:51:46",
   "step_id": 3
 }

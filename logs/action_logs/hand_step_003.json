@@ -1,16 +1,22 @@
 {
-  "action_type": "play_card",
+  "action_type": "enter_single_mode",
   "execute_status": "success",
-  "before_scene": "battle",
-  "after_scene": "battle",
-  "time_cost_ms": 400,
+  "before_scene": "title_main",
+  "after_scene": "title_main",
+  "time_cost_ms": 550,
   "click_position": [
-    594,
-    1050
+    1177,
+    1094
   ],
-  "screen_diff": "possible_battle_state_changed",
+  "click_positions": [
+    [
+      1177,
+      1094
+    ]
+  ],
+  "screen_diff": "title_menu_advanced",
   "error_message": "",
   "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_003.png",
-  "timestamp": "2026-03-11 20:31:59",
+  "timestamp": "2026-03-18 14:51:46",
   "step_id": 3
 }

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-17 21:24:03",
+  "updated_at": "2026-03-18 15:18:07",
   "skills": {
     "battle_play_card_strike": {
       "skill_id": "battle_play_card_strike",
@@ -48,6 +48,25 @@
       "last_update": "2026-03-11 20:56:12",
       "teacher_feedback": "动作 choose_reward 执行成功，但收益一般，建议保留为可选经验。",
       "last_score": 0.75
+    },
+    "title_main::enter_single_mode::single_mode": {
+      "skill_id": "title_main::enter_single_mode::single_mode",
+      "scene_type": "title_main",
+      "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
+      "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
+      "success_count": 13,
+      "fail_count": 0,
+      "reuse_count": 13,
+      "last_update": "2026-03-18 15:18:07",
+      "memory_priority": "medium",
+      "outcome_tags": [
+        "execute_success",
+        "usable"
+      ],
+      "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。",
+      "last_score": 0.75,
+      "last_episode_id": null,
+      "last_execute_status": "success"
     }
   }
 }

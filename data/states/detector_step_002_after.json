@@ -1,137 +1,377 @@
 {
-  "screen_image": "D:\\code\\sts-agent-course-project\\screenshots\\history\\step_002_after.png",
-  "scene_hint": "battle",
+  "scene_hint": "title_main",
+  "scene_variant": null,
+  "scene_scores": {
+    "battle": 0.443,
+    "battle_result": 0.5469,
+    "blessing_choice": 0.4437,
+    "campfire_choice": 0.5141,
+    "campfire_rest_done": 0.5125,
+    "campfire_upgrade": 0.65,
+    "card_reward": 0.4922,
+    "character_select": 0.4687,
+    "map": 0.5531,
+    "merchant": 0.5039,
+    "merchant_shop": 0.5,
+    "mode_select": 0.5938,
+    "title_main": 0.85
+  },
+  "match_confidence": 0.85,
+  "matched_template": "pic/scene_templates/title_main/title_main_001.png",
+  "scene_match_debug": {
+    "threshold": 0.78,
+    "accepted": true,
+    "best_scene": "title_main",
+    "best_detail": {
+      "rois": [
+        {
+          "roi": "logo",
+          "similarity": 0.9062,
+          "weight": 0.55
+        },
+        {
+          "roi": "menu",
+          "similarity": 0.7812,
+          "weight": 0.45
+        }
+      ]
+    },
+    "scene_rank": [
+      {
+        "scene": "battle",
+        "score": 0.443,
+        "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
+        "variant": "normal"
+      },
+      {
+        "scene": "battle_result",
+        "score": 0.5469,
+        "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
+        "variant": null
+      },
+      {
+        "scene": "blessing_choice",
+        "score": 0.4437,
+        "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_choice",
+        "score": 0.5141,
+        "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_rest_done",
+        "score": 0.5125,
+        "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
+        "variant": null
+      },
+      {
+        "scene": "campfire_upgrade",
+        "score": 0.65,
+        "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
+        "variant": null
+      },
+      {
+        "scene": "card_reward",
+        "score": 0.4922,
+        "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
+        "variant": null
+      },
+      {
+        "scene": "character_select",
+        "score": 0.4687,
+        "template_path": "pic/scene_templates/character_select/character_select_001.png",
+        "variant": null
+      },
+      {
+        "scene": "map",
+        "score": 0.5531,
+        "template_path": "pic/scene_templates/map/map_002.png",
+        "variant": null
+      },
+      {
+        "scene": "merchant",
+        "score": 0.5039,
+        "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
+        "variant": null
+      },
+      {
+        "scene": "merchant_shop",
+        "score": 0.5,
+        "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
+        "variant": null
+      },
+      {
+        "scene": "mode_select",
+        "score": 0.5938,
+        "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
+        "variant": null
+      },
+      {
+        "scene": "title_main",
+        "score": 0.85,
+        "template_path": "pic/scene_templates/title_main/title_main_001.png",
+        "variant": null
+      }
+    ]
+  },
+  "legacy_scene_scores": {
+    "title_main": 6.0,
+    "mode_select": 3.0,
+    "character_select": 1.0,
+    "blessing_choice": 0.5,
+    "battle": 2.0,
+    "map": 0.0
+  },
+  "flow_phase_before": "bootstrap",
+  "flow_phase_after": "bootstrap",
+  "flow_prev_scene": "title_main",
+  "flow_allowed_scenes": [
+    "mode_select",
+    "title_main"
+  ],
+  "flow_corrected": false,
+  "flow_reason": "top_candidate_accepted",
+  "flow_ordered_candidates": [
+    [
+      "title_main",
+      0.95
+    ],
+    [
+      "campfire_upgrade",
+      0.65
+    ],
+    [
+      "mode_select",
+      0.6
+    ],
+    [
+      "map",
+      0.5531
+    ],
+    [
+      "battle_result",
+      0.5469
+    ],
+    [
+      "campfire_choice",
+      0.5141
+    ]
+  ],
   "window_bbox": [
     0,
+    34,
+    2560,
+    1528
+  ],
+  "capture_bbox": [
     0,
-    1920,
-    1200
+    34,
+    2560,
+    1528
+  ],
+  "timestamp": "2026-03-18 15:18:07",
+  "title_logo_area": [
+    512,
+    332,
+    1792,
+    900
+  ],
+  "title_menu_column": [
+    972,
+    990,
+    1382,
+    1468
+  ],
+  "title_single_mode": [
+    1024,
+    1034,
+    1331,
+    1154
+  ],
+  "single_standard_card": [
+    486,
+    302,
+    998,
+    1318
+  ],
+  "single_daily_card": [
+    1049,
+    302,
+    1561,
+    1318
+  ],
+  "single_custom_card": [
+    1612,
+    302,
+    2150,
+    1318
+  ],
+  "back_button": [
+    0,
+    1079,
+    256,
+    1423
+  ],
+  "character_confirm_button": [
+    2201,
+    1199,
+    2534,
+    1483
+  ],
+  "continue_button": [
+    204,
+    1408,
+    716,
+    1520
+  ],
+  "right_arrow_button": [
+    2304,
+    1049,
+    2534,
+    1408
+  ],
+  "center_modal_button": [
+    1024,
+    1199,
+    1536,
+    1408
   ],
   "hand_area": [
-    230,
-    924,
-    1689,
-    1176
+    307,
+    1184,
+    2252,
+    1498
   ],
   "enemy_area": [
-    960,
-    192,
-    1766,
-    816
+    1280,
+    273,
+    2355,
+    1049
   ],
   "player_hp_bar": [
-    76,
-    1056,
-    422,
-    1140
+    102,
+    1348,
+    563,
+    1453
   ],
   "energy_area": [
-    748,
-    1032,
-    960,
-    1176
-  ],
-  "end_turn_button": [
-    1612,
-    840,
-    1862,
-    1044
+    998,
+    1318,
+    1280,
+    1498
   ],
   "map_area": [
-    192,
-    96,
-    1728,
-    983
+    256,
+    153,
+    2304,
+    1259
   ],
   "reward_area": [
-    345,
-    216,
-    1574,
-    936
+    460,
+    302,
+    2099,
+    1348
   ],
-  "detected_buttons": [
-    {
-      "name": "end_turn",
-      "bbox": [
-        1612,
-        840,
-        1862,
-        1044
-      ],
-      "confidence": 0.7
-    }
+  "end_turn_button": [
+    2150,
+    1079,
+    2483,
+    1333
   ],
-  "detected_cards": [
-    {
-      "name": "Strike",
-      "bbox": [
-        492,
-        936,
-        697,
-        1164
-      ],
-      "cost": 1,
-      "type": "attack",
-      "confidence": 0.95
-    },
-    {
-      "name": "Defend",
-      "bbox": [
-        735,
-        936,
-        940,
-        1164
-      ],
-      "cost": 1,
-      "type": "skill",
-      "confidence": 0.95
-    },
-    {
-      "name": "Strike",
-      "bbox": [
-        978,
-        936,
-        1183,
-        1164
-      ],
-      "cost": 1,
-      "type": "attack",
-      "confidence": 0.95
-    },
-    {
-      "name": "Defend",
-      "bbox": [
-        1221,
-        936,
-        1426,
-        1164
-      ],
-      "cost": 1,
-      "type": "skill",
-      "confidence": 0.95
-    }
-  ],
-  "detected_enemies": [
-    {
-      "name": "Unknown Enemy",
-      "bbox": [
-        960,
-        192,
-        1766,
-        816
-      ],
-      "hp": null,
-      "intent": "unknown",
-      "confidence": 0.9
-    }
-  ],
+  "detected_cards": [],
+  "detected_enemies": [],
   "map_options": [],
   "reward_options": [],
   "player": {
     "hp": null,
     "max_hp": null,
-    "energy": 3
+    "energy": 0
   },
   "floor_hint": null,
-  "timestamp": "2026-03-11 20:31:58"
+  "detected_buttons": [
+    {
+      "name": "single_mode",
+      "bbox": [
+        1024,
+        1034,
+        1331,
+        1154
+      ],
+      "confidence": 0.95
+    }
+  ],
+  "menu_options": [
+    {
+      "name": "single_mode",
+      "bbox": [
+        972,
+        999,
+        1382,
+        1066
+      ],
+      "confidence": 0.75
+    },
+    {
+      "name": "multi_mode",
+      "bbox": [
+        972,
+        1066,
+        1382,
+        1133
+      ],
+      "confidence": 0.75
+    },
+    {
+      "name": "timeline",
+      "bbox": [
+        972,
+        1133,
+        1382,
+        1200
+      ],
+      "confidence": 0.75
+    },
+    {
+      "name": "settings",
+      "bbox": [
+        972,
+        1200,
+        1382,
+        1267
+      ],
+      "confidence": 0.75
+    },
+    {
+      "name": "encyclopedia",
+      "bbox": [
+        972,
+        1267,
+        1382,
+        1334
+      ],
+      "confidence": 0.75
+    },
+    {
+      "name": "quit",
+      "bbox": [
+        972,
+        1334,
+        1382,
+        1468
+      ],
+      "confidence": 0.75
+    }
+  ],
+  "mode_options": [],
+  "character_options": [],
+  "selected_character": null,
+  "single_mode_bbox": [
+    1024,
+    1034,
+    1331,
+    1154
+  ]
 }

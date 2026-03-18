@@ -1,6 +1,6 @@
 runtime:
   task: "Play the game"
-  max_steps: 1
+  max_steps: 5
   log_level: "INFO"
   mode: "dev_dryrun"
   stop_on_failures: 3
