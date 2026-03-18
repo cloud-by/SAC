@@ -9,14 +9,11 @@ import numpy as np
 from PIL import Image, ImageOps
 
 try:
-    import yaml  # type: ignore
-except Exception:  # pragma: no cover
-    yaml = None
-
-try:
     import cv2  # type: ignore
 except Exception:  # pragma: no cover
     cv2 = None
+
+from BottomUpAgent.common.config_loader import load_yaml_file
 
 
 class SceneMatcher:
@@ -309,11 +306,8 @@ class SceneMatcher:
         path = self._resolve_path(config_file)
         if not path.exists():
             return {}
-        if yaml is None:
-            logging.warning("未安装 PyYAML，无法读取 %s", path)
-            return {}
         try:
-            data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            data = load_yaml_file(path) or {}
             return data if isinstance(data, dict) else {}
         except Exception as exc:
             logging.warning("读取 SceneMatcher 配置失败 %s: %s", path, exc)

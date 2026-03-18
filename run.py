@@ -22,7 +22,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 
-import yaml
+from BottomUpAgent.common.config_loader import load_yaml_file
 
 
 DEFAULT_TASK = "Play the game"
@@ -79,8 +79,7 @@ def load_yaml_config(config_path: str | Path) -> Dict[str, Any]:
     if not path.exists():
         raise FileNotFoundError(f"配置文件不存在: {path}")
 
-    with path.open("r", encoding="utf-8") as f:
-        config = yaml.safe_load(f)
+    config = load_yaml_file(path)
 
     if config is None:
         raise ValueError(f"配置文件为空: {path}")

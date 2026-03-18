@@ -7,15 +7,12 @@ from typing import Any, Dict
 
 
 def _load_yaml(path: Path) -> Dict[str, Any]:
-    try:
-        import yaml  # type: ignore
-    except Exception as exc:
-        raise RuntimeError("缺少 PyYAML，请先执行: pip install pyyaml") from exc
+    from BottomUpAgent.common.config_loader import load_yaml_file
 
     if not path.exists():
         raise FileNotFoundError(f"未找到配置文件: {path}")
 
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    data = load_yaml_file(path) or {}
     if not isinstance(data, dict):
         raise ValueError(f"配置文件不是 dict: {path}")
     return data
@@ -29,7 +26,6 @@ def main() -> int:
 
     if not (project_root / "BottomUpAgent").exists():
         print(f"[ERROR] 项目根目录看起来不对: {project_root}")
-        print(r"用法: python test_scene_capture_flow.py D:\code\sts-agent-course-project")
         return 2
 
     sys.path.insert(0, str(project_root))

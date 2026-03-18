@@ -1,9 +1,17 @@
-opencv-python
-mss
-pywin32
-pyautogui
-pillow
-pydantic
-numpy
-pyyaml
-pywin32
+# Core HTTP/model integration
+requests>=2.31
+
+# Config loading (.env is optional in code, but supported by run.py)
+python-dotenv>=1.0
+PyYAML>=6.0
+
+# Vision / screenshot / image processing
+numpy>=1.26
+Pillow>=10.0
+mss>=9.0
+opencv-python>=4.8
+
+# Desktop window discovery and input control (mainly for Windows game automation)
+PyAutoGUI>=0.9.54
+PyGetWindow>=0.0.9
+pywin32>=306; platform_system == "Windows"

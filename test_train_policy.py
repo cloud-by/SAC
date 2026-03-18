@@ -6,8 +6,9 @@ import sys
 from pathlib import Path
 
 def _load_yaml(path: Path):
-    import yaml
-    return yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    from BottomUpAgent.common.config_loader import load_yaml_file
+
+    return load_yaml_file(path) or {}
 
 def main():
     if len(sys.argv) >= 2:

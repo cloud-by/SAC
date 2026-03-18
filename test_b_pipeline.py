@@ -7,8 +7,9 @@ from pathlib import Path
 from typing import Any, Dict
 
 def load_yaml(path: Path) -> Dict[str, Any]:
-    import yaml  # type: ignore
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    from BottomUpAgent.common.config_loader import load_yaml_file
+
+    data = load_yaml_file(path) or {}
     if not isinstance(data, dict):
         raise ValueError("game.yaml 不是 dict")
     return data
