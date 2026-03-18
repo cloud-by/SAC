@@ -83,12 +83,15 @@ class Trainer:
         signature_action: DefaultDict[str, DefaultDict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
         scene_target_kind: DefaultDict[str, DefaultDict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
         scene_button: DefaultDict[str, DefaultDict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
+        memory_priority_action: DefaultDict[str, DefaultDict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
+        skill_key_action: DefaultDict[str, DefaultDict[str, List[float]]] = defaultdict(lambda: defaultdict(list))
 
         for record in records:
             state_repr = dict(record.get("state_repr", {}) or {})
             action_data = dict(record.get("action_data", {}) or {})
             label = dict(record.get("label", {}) or {})
             teacher = dict(record.get("teacher_feedback", {}) or {})
+            skill_data = dict(record.get("skill_data", {}) or {})
 
             scene_type = str(state_repr.get("scene_type", "unknown") or "unknown")
             state_signature = str(state_repr.get("state_signature", "unknown") or "unknown")
@@ -107,12 +110,21 @@ class Trainer:
             if button:
                 scene_button[scene_type][f"{action_type}::{button}"].append(value)
 
+            memory_priority = str(label.get("memory_priority") or teacher.get("memory_priority") or "low")
+            memory_priority_action[memory_priority][action_type].append(value)
+
+            skill_key = str(label.get("skill_key") or teacher.get("skill_key") or skill_data.get("skill_id") or "")
+            if skill_key:
+                skill_key_action[skill_key][action_type].append(value)
+
         return {
             "global_action_stats": self._finalize_bucket(global_action),
             "scene_action_stats": self._finalize_nested(scene_action),
             "signature_action_stats": self._finalize_nested(signature_action),
             "scene_target_kind_stats": self._finalize_nested(scene_target_kind),
             "scene_button_stats": self._finalize_nested(scene_button),
+            "memory_priority_action_stats": self._finalize_nested(memory_priority_action),
+            "skill_key_action_stats": self._finalize_nested(skill_key_action),
         }
 
     def _resolve_value(self, label: Dict[str, Any], teacher: Dict[str, Any]) -> float:

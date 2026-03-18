@@ -11,7 +11,14 @@ from __future__ import annotations
 
 import logging
 from datetime import datetime
-from typing import Any, Dict
+from typing import Any, Dict, List
+
+from BottomUpAgent.common.protocols import (
+    ensure_action_protocol,
+    ensure_feedback_protocol,
+    ensure_state_protocol,
+    ensure_teacher_protocol,
+)
 
 
 def now_str() -> str:
@@ -30,6 +37,25 @@ class Teacher:
         feedback_data: Dict[str, Any],
         step_id: int,
     ) -> Dict[str, Any]:
+        state_data = ensure_state_protocol(state_data, step_id=step_id,
+                                           phase=str(state_data.get("phase", "before") or "before"))
+        action_data = ensure_action_protocol(
+            action_data,
+            scene_type=str(state_data.get("scene_type", "unknown") or "unknown"),
+            episode_id=action_data.get("episode_id") or state_data.get("episode_id"),
+            step_id=step_id,
+        )
+        feedback_data = ensure_feedback_protocol(
+            feedback_data,
+            action_type=action_data.get("action_type", "wait"),
+            before_scene=feedback_data.get("before_scene", state_data.get("scene_type", "unknown")),
+            after_scene=feedback_data.get("after_scene", state_data.get("scene_type", "unknown")),
+            elapsed_ms=int(feedback_data.get("time_cost_ms", 0) or 0),
+            screenshot_after=str(feedback_data.get("screenshot_after", "") or ""),
+            step_id=step_id,
+            screen_diff=str(feedback_data.get("screen_diff", "") or ""),
+        )
+
         score = self._score_action(
             state_data=state_data,
             action_data=action_data,
@@ -41,14 +67,24 @@ class Teacher:
             feedback_data=feedback_data,
             score=score,
         )
+        outcome_tags = self._build_outcome_tags(state_data, action_data, feedback_data, score)
 
-        return {
-            "step_id": step_id,
-            "score": score,
-            "feedback": feedback_text,
-            "should_promote_to_skill": score >= 0.5,
-            "timestamp": now_str(),
-        }
+        result = ensure_teacher_protocol(
+            {
+                "score": score,
+                "feedback": feedback_text,
+                "should_promote_to_skill": score >= 0.5,
+                "memory_priority": self._resolve_memory_priority(score, feedback_data),
+                "outcome_tags": outcome_tags,
+            },
+            step_id=step_id,
+            scene_type=str(state_data.get("scene_type", "unknown") or "unknown"),
+            action_type=str(action_data.get("action_type", "wait") or "wait"),
+            execute_status=str(feedback_data.get("execute_status", "unknown") or "unknown"),
+            episode_id=action_data.get("episode_id") or state_data.get("episode_id"),
+        )
+        result["skill_key"] = self._build_skill_key(state_data, action_data)
+        return result
 
     def review(
         self,
@@ -132,3 +168,44 @@ class Teacher:
             return f"动作 {action_type} 执行成功，但收益一般，建议保留为可选经验。"
 
         return f"动作 {action_type} 虽已执行，但效果不明显，建议谨慎复用。"
+
+        def _resolve_memory_priority(self, score: float, feedback_data: Dict[str, Any]) -> str:
+            execute_status = str(feedback_data.get("execute_status", "unknown") or "unknown")
+            if execute_status != "success":
+                return "high"
+            if score >= 0.8:
+                return "high"
+            if score >= 0.5:
+                return "medium"
+            return "low"
+
+        def _build_outcome_tags(
+                self,
+                state_data: Dict[str, Any],
+                action_data: Dict[str, Any],
+                feedback_data: Dict[str, Any],
+                score: float,
+        ) -> List[str]:
+            tags: List[str] = []
+            if feedback_data.get("execute_status") == "success":
+                tags.append("execute_success")
+            else:
+                tags.append("execute_failure")
+            if feedback_data.get("before_scene") != feedback_data.get("after_scene"):
+                tags.append("scene_changed")
+            if action_data.get("action_type") == "wait":
+                tags.append("passive_action")
+            if score >= 0.8:
+                tags.append("high_value")
+            elif score >= 0.5:
+                tags.append("usable")
+            else:
+                tags.append("weak_signal")
+            return tags
+
+        def _build_skill_key(self, state_data: Dict[str, Any], action_data: Dict[str, Any]) -> str:
+            scene_type = str(state_data.get("scene_type", "unknown") or "unknown")
+            action_type = str(action_data.get("action_type", "unknown_action") or "unknown_action")
+            target = action_data.get("target", {}) if isinstance(action_data.get("target"), dict) else {}
+            target_name = target.get("kind") or target.get("button") or target.get("name") or "generic"
+            return f"{scene_type}::{action_type}::{str(target_name).lower()}"

@@ -16,6 +16,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
+from BottomUpAgent.common.protocols import (
+    ensure_action_protocol,
+    ensure_feedback_protocol,
+    ensure_skill_protocol,
+    ensure_state_protocol,
+    ensure_teacher_protocol,
+)
+
 try:
     from BottomUpAgent.group_b.StateAdapter import StateAdapter
 except Exception:  # pragma: no cover
@@ -100,6 +108,7 @@ class TrajectoryLogger:
         action_data: Optional[Dict[str, Any]] = None,
         feedback_data: Optional[Dict[str, Any]] = None,
         teacher_feedback: Optional[Dict[str, Any]] = None,
+        skill_data: Optional[Dict[str, Any]] = None,
         memory_summary: Optional[Dict[str, Any]] = None,
         extra: Optional[Dict[str, Any]] = None,
         episode_id: Optional[str] = None,
@@ -113,15 +122,49 @@ class TrajectoryLogger:
             self.runtime_context["current_episode_id"] = eid
             self.runtime_context["episode_id"] = eid
 
-        state_payload = dict(state_data or {})
-        state_payload.setdefault("episode_id", eid)
-        action_payload = dict(action_data or {})
-        action_payload.setdefault("episode_id", eid)
-        action_payload.setdefault("params", {})
-        action_payload["params"].setdefault("episode_id", eid)
-        feedback_payload = dict(feedback_data or {})
-        feedback_payload.setdefault("episode_id", eid)
-        teacher_payload = dict(teacher_feedback or {})
+        state_payload = ensure_state_protocol(state_data or {}, step_id=step_id,
+                                              phase=str((state_data or {}).get("phase", "before") or "before"))
+        state_payload["episode_id"] = eid
+        action_payload = ensure_action_protocol(
+            action_data or {},
+            scene_type=str(state_payload.get("scene_type", "unknown") or "unknown"),
+            episode_id=eid,
+            step_id=step_id,
+        )
+        feedback_payload = ensure_feedback_protocol(
+            feedback_data or {},
+            action_type=action_payload.get("action_type", "unknown"),
+            before_scene=str((feedback_data or {}).get("before_scene",
+                                                       state_payload.get("scene_type", "unknown")) or state_payload.get(
+                "scene_type", "unknown")),
+            after_scene=str((feedback_data or {}).get("after_scene",
+                                                      state_payload.get("scene_type", "unknown")) or state_payload.get(
+                "scene_type", "unknown")),
+            elapsed_ms=int((feedback_data or {}).get("time_cost_ms", 0) or 0),
+            screenshot_after=str((feedback_data or {}).get("screenshot_after", "") or ""),
+            step_id=step_id,
+            screen_diff=str((feedback_data or {}).get("screen_diff", "") or ""),
+        )
+        feedback_payload["episode_id"] = eid
+        teacher_payload = ensure_teacher_protocol(
+            teacher_feedback or {},
+            step_id=step_id,
+            scene_type=str(
+                (teacher_feedback or {}).get("scene_type", state_payload.get("scene_type", "unknown")) or "unknown"),
+            action_type=str(
+                (teacher_feedback or {}).get("action_type", action_payload.get("action_type", "unknown")) or "unknown"),
+            execute_status=str((teacher_feedback or {}).get("execute_status", feedback_payload.get("execute_status",
+                                                                                                   "unknown")) or "unknown"),
+            episode_id=eid,
+        )
+        skill_payload = ensure_skill_protocol(
+            skill_data or {},
+            scene_type=str(state_payload.get("scene_type", "unknown") or "unknown"),
+            action_type=str(action_payload.get("action_type", "unknown_action") or "unknown_action"),
+            action_pattern=str(
+                action_payload.get("reason", action_payload.get("action_type", "unknown_action")) or action_payload.get(
+                    "action_type", "unknown_action")),
+        )
         memory_payload = dict(memory_summary or {})
         extra_payload = dict(extra or {})
 
@@ -150,8 +193,9 @@ class TrajectoryLogger:
             "action_data": action_payload,
             "feedback_data": feedback_payload,
             "teacher_feedback": teacher_payload,
+            "skill_data": skill_payload,
             "memory_summary": memory_payload,
-            "label": self._build_label(action_payload, feedback_payload, teacher_payload),
+            "label": self._build_label(action_payload, feedback_payload, teacher_payload, skill_payload),
             "extra": extra_payload,
         }
 
@@ -172,19 +216,51 @@ class TrajectoryLogger:
         action_data: Optional[Dict[str, Any]] = None,
         feedback_data: Optional[Dict[str, Any]] = None,
         teacher_feedback: Optional[Dict[str, Any]] = None,
+        skill_data: Optional[Dict[str, Any]] = None,
         memory_summary: Optional[Dict[str, Any]] = None,
         episode_id: Optional[str] = None,
     ) -> Dict[str, Any]:
         eid = episode_id or self.current_episode_id or self.runtime_context.get("current_episode_id") or "manual_episode"
-        state_payload = dict(state_data or {})
-        state_payload.setdefault("episode_id", eid)
-        action_payload = dict(action_data or {})
-        action_payload.setdefault("episode_id", eid)
-        action_payload.setdefault("params", {})
-        action_payload["params"].setdefault("episode_id", eid)
-        feedback_payload = dict(feedback_data or {})
-        feedback_payload.setdefault("episode_id", eid)
-        teacher_payload = dict(teacher_feedback or {})
+        state_payload = ensure_state_protocol(state_data or {}, step_id=step_id,
+                                              phase=str((state_data or {}).get("phase", "before") or "before"))
+        state_payload["episode_id"] = eid
+        action_payload = ensure_action_protocol(action_data or {},
+                                                scene_type=str(state_payload.get("scene_type", "unknown") or "unknown"),
+                                                episode_id=eid, step_id=step_id)
+        feedback_payload = ensure_feedback_protocol(
+            feedback_data or {},
+            action_type=action_payload.get("action_type", "unknown"),
+            before_scene=str((feedback_data or {}).get("before_scene",
+                                                       state_payload.get("scene_type", "unknown")) or state_payload.get(
+                "scene_type", "unknown")),
+            after_scene=str((feedback_data or {}).get("after_scene",
+                                                      state_payload.get("scene_type", "unknown")) or state_payload.get(
+                "scene_type", "unknown")),
+            elapsed_ms=int((feedback_data or {}).get("time_cost_ms", 0) or 0),
+            screenshot_after=str((feedback_data or {}).get("screenshot_after", "") or ""),
+            step_id=step_id,
+            screen_diff=str((feedback_data or {}).get("screen_diff", "") or ""),
+        )
+        feedback_payload["episode_id"] = eid
+        teacher_payload = ensure_teacher_protocol(
+            teacher_feedback or {},
+            step_id=step_id,
+            scene_type=str(
+                (teacher_feedback or {}).get("scene_type", state_payload.get("scene_type", "unknown")) or "unknown"),
+            action_type=str(
+                (teacher_feedback or {}).get("action_type", action_payload.get("action_type", "unknown")) or "unknown"),
+            execute_status=str((teacher_feedback or {}).get("execute_status", feedback_payload.get("execute_status",
+                                                                                                   "unknown")) or "unknown"),
+            episode_id=eid,
+        )
+        skill_payload = ensure_skill_protocol(
+            skill_data or {},
+            scene_type=str(state_payload.get("scene_type", "unknown") or "unknown"),
+            action_type=str(action_payload.get("action_type", "unknown_action") or "unknown_action"),
+            action_pattern=str(
+                action_payload.get("reason", action_payload.get("action_type", "unknown_action")) or action_payload.get(
+                    "action_type", "unknown_action")),
+        )
 
         adapted = None
         feature_dict = None
@@ -206,10 +282,11 @@ class TrajectoryLogger:
             "action_data": action_payload,
             "feedback_data": feedback_payload,
             "teacher_feedback": teacher_payload,
-            "label": self._build_label(action_payload, feedback_payload, teacher_payload),
+            "skill_data": skill_payload,
+            "label": self._build_label(action_payload, feedback_payload, teacher_payload, skill_payload),
         }
 
-    def _build_label(self, action_data: Dict[str, Any], feedback_data: Dict[str, Any], teacher_feedback: Dict[str, Any]) -> Dict[str, Any]:
+    def _build_label(self, action_data: Dict[str, Any], feedback_data: Dict[str, Any], teacher_feedback: Dict[str, Any], skill_data: Dict[str, Any]) -> Dict[str, Any]:
         score = self._to_float(teacher_feedback.get("score"), default=0.0)
         execute_status = str(feedback_data.get("execute_status", "unknown") or "unknown").lower()
         before_scene = str(feedback_data.get("before_scene", "unknown") or "unknown")
@@ -219,6 +296,9 @@ class TrajectoryLogger:
             "value": round(score, 4),
             "scene_changed": 1 if before_scene != after_scene else 0,
             "action_type": action_data.get("action_type", "unknown"),
+            "memory_priority": teacher_feedback.get("memory_priority", "low"),
+            "skill_id": skill_data.get("skill_id"),
+            "skill_key": teacher_feedback.get("skill_key"),
         }
 
     def _append_jsonl(self, path: Path, payload: Dict[str, Any]) -> None:

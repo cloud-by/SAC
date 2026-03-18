@@ -18,6 +18,15 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Tuple
 
+from BottomUpAgent.common.protocols import ensure_action_protocol, ensure_state_protocol
+
+try:
+    from BottomUpAgent.group_b.PolicyModel import PolicyModel
+except Exception:  # pragma: no cover
+    try:
+        from PolicyModel import PolicyModel  # type: ignore
+    except Exception:  # pragma: no cover
+        PolicyModel = None  # type: ignore
 
 SCENE_ALIASES = {
     "single_mode_menu": "mode_select",
@@ -34,6 +43,7 @@ class Mcts:
     def __init__(self, config: Dict[str, Any]) -> None:
         self.config = config
         self.runtime_context = config.setdefault("_runtime_context", {})
+        self.policy_model = self._build_policy_model()
         logging.info("Mcts 初始化完成（轻量版）")
 
     def search(
@@ -42,18 +52,40 @@ class Mcts:
         state_data: Dict[str, Any],
         step_id: int,
     ) -> Dict[str, Any]:
-        candidates = self._generate_candidates(action_data, state_data)
+        state_data = ensure_state_protocol(state_data, step_id=step_id,
+                                           phase=str(state_data.get("phase", "before") or "before"))
+        action_data = ensure_action_protocol(
+            action_data,
+            scene_type=self._normalize_scene(state_data.get("scene_type", "unknown")),
+            episode_id=self._resolve_episode_id(state_data, action_data),
+            step_id=step_id,
+        )
+        candidates = self._generate_candidates(action_data, state_data, step_id=step_id)
         if not candidates:
-            return self._mark_source(action_data, state_data)
+            return self._mark_source(action_data, state_data, step_id=step_id)
 
         scored: List[Tuple[float, Dict[str, Any]]] = []
+        scene_type = self._normalize_scene(state_data.get("scene_type", "unknown"))
         for candidate in candidates:
-            score = self._score_candidate(candidate, state_data)
-            scored.append((score, candidate))
+            heuristic_score = self._score_candidate(candidate, state_data)
+            learned_score = self._score_with_policy_model(candidate, state_data, scene_type=scene_type)
+            final_score = self._blend_scores(heuristic_score, learned_score)
+            enriched_candidate = dict(candidate)
+            enriched_candidate.setdefault("params", {})
+            enriched_candidate["params"]["mcts_heuristic_score"] = round(heuristic_score, 4)
+            enriched_candidate["params"]["mcts_learned_score"] = round(learned_score,
+                                                                       4) if learned_score is not None else None
+            enriched_candidate["params"]["mcts_final_score"] = round(final_score, 4)
+            scored.append((final_score, enriched_candidate))
 
         scored.sort(key=lambda x: x[0], reverse=True)
         best_score, best_action = scored[0]
-        best_action = dict(best_action)
+        best_action = ensure_action_protocol(
+            dict(best_action),
+            scene_type=self._normalize_scene(state_data.get("scene_type", "unknown")),
+            episode_id=self._resolve_episode_id(state_data, best_action),
+            step_id=step_id,
+        )
         best_action["source"] = self._merge_source(best_action.get("source", "Brain"), "Mcts")
         best_action["confidence"] = round(
             max(float(best_action.get("confidence", 0.0)), min(0.95, best_score)),
@@ -63,8 +95,6 @@ class Mcts:
         best_action.setdefault("params", {})
         best_action["params"]["mcts_top_score"] = round(best_score, 4)
         best_action["params"]["mcts_candidate_count"] = len(candidates)
-        best_action["episode_id"] = self._resolve_episode_id(state_data, best_action)
-        best_action["params"].setdefault("episode_id", best_action["episode_id"])
         return best_action
 
     def select(self, action_data: Dict[str, Any], state_data: Dict[str, Any], step_id: int) -> Dict[str, Any]:
@@ -73,14 +103,15 @@ class Mcts:
     def refine(self, action_data: Dict[str, Any], state_data: Dict[str, Any], step_id: int) -> Dict[str, Any]:
         return self.search(action_data, state_data, step_id)
 
-    def _generate_candidates(self, action_data: Dict[str, Any], state_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+    def _generate_candidates(self, action_data: Dict[str, Any], state_data: Dict[str, Any], *, step_id: int) -> List[Dict[str, Any]]:
         scene_type = self._normalize_scene(state_data.get("scene_type", "unknown"))
-        base_action = dict(action_data)
-        episode_id = self._resolve_episode_id(state_data, base_action)
-        if episode_id:
-            base_action["episode_id"] = episode_id
-            base_action.setdefault("params", {})
-            base_action["params"].setdefault("episode_id", episode_id)
+        episode_id = self._resolve_episode_id(state_data, action_data)
+        base_action = ensure_action_protocol(
+            action_data,
+            scene_type=scene_type,
+            episode_id=episode_id,
+            step_id=step_id,
+        )
 
         candidates: List[Dict[str, Any]] = [base_action]
 
@@ -112,11 +143,13 @@ class Mcts:
             if key in seen:
                 continue
             seen.add(key)
-            if episode_id:
-                item["episode_id"] = episode_id
-                item.setdefault("params", {})
-                item["params"].setdefault("episode_id", episode_id)
-            unique_candidates.append(item)
+            normalized = ensure_action_protocol(
+                item,
+                scene_type=scene_type,
+                episode_id=episode_id,
+                step_id=step_id,
+            )
+            unique_candidates.append(normalized)
         return unique_candidates
 
     def _bootstrap_candidates(self, scene_type: str) -> List[Dict[str, Any]]:
@@ -475,15 +508,15 @@ class Mcts:
     def _choice_sort_key(self, option: Dict[str, Any]) -> float:
         return self._to_float(option.get("confidence"), default=0.5) + self._choice_bonus(option)
 
-    def _mark_source(self, action_data: Dict[str, Any], state_data: Dict[str, Any]) -> Dict[str, Any]:
-        result = dict(action_data)
+    def _mark_source(self, action_data: Dict[str, Any], state_data: Dict[str, Any], *, step_id: int) -> Dict[str, Any]:
+        result = ensure_action_protocol(
+            action_data,
+            scene_type=self._normalize_scene(state_data.get("scene_type", "unknown")),
+            episode_id=self._resolve_episode_id(state_data, action_data),
+            step_id=step_id,
+        )
         result["source"] = self._merge_source(result.get("source", "Brain"), "Mcts")
         result["timestamp"] = now_str()
-        eid = self._resolve_episode_id(state_data, result)
-        if eid:
-            result["episode_id"] = eid
-            result.setdefault("params", {})
-            result["params"].setdefault("episode_id", eid)
         return result
 
     def _merge_source(self, source: str, suffix: str) -> str:
@@ -533,3 +566,52 @@ class Mcts:
         if hp_i < 0 or max_i <= 0:
             return None
         return round(hp_i / max_i, 4)
+
+    def _build_policy_model(self):
+        if PolicyModel is None:
+            return None
+        try:
+            model = PolicyModel(self.config)
+            return model if model.loaded or getattr(model, "model", None) == {} else model
+        except Exception as exc:
+            logging.warning("Mcts 初始化 PolicyModel 失败，将只使用启发式评分: %s", exc)
+            return None
+
+    def _score_with_policy_model(self, candidate: Dict[str, Any], state_data: Dict[str, Any], *,
+                                 scene_type: str) -> float | None:
+        if self.policy_model is None:
+            return None
+        try:
+            policy_candidate = dict(candidate)
+            policy_candidate.setdefault("params", {})
+            policy_candidate["params"].setdefault("memory_priority", self._memory_priority_hint(state_data, candidate))
+            policy_candidate["params"].setdefault("skill_key", self._skill_key_hint(scene_type, candidate))
+            return float(self.policy_model.score_action(policy_candidate, state_data=state_data))
+        except Exception as exc:
+            logging.warning("PolicyModel 候选打分失败，回退启发式评分: %s", exc)
+            return None
+
+    def _blend_scores(self, heuristic_score: float, learned_score: float | None) -> float:
+        if learned_score is None:
+            return heuristic_score
+        return round(heuristic_score * 0.7 + learned_score * 0.3, 4)
+
+    def _memory_priority_hint(self, state_data: Dict[str, Any], candidate: Dict[str, Any]) -> str:
+        action_type = str(candidate.get("action_type", "wait") or "wait")
+        hp_ratio = self._safe_ratio(state_data.get("hp"), state_data.get("max_hp"))
+        if action_type == "wait":
+            return "low"
+        if hp_ratio is not None and hp_ratio < 0.4:
+            return "high"
+        if action_type in {"continue_act", "end_turn"}:
+            return "medium"
+        return "medium"
+
+    def _skill_key_hint(self, scene_type: str, candidate: Dict[str, Any]) -> str:
+        params = candidate.get("params", {}) if isinstance(candidate.get("params"), dict) else {}
+        explicit = params.get("skill_key") or candidate.get("skill_key")
+        if explicit:
+            return str(explicit)
+        target = candidate.get("target", {}) if isinstance(candidate.get("target"), dict) else {}
+        target_name = target.get("kind") or target.get("button") or target.get("name") or "generic"
+        return f"{scene_type}::{str(candidate.get('action_type', 'unknown') or 'unknown')}::{str(target_name).lower()}"

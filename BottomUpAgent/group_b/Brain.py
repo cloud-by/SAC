@@ -19,6 +19,8 @@ import logging
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from BottomUpAgent.common.protocols import ensure_action_protocol, ensure_state_protocol
+
 try:
     from base_model import build_model
 except Exception:
@@ -81,6 +83,8 @@ class Brain:
         memory_summary: Dict[str, Any],
         step_id: int,
     ) -> Dict[str, Any]:
+        state_data = ensure_state_protocol(state_data, step_id=step_id,
+                                           phase=str(state_data.get("phase", "before") or "before"))
         scene_type = self._normalize_scene(state_data.get("scene_type", "unknown"))
         episode_id = self._resolve_episode_id(state_data)
 
@@ -106,11 +110,12 @@ class Brain:
         planner = dispatch.get(scene_type, self._plan_unknown)
         action = planner(task, state_data, memory_summary, step_id)
         action = self._normalize_action(action)
-        action["scene_type"] = scene_type
-        action["episode_id"] = episode_id
-        action.setdefault("params", {})
-        action["params"].setdefault("episode_id", episode_id)
-        action["params"].setdefault("step_id", step_id)
+        action = ensure_action_protocol(
+            action,
+            scene_type=scene_type,
+            episode_id=episode_id,
+            step_id=step_id,
+        )
 
         llm_analysis = self._try_llm_assist(
             task=task,

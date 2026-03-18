@@ -24,6 +24,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
+from BottomUpAgent.common.protocols import (
+    ensure_action_protocol,
+    ensure_feedback_protocol,
+    ensure_skill_protocol,
+    ensure_state_protocol,
+)
 
 def now_str() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -700,39 +706,10 @@ class BottomUpAgent:
         step_id: int,
         phase: str,
     ) -> Dict[str, Any]:
-        if not isinstance(raw, dict):
-            raw = {}
-
-        result = dict(raw)
-        result.setdefault("scene_type", "unknown")
-        result.setdefault("floor", None)
-        result.setdefault("hp", None)
-        result.setdefault("max_hp", None)
-        result.setdefault("energy", None)
-        result.setdefault("hand_cards", [])
-        result.setdefault("enemies", [])
-        result.setdefault("map_options", [])
-        result.setdefault("reward_options", [])
-        result.setdefault("screen_image", "")
-        result.setdefault("detected_regions", {})
-        result.setdefault("timestamp", now_str())
-        result["step_id"] = step_id
-        result["phase"] = phase
-        return result
+        return ensure_state_protocol(raw, step_id=step_id, phase=phase)
 
     def _normalize_action_data(self, raw: Any) -> Dict[str, Any]:
-        if not isinstance(raw, dict):
-            raw = {}
-
-        result = dict(raw)
-        result.setdefault("action_type", "wait")
-        result.setdefault("target", {})
-        result.setdefault("reason", "未提供动作解释")
-        result.setdefault("confidence", 0.0)
-        result.setdefault("source", "unknown")
-        result.setdefault("timestamp", now_str())
-        result.setdefault("params", {})
-        return result
+        return ensure_action_protocol(raw)
 
     def _normalize_feedback_data(
         self,
@@ -743,22 +720,16 @@ class BottomUpAgent:
         elapsed_ms: int,
         step_id: int,
     ) -> Dict[str, Any]:
-        if not isinstance(raw_feedback, dict):
-            raw_feedback = {}
-
-        result = dict(raw_feedback)
-        result["action_type"] = action_data.get("action_type", result.get("action_type", "wait"))
-        result.setdefault("execute_status", "success")
-        result.setdefault("before_scene", before_state.get("scene_type", "unknown"))
-        result.setdefault("after_scene", after_state.get("scene_type", before_state.get("scene_type", "unknown")))
-        result.setdefault("time_cost_ms", elapsed_ms)
-        result.setdefault("click_position", [])
-        result.setdefault("screen_diff", self._infer_screen_diff(before_state, after_state))
-        result.setdefault("error_message", "")
-        result.setdefault("screenshot_after", after_state.get("screen_image", ""))
-        result.setdefault("timestamp", now_str())
-        result["step_id"] = step_id
-        return result
+        return ensure_feedback_protocol(
+            raw_feedback,
+            action_type=action_data.get("action_type", "wait"),
+            before_scene=before_state.get("scene_type", "unknown"),
+            after_scene=after_state.get("scene_type", before_state.get("scene_type", "unknown")),
+            elapsed_ms=elapsed_ms,
+            screenshot_after=after_state.get("screen_image", ""),
+            step_id=step_id,
+            screen_diff=self._infer_screen_diff(before_state, after_state),
+        )
 
     def _normalize_skill_data(
         self,
@@ -766,21 +737,14 @@ class BottomUpAgent:
         state_data: Dict[str, Any],
         action_data: Dict[str, Any],
     ) -> Dict[str, Any]:
-        if not isinstance(raw_skill, dict):
-            raw_skill = {}
-
         scene_type = state_data.get("scene_type", "unknown")
         action_type = action_data.get("action_type", "unknown_action")
-        result = dict(raw_skill)
-        result.setdefault("skill_id", f"{scene_type}_{action_type}_001")
-        result.setdefault("scene_type", scene_type)
-        result.setdefault("trigger_condition", f"scene={scene_type}")
-        result.setdefault("action_pattern", action_data.get("reason", action_type))
-        result.setdefault("success_count", 0)
-        result.setdefault("fail_count", 0)
-        result.setdefault("reuse_count", 0)
-        result.setdefault("last_update", now_str())
-        return result
+        return ensure_skill_protocol(
+            raw_skill,
+            scene_type=scene_type,
+            action_type=action_type,
+            action_pattern=action_data.get("reason", action_type),
+        )
 
     def _infer_screen_diff(
         self,

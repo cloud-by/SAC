@@ -52,6 +52,8 @@ class PolicyModel:
         self.signature_action_stats: Dict[str, Any] = {}
         self.scene_target_kind_stats: Dict[str, Any] = {}
         self.scene_button_stats: Dict[str, Any] = {}
+        self.memory_priority_action_stats: Dict[str, Any] = {}
+        self.skill_key_action_stats: Dict[str, Any] = {}
         self.loaded = False
 
         self.load()
@@ -72,6 +74,8 @@ class PolicyModel:
             self.signature_action_stats = dict(payload.get("signature_action_stats", {}) or {})
             self.scene_target_kind_stats = dict(payload.get("scene_target_kind_stats", {}) or {})
             self.scene_button_stats = dict(payload.get("scene_button_stats", {}) or {})
+            self.memory_priority_action_stats = dict(payload.get("memory_priority_action_stats", {}) or {})
+            self.skill_key_action_stats = dict(payload.get("skill_key_action_stats", {}) or {})
             self.loaded = True
             logging.info("PolicyModel 加载完成: %s", self.model_path)
             return True
@@ -97,6 +101,8 @@ class PolicyModel:
         action_type = str(candidate_action.get("action_type", "unknown") or "unknown")
         kind = self._extract_target_kind(candidate_action)
         button = self._extract_button(candidate_action)
+        memory_priority = self._extract_memory_priority(candidate_action)
+        skill_key = self._build_skill_key(scene_type, candidate_action)
 
         score = 0.0
         weight = 0.0
@@ -120,6 +126,14 @@ class PolicyModel:
         if button:
             btn_stats = dict(self.scene_button_stats.get(scene_type, {}) or {})
             score, weight = self._accumulate(score, weight, self._lookup_mean(btn_stats, f"{action_type}::{button}"), 0.05)
+
+        if memory_priority:
+            priority_stats = dict(self.memory_priority_action_stats.get(memory_priority, {}) or {})
+            score, weight = self._accumulate(score, weight, self._lookup_mean(priority_stats, action_type), 0.07)
+
+        if skill_key:
+            skill_stats = dict(self.skill_key_action_stats.get(skill_key, {}) or {})
+            score, weight = self._accumulate(score, weight, self._lookup_mean(skill_stats, action_type), 0.08)
 
         if weight <= 0:
             return 0.0
@@ -216,3 +230,17 @@ class PolicyModel:
         params = action.get("params", {}) if isinstance(action.get("params"), dict) else {}
         button = params.get("button_name")
         return str(button).lower() if button else ""
+
+    def _extract_memory_priority(self, action: Dict[str, Any]) -> str:
+        params = action.get("params", {}) if isinstance(action.get("params"), dict) else {}
+        value = params.get("memory_priority") or action.get("memory_priority")
+        return str(value).lower() if value else ""
+
+    def _build_skill_key(self, scene_type: str, action: Dict[str, Any]) -> str:
+        params = action.get("params", {}) if isinstance(action.get("params"), dict) else {}
+        explicit = params.get("skill_key") or action.get("skill_key")
+        if explicit:
+            return str(explicit)
+        target = action.get("target", {}) if isinstance(action.get("target"), dict) else {}
+        target_name = target.get("kind") or target.get("button") or target.get("name") or "generic"
+        return f"{scene_type}::{str(action.get('action_type', 'unknown') or 'unknown')}::{str(target_name).lower()}"

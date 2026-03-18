@@ -16,6 +16,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from BottomUpAgent.common.protocols import (
+    ensure_action_protocol,
+    ensure_feedback_protocol,
+    ensure_skill_protocol,
+    ensure_state_protocol,
+    ensure_teacher_protocol,
+)
+
 
 def now_str() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -89,7 +97,7 @@ class LongMemory:
     def summary(self) -> Dict[str, Any]:
         recent_skills = sorted(
             self.skills.values(),
-            key=lambda x: x.get("last_update", ""),
+            key=lambda x: (self._priority_rank(x.get("memory_priority", "low")), x.get("last_update", "")),
             reverse=True,
         )[:5]
 
@@ -107,6 +115,8 @@ class LongMemory:
         根据 scene_type 检索技能。
         当前先做最朴素的检索：同场景优先，再按 success_count 排序。
         """
+        state_data = ensure_state_protocol(state_data, step_id=state_data.get("step_id"),
+                                           phase=str(state_data.get("phase", "before") or "before"))
         scene_type = state_data.get("scene_type", "unknown")
         candidates = [
             skill for skill in self.skills.values()
@@ -115,6 +125,7 @@ class LongMemory:
 
         candidates.sort(
             key=lambda x: (
+                self._priority_rank(x.get("memory_priority", "low")),
                 x.get("success_count", 0) - x.get("fail_count", 0),
                 x.get("reuse_count", 0),
             ),
@@ -135,12 +146,48 @@ class LongMemory:
         """
         根据本次执行情况更新技能。
         """
+        state_data = ensure_state_protocol(
+            state_data,
+            step_id=state_data.get("step_id"),
+            phase=str(state_data.get("phase", "before") or "before"),
+        )
+        action_data = ensure_action_protocol(
+            action_data,
+            scene_type=str(state_data.get("scene_type", "unknown") or "unknown"),
+            episode_id=action_data.get("episode_id") or state_data.get("episode_id"),
+            step_id=action_data.get("params", {}).get("step_id") if isinstance(action_data.get("params"),
+                                                                               dict) else None,
+        )
+        feedback_data = ensure_feedback_protocol(
+            feedback_data,
+            action_type=action_data.get("action_type", "unknown_action"),
+            before_scene=feedback_data.get("before_scene", state_data.get("scene_type", "unknown")),
+            after_scene=feedback_data.get("after_scene", state_data.get("scene_type", "unknown")),
+            elapsed_ms=int(feedback_data.get("time_cost_ms", 0) or 0),
+            screenshot_after=str(feedback_data.get("screenshot_after", "") or ""),
+            step_id=int(feedback_data.get("step_id", state_data.get("step_id", 0)) or 0),
+            screen_diff=str(feedback_data.get("screen_diff", "") or ""),
+        )
+        teacher_feedback = ensure_teacher_protocol(
+            teacher_feedback or {},
+            step_id=int((teacher_feedback or {}).get("step_id",
+                                                     feedback_data.get("step_id", state_data.get("step_id", 0))) or 0),
+            scene_type=str(
+                (teacher_feedback or {}).get("scene_type", state_data.get("scene_type", "unknown")) or "unknown"),
+            action_type=str((teacher_feedback or {}).get("action_type", action_data.get("action_type",
+                                                                                        "unknown_action")) or "unknown_action"),
+            execute_status=str((teacher_feedback or {}).get("execute_status", feedback_data.get("execute_status",
+                                                                                                "unknown")) or "unknown"),
+            episode_id=(teacher_feedback or {}).get("episode_id") or action_data.get("episode_id") or state_data.get(
+                "episode_id"),
+        )
+
         scene_type = state_data.get("scene_type", "unknown")
         action_type = action_data.get("action_type", "unknown_action")
         reason = action_data.get("reason", action_type)
 
         trigger_condition = self._build_trigger_condition(state_data, action_data)
-        skill_id = self._build_skill_id(scene_type, action_type, state_data, action_data)
+        skill_id = str(teacher_feedback.get("skill_key") or self._build_skill_id(scene_type, action_type, state_data, action_data))
 
         if skill_id not in self.skills:
             self.skills[skill_id] = {
@@ -164,11 +211,16 @@ class LongMemory:
 
         skill["reuse_count"] = int(skill.get("reuse_count", 0)) + 1
         skill["last_update"] = now_str()
-
-        if teacher_feedback:
-            skill["teacher_feedback"] = teacher_feedback.get("feedback", "")
-            if "score" in teacher_feedback:
-                skill["last_score"] = teacher_feedback.get("score")
+        skill["trigger_condition"] = trigger_condition
+        skill["action_pattern"] = reason
+        skill["memory_priority"] = teacher_feedback.get("memory_priority", skill.get("memory_priority", "low"))
+        skill["outcome_tags"] = sorted(
+            set(list(skill.get("outcome_tags", [])) + list(teacher_feedback.get("outcome_tags", []))))
+        skill["teacher_feedback"] = teacher_feedback.get("feedback", "")
+        skill["last_score"] = teacher_feedback.get("score", skill.get("last_score"))
+        skill["last_episode_id"] = teacher_feedback.get("episode_id") or action_data.get(
+            "episode_id") or state_data.get("episode_id")
+        skill["last_execute_status"] = execute_status
 
         self._save_latest_skills()
         return dict(skill)
@@ -264,3 +316,7 @@ class LongMemory:
                 json.dump(payload, f, ensure_ascii=False, indent=2)
         except Exception as exc:
             logging.warning("保存 latest_skills.json 失败: %s", exc)
+
+            def _priority_rank(self, value: Any) -> int:
+                mapping = {"low": 0, "medium": 1, "high": 2}
+                return mapping.get(str(value or "low").lower(), 0)

@@ -13,6 +13,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+from BottomUpAgent.common.protocols import ensure_state_protocol
+
 
 def now_str() -> str:
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -63,6 +65,11 @@ class StateAdapter:
         episode_id: Optional[str] = None,
         memory_summary: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
+        state_data = ensure_state_protocol(
+            state_data,
+            step_id=step_id if step_id is not None else state_data.get("step_id"),
+            phase=str(state_data.get("phase", "before") or "before"),
+        )
         resolved_episode_id = episode_id or state_data.get("episode_id") or self.runtime_context.get("current_episode_id")
 
         scene_type = self._normalize_scene(str(state_data.get("scene_type", "unknown") or "unknown"))
