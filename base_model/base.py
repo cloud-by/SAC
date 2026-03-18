@@ -8,6 +8,23 @@ class BaseModel(ABC):
     def __init__(self, config: Dict[str, Any]) -> None:
         self.config = config
 
+    def generate(
+            self,
+            prompt: str,
+            temperature: float = 0.2,
+            max_tokens: int = 512,
+            **kwargs: Any,
+    ) -> str:
+        """
+        统一单轮文本生成接口，默认转发到 chat。
+        """
+        return self.chat(
+            [{"role": "user", "content": prompt}],
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs,
+        )
+
     @abstractmethod
     def chat(
         self,

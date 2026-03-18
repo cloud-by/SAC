@@ -625,7 +625,16 @@ class Brain:
             return ""
         try:
             prompt = self._build_llm_prompt(task, state_data, memory_summary, step_id, current_action)
-            response = self.llm.generate(prompt)  # type: ignore[attr-defined]
+            if hasattr(self.llm, "generate") and callable(getattr(self.llm, "generate")):
+                response = self.llm.generate(prompt)  # type: ignore[attr-defined]
+            elif hasattr(self.llm, "chat") and callable(getattr(self.llm, "chat")):
+                response = self.llm.chat(  # type: ignore[attr-defined]
+                    [{"role": "user", "content": prompt}],
+                    temperature=float(self.model_config.get("temperature", 0.2)),
+                    max_tokens=int(self.model_config.get("max_tokens", 512)),
+                )
+            else:
+                raise AttributeError(f"{self.llm.__class__.__name__} 未提供 generate/chat 接口")
             return str(response or "").strip()
         except Exception as exc:
             logging.warning("LLM 辅助分析失败，忽略并继续使用规则动作: %s", exc)
