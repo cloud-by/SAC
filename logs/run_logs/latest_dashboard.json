@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-18 15:18:07",
+  "updated_at": "2026-03-18 15:39:24",
   "state_panel": {
     "title": "当前状态",
     "scene_type": "title_main",
@@ -8,7 +8,7 @@
     "hp": "None/None",
     "energy": 0,
     "selected_character": null,
-    "match_confidence": 0.8711,
+    "match_confidence": 0.843,
     "matched_template": "pic/scene_templates/title_main/title_main_001.png",
     "flow_prev_scene": "title_main",
     "flow_phase_before": "bootstrap",
@@ -22,41 +22,41 @@
       ],
       [
         "campfire_upgrade",
-        0.6266
+        0.6078
       ],
       [
         "mode_select",
         0.6
       ],
       [
-        "map",
-        0.5656
+        "battle_result",
+        0.5625
       ],
       [
-        "merchant",
-        0.5547
+        "merchant_shop",
+        0.5625
       ]
     ],
     "top_scene_scores": [
       [
         "title_main",
-        0.8711
+        0.843
       ],
       [
         "campfire_upgrade",
-        0.6266
+        0.6078
       ],
       [
-        "map",
-        0.5656
+        "battle_result",
+        0.5625
+      ],
+      [
+        "merchant_shop",
+        0.5625
       ],
       [
         "mode_select",
         0.5625
-      ],
-      [
-        "merchant",
-        0.5547
       ]
     ],
     "window_bbox": [
@@ -155,6 +155,9 @@
     "source": "Brain-rule-title_main+Mcts",
     "params": {
       "step_id": 2,
+      "llm_analysis": "当前动作是进入单人模式，因为玩家当前位于游戏的主页面，而进入单人模式是开始一局游戏的第一步。这个动作的置信度为0.96，说明系统认为这是一个合理的选择。根据记忆摘要，这个动作在过去已经成功执行了18次，没有失败记录，因此可以认为这是一个有效的策略。",
+      "llm_provider": "openai_compatible",
+      "llm_model": "moonshot-v1-8k",
       "memory_priority": "medium",
       "skill_key": "title_main::enter_single_mode::single_mode",
       "mcts_heuristic_score": 0.99,
@@ -176,7 +179,7 @@
     "execute_status": "success",
     "before_scene": "title_main",
     "after_scene": "title_main",
-    "time_cost_ms": 809,
+    "time_cost_ms": 804,
     "click_position": [
       1177,
       1094
@@ -192,9 +195,9 @@
     "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
     "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
     "result": "success",
-    "time_cost_ms": 6382,
+    "time_cost_ms": 9371,
     "operator": "A组执行平台",
-    "timestamp": "2026-03-18 15:18:07"
+    "timestamp": "2026-03-18 15:39:24"
   },
   "skill_panel": {
     "title": "技能演化",
@@ -202,10 +205,10 @@
     "scene_type": "title_main",
     "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
     "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
-    "success_count": 13,
+    "success_count": 19,
     "fail_count": 0,
-    "reuse_count": 13,
-    "last_update": "2026-03-18 15:18:07",
+    "reuse_count": 19,
+    "last_update": "2026-03-18 15:39:24",
     "teacher_feedback": "动作 enter_single_mode 执行成功，但收益一般，建议保留为可选经验。"
   },
   "step_record": {
@@ -215,21 +218,21 @@
       "scene_type": "title_main",
       "scene_variant": null,
       "scene_scores": {
-        "battle": 0.4531,
-        "battle_result": 0.5344,
-        "blessing_choice": 0.4766,
-        "campfire_choice": 0.5031,
-        "campfire_rest_done": 0.5094,
-        "campfire_upgrade": 0.6266,
-        "card_reward": 0.5,
-        "character_select": 0.4633,
-        "map": 0.5656,
-        "merchant": 0.5547,
-        "merchant_shop": 0.5406,
+        "battle": 0.4359,
+        "battle_result": 0.5625,
+        "blessing_choice": 0.4984,
+        "campfire_choice": 0.525,
+        "campfire_rest_done": 0.5375,
+        "campfire_upgrade": 0.6078,
+        "card_reward": 0.5078,
+        "character_select": 0.4727,
+        "map": 0.5437,
+        "merchant": 0.543,
+        "merchant_shop": 0.5625,
         "mode_select": 0.5625,
-        "title_main": 0.8711
+        "title_main": 0.843
       },
-      "match_confidence": 0.8711,
+      "match_confidence": 0.843,
       "matched_template": "pic/scene_templates/title_main/title_main_001.png",
       "flow_phase_before": "bootstrap",
       "flow_phase_after": "bootstrap",
@@ -247,23 +250,23 @@
         ],
         [
           "campfire_upgrade",
-          0.6266
+          0.6078
         ],
         [
           "mode_select",
           0.6
         ],
         [
-          "map",
-          0.5656
-        ],
-        [
-          "merchant",
-          0.5547
+          "battle_result",
+          0.5625
         ],
         [
           "merchant_shop",
-          0.5406
+          0.5625
+        ],
+        [
+          "map",
+          0.5437
         ]
       ],
       "floor": null,
@@ -356,21 +359,21 @@
         "scene_hint": "title_main",
         "scene_variant": null,
         "scene_scores": {
-          "battle": 0.4531,
-          "battle_result": 0.5344,
-          "blessing_choice": 0.4766,
-          "campfire_choice": 0.5031,
-          "campfire_rest_done": 0.5094,
-          "campfire_upgrade": 0.6266,
-          "card_reward": 0.5,
-          "character_select": 0.4633,
-          "map": 0.5656,
-          "merchant": 0.5547,
-          "merchant_shop": 0.5406,
+          "battle": 0.4359,
+          "battle_result": 0.5625,
+          "blessing_choice": 0.4984,
+          "campfire_choice": 0.525,
+          "campfire_rest_done": 0.5375,
+          "campfire_upgrade": 0.6078,
+          "card_reward": 0.5078,
+          "character_select": 0.4727,
+          "map": 0.5437,
+          "merchant": 0.543,
+          "merchant_shop": 0.5625,
           "mode_select": 0.5625,
-          "title_main": 0.8711
+          "title_main": 0.843
         },
-        "match_confidence": 0.8711,
+        "match_confidence": 0.843,
         "matched_template": "pic/scene_templates/title_main/title_main_001.png",
         "scene_match_debug": {
           "threshold": 0.78,
@@ -385,7 +388,7 @@
               },
               {
                 "roi": "menu",
-                "similarity": 0.8281,
+                "similarity": 0.7656,
                 "weight": 0.45
               }
             ]
@@ -393,67 +396,67 @@
           "scene_rank": [
             {
               "scene": "battle",
-              "score": 0.4531,
+              "score": 0.4359,
               "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
               "variant": "normal"
             },
             {
               "scene": "battle_result",
-              "score": 0.5344,
+              "score": 0.5625,
               "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
               "variant": null
             },
             {
               "scene": "blessing_choice",
-              "score": 0.4766,
+              "score": 0.4984,
               "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
               "variant": null
             },
             {
               "scene": "campfire_choice",
-              "score": 0.5031,
+              "score": 0.525,
               "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
               "variant": null
             },
             {
               "scene": "campfire_rest_done",
-              "score": 0.5094,
+              "score": 0.5375,
               "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
               "variant": null
             },
             {
               "scene": "campfire_upgrade",
-              "score": 0.6266,
+              "score": 0.6078,
               "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
               "variant": null
             },
             {
               "scene": "card_reward",
-              "score": 0.5,
+              "score": 0.5078,
               "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
               "variant": null
             },
             {
               "scene": "character_select",
-              "score": 0.4633,
+              "score": 0.4727,
               "template_path": "pic/scene_templates/character_select/character_select_001.png",
               "variant": null
             },
             {
               "scene": "map",
-              "score": 0.5656,
+              "score": 0.5437,
               "template_path": "pic/scene_templates/map/map_001.png",
               "variant": null
             },
             {
               "scene": "merchant",
-              "score": 0.5547,
+              "score": 0.543,
               "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
               "variant": null
             },
             {
               "scene": "merchant_shop",
-              "score": 0.5406,
+              "score": 0.5625,
               "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
               "variant": null
             },
@@ -465,14 +468,14 @@
             },
             {
               "scene": "title_main",
-              "score": 0.8711,
+              "score": 0.843,
               "template_path": "pic/scene_templates/title_main/title_main_001.png",
               "variant": null
             }
           ]
         },
         "legacy_scene_scores": {
-          "title_main": 5.0,
+          "title_main": 6.0,
           "mode_select": 3.0,
           "character_select": 1.0,
           "blessing_choice": 0.5,
@@ -495,23 +498,23 @@
           ],
           [
             "campfire_upgrade",
-            0.6266
+            0.6078
           ],
           [
             "mode_select",
             0.6
           ],
           [
-            "map",
-            0.5656
-          ],
-          [
-            "merchant",
-            0.5547
+            "battle_result",
+            0.5625
           ],
           [
             "merchant_shop",
-            0.5406
+            0.5625
+          ],
+          [
+            "map",
+            0.5437
           ]
         ],
         "window_bbox": [
@@ -526,7 +529,7 @@
           2560,
           1528
         ],
-        "timestamp": "2026-03-18 15:18:03",
+        "timestamp": "2026-03-18 15:39:17",
         "title_logo_area": [
           512,
           332,
@@ -729,7 +732,7 @@
           1154
         ]
       },
-      "timestamp": "2026-03-18 15:18:03",
+      "timestamp": "2026-03-18 15:39:17",
       "step_id": 2,
       "phase": "before",
       "window_name": "Slay the Spire 2",
@@ -750,21 +753,21 @@
       "scene_type": "title_main",
       "scene_variant": null,
       "scene_scores": {
-        "battle": 0.443,
-        "battle_result": 0.5469,
-        "blessing_choice": 0.4437,
-        "campfire_choice": 0.5141,
-        "campfire_rest_done": 0.5125,
-        "campfire_upgrade": 0.65,
-        "card_reward": 0.4922,
-        "character_select": 0.4687,
-        "map": 0.5531,
-        "merchant": 0.5039,
-        "merchant_shop": 0.5,
-        "mode_select": 0.5938,
-        "title_main": 0.85
+        "battle": 0.4633,
+        "battle_result": 0.5344,
+        "blessing_choice": 0.4984,
+        "campfire_choice": 0.5359,
+        "campfire_rest_done": 0.5438,
+        "campfire_upgrade": 0.6141,
+        "card_reward": 0.4844,
+        "character_select": 0.4758,
+        "map": 0.5063,
+        "merchant": 0.5586,
+        "merchant_shop": 0.5375,
+        "mode_select": 0.5625,
+        "title_main": 0.8641
       },
-      "match_confidence": 0.85,
+      "match_confidence": 0.8641,
       "matched_template": "pic/scene_templates/title_main/title_main_001.png",
       "flow_phase_before": "bootstrap",
       "flow_phase_after": "bootstrap",
@@ -782,23 +785,23 @@
         ],
         [
           "campfire_upgrade",
-          0.65
+          0.6141
         ],
         [
           "mode_select",
           0.6
         ],
         [
-          "map",
-          0.5531
+          "merchant",
+          0.5586
         ],
         [
-          "battle_result",
-          0.5469
+          "campfire_rest_done",
+          0.5438
         ],
         [
-          "campfire_choice",
-          0.5141
+          "merchant_shop",
+          0.5375
         ]
       ],
       "floor": null,
@@ -891,21 +894,21 @@
         "scene_hint": "title_main",
         "scene_variant": null,
         "scene_scores": {
-          "battle": 0.443,
-          "battle_result": 0.5469,
-          "blessing_choice": 0.4437,
-          "campfire_choice": 0.5141,
-          "campfire_rest_done": 0.5125,
-          "campfire_upgrade": 0.65,
-          "card_reward": 0.4922,
-          "character_select": 0.4687,
-          "map": 0.5531,
-          "merchant": 0.5039,
-          "merchant_shop": 0.5,
-          "mode_select": 0.5938,
-          "title_main": 0.85
+          "battle": 0.4633,
+          "battle_result": 0.5344,
+          "blessing_choice": 0.4984,
+          "campfire_choice": 0.5359,
+          "campfire_rest_done": 0.5438,
+          "campfire_upgrade": 0.6141,
+          "card_reward": 0.4844,
+          "character_select": 0.4758,
+          "map": 0.5063,
+          "merchant": 0.5586,
+          "merchant_shop": 0.5375,
+          "mode_select": 0.5625,
+          "title_main": 0.8641
         },
-        "match_confidence": 0.85,
+        "match_confidence": 0.8641,
         "matched_template": "pic/scene_templates/title_main/title_main_001.png",
         "scene_match_debug": {
           "threshold": 0.78,
@@ -920,7 +923,7 @@
               },
               {
                 "roi": "menu",
-                "similarity": 0.7812,
+                "similarity": 0.8125,
                 "weight": 0.45
               }
             ]
@@ -928,79 +931,79 @@
           "scene_rank": [
             {
               "scene": "battle",
-              "score": 0.443,
+              "score": 0.4633,
               "template_path": "pic/scene_templates/battle/normal/battle_normal_001.png",
               "variant": "normal"
             },
             {
               "scene": "battle_result",
-              "score": 0.5469,
+              "score": 0.5344,
               "template_path": "pic/scene_templates/battle_result/battle_result_001.png.png",
               "variant": null
             },
             {
               "scene": "blessing_choice",
-              "score": 0.4437,
+              "score": 0.4984,
               "template_path": "pic/scene_templates/blessing_choice/blessing_choice_001.png",
               "variant": null
             },
             {
               "scene": "campfire_choice",
-              "score": 0.5141,
+              "score": 0.5359,
               "template_path": "pic/scene_templates/campfire_choice/campfire_choice_001.png",
               "variant": null
             },
             {
               "scene": "campfire_rest_done",
-              "score": 0.5125,
+              "score": 0.5438,
               "template_path": "pic/scene_templates/campfire_rest_done/campfire_rest_done_001.png",
               "variant": null
             },
             {
               "scene": "campfire_upgrade",
-              "score": 0.65,
+              "score": 0.6141,
               "template_path": "pic/scene_templates/campfire_upgrade/campfire_upgrade_001.png",
               "variant": null
             },
             {
               "scene": "card_reward",
-              "score": 0.4922,
+              "score": 0.4844,
               "template_path": "pic/scene_templates/card_reward/card_reward_001.png",
               "variant": null
             },
             {
               "scene": "character_select",
-              "score": 0.4687,
+              "score": 0.4758,
               "template_path": "pic/scene_templates/character_select/character_select_001.png",
               "variant": null
             },
             {
               "scene": "map",
-              "score": 0.5531,
-              "template_path": "pic/scene_templates/map/map_002.png",
+              "score": 0.5063,
+              "template_path": "pic/scene_templates/map/map_001.png",
               "variant": null
             },
             {
               "scene": "merchant",
-              "score": 0.5039,
+              "score": 0.5586,
               "template_path": "pic/scene_templates/merchant/merchant_shop_001.png",
               "variant": null
             },
             {
               "scene": "merchant_shop",
-              "score": 0.5,
+              "score": 0.5375,
               "template_path": "pic/scene_templates/merchant_shop/merchant_shop_001.png",
               "variant": null
             },
             {
               "scene": "mode_select",
-              "score": 0.5938,
+              "score": 0.5625,
               "template_path": "pic/scene_templates/mode_select/mode_select_001.png",
               "variant": null
             },
             {
               "scene": "title_main",
-              "score": 0.85,
+              "score": 0.8641,
               "template_path": "pic/scene_templates/title_main/title_main_001.png",
               "variant": null
             }
@@ -1009,7 +1012,7 @@
         "legacy_scene_scores": {
           "title_main": 6.0,
           "mode_select": 3.0,
-          "character_select": 1.0,
+          "character_select": 1.5,
           "blessing_choice": 0.5,
           "battle": 2.0,
           "map": 0.0
@@ -1030,23 +1033,23 @@
           ],
           [
             "campfire_upgrade",
-            0.65
+            0.6141
           ],
           [
             "mode_select",
             0.6
           ],
           [
-            "map",
-            0.5531
+            "merchant",
+            0.5586
           ],
           [
-            "battle_result",
-            0.5469
+            "campfire_rest_done",
+            0.5438
           ],
           [
-            "campfire_choice",
-            0.5141
+            "merchant_shop",
+            0.5375
           ]
         ],
         "window_bbox": [
@@ -1061,7 +1064,7 @@
           2560,
           1528
         ],
-        "timestamp": "2026-03-18 15:18:07",
+        "timestamp": "2026-03-18 15:39:24",
         "title_logo_area": [
           512,
           332,
@@ -1264,7 +1267,7 @@
           1154
         ]
       },
-      "timestamp": "2026-03-18 15:18:07",
+      "timestamp": "2026-03-18 15:39:24",
       "step_id": 2,
       "phase": "after",
       "window_name": "Slay the Spire 2",
@@ -1295,6 +1298,9 @@
       ],
       "params": {
         "step_id": 2,
+        "llm_analysis": "当前动作是进入单人模式，因为玩家当前位于游戏的主页面，而进入单人模式是开始一局游戏的第一步。这个动作的置信度为0.96，说明系统认为这是一个合理的选择。根据记忆摘要，这个动作在过去已经成功执行了18次，没有失败记录，因此可以认为这是一个有效的策略。",
+        "llm_provider": "openai_compatible",
+        "llm_model": "moonshot-v1-8k",
         "memory_priority": "medium",
         "skill_key": "title_main::enter_single_mode::single_mode",
         "mcts_heuristic_score": 0.99,
@@ -1305,7 +1311,7 @@
       },
       "confidence": 0.96,
       "source": "Brain-rule-title_main+Mcts",
-      "timestamp": "2026-03-18 15:18:03",
+      "timestamp": "2026-03-18 15:39:21",
       "step_id": 2
     },
     "feedback_data": {
@@ -1313,7 +1319,7 @@
       "execute_status": "success",
       "before_scene": "title_main",
       "after_scene": "title_main",
-      "time_cost_ms": 809,
+      "time_cost_ms": 804,
       "click_position": [
         1177,
         1094
@@ -1327,7 +1333,7 @@
       "screen_diff": "title_menu_advanced",
       "error_message": "",
       "screenshot_after": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
-      "timestamp": "2026-03-18 15:18:06",
+      "timestamp": "2026-03-18 15:39:23",
       "step_id": 2
     },
     "log_data": {
@@ -1336,20 +1342,20 @@
       "input_summary": "scene=title_main, cards=0, enemies=0, energy=0",
       "decision": "enter_single_mode | 当前位于主页，优先进入单人模式以开始一局游戏。",
       "result": "success",
-      "time_cost_ms": 6382,
+      "time_cost_ms": 9371,
       "screenshot": "D:\\code\\sts-agent-course-project\\screenshots\\history\\after_action_002.png",
       "operator": "A组执行平台",
-      "timestamp": "2026-03-18 15:18:07"
+      "timestamp": "2026-03-18 15:39:24"
     },
     "skill_data": {
       "skill_id": "title_main::enter_single_mode::single_mode",
       "scene_type": "title_main",
       "trigger_condition": "scene=title_main, hp=None/None, energy=0, enemies=0, cards=0",
       "action_pattern": "当前位于主页，优先进入单人模式以开始一局游戏。",
-      "success_count": 13,
+      "success_count": 19,
       "fail_count": 0,
-      "reuse_count": 13,
-      "last_update": "2026-03-18 15:18:07",
+      "reuse_count": 19,
+      "last_update": "2026-03-18 15:39:24",
       "memory_priority": "medium",
       "outcome_tags": [
         "execute_success",
@@ -1369,13 +1375,13 @@
         "execute_success",
         "usable"
       ],
-      "timestamp": "2026-03-18 15:18:07",
+      "timestamp": "2026-03-18 15:39:24",
       "step_id": 2,
       "scene_type": "title_main",
       "action_type": "enter_single_mode",
       "execute_status": "success",
       "skill_key": "title_main::enter_single_mode::single_mode"
     },
-    "timestamp": "2026-03-18 15:18:07"
+    "timestamp": "2026-03-18 15:39:24"
   }
 }
