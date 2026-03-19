@@ -1,10 +1,49 @@
+# IDE / local env
 .idea/
 .env
+.venv/
+venv/
+
+# Python cache
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
 
-# Runtime logs / debug artifacts
-logs/run_logs/
-logs/action_logs/
-screenshots/current/
-screenshots/history/
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Runtime-generated logs and screenshots
+logs/run_logs/**
+logs/action_logs/**
+screenshots/current/**
+screenshots/history/**
+
+# Runtime-generated agent data
+# Keep source templates/configs in repo, but ignore derived data produced by runs/training.
+data/actions/**
+data/feedback/**
+data/states/**
+data/skills/**
+data/models/**
+data/template_cache/**
+data/trajectories/**
+data/adapted_states/**
+
+# Preserve empty runtime directories with .gitkeep files when needed
+!logs/run_logs/.gitkeep
+!logs/action_logs/.gitkeep
+!screenshots/current/.gitkeep
+!screenshots/history/.gitkeep
+!data/actions/.gitkeep
+!data/feedback/.gitkeep
+!data/states/.gitkeep
+!data/skills/.gitkeep
+!data/models/.gitkeep
+!data/template_cache/.gitkeep
+!data/trajectories/.gitkeep
+!data/trajectories/steps/.gitkeep
+!data/adapted_states/.gitkeep
